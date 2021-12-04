@@ -1,6 +1,5 @@
 import React from "react";
 import { StyledTitle, StyledSubTitle, Wrapper } from "../StyledTitle";
-import ParticlesContainer from "../ParticleContainer";
 import { LogoStylesWrapper, LogoStyles } from "../LogoStyles";
 import { Button, ButtonWrapper } from "../ButtomStyles";
 import Logo from "../../assets/logo.png"
@@ -9,9 +8,6 @@ const WelcomePage = () => {
 
     return(
         <div>
-            
-            {/* <ParticlesContainer/> */}
-
             <LogoStylesWrapper>
                 <LogoStyles image={Logo} height={250} width={250}></LogoStyles>
             </LogoStylesWrapper>

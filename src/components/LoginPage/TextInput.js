@@ -1,15 +1,8 @@
-import React, { useState, useContext } from "react";
-
-import { StyledTextInput, StyledLabel, FormButton, FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink } from "./LoginStyles";
-import { StyledTitle, StyledSubTitle } from "../StyledTitle";
-import Logo from "../../assets/logo.png";
-import { colours } from "../StyledContainer";
-import { LogoStylesWrapper, LogoStyles } from "../LogoStyles";
-import { ParticlesOptions } from "tsparticles/Options/Classes/Particles/ParticlesOptions";
-import { Button, ButtonWrapper } from "../ButtomStyles";
-import { Wrapper } from "../StyledTitle";
-import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import React, { useState } from "react";
+import { StyledTextInput, StyledLabel } from "./LoginStyles";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Icon } from "./LoginStyles";
+import { Wrapper } from "../StyledTitle";
 
 
 const TextInputField = ({icon, name, type, label, placeholder }) => {
@@ -41,8 +34,6 @@ const TextInputField = ({icon, name, type, label, placeholder }) => {
                         {!show && <FiEyeOff/>}
                     </Icon>
                 }
-                {/* <StyledTextInput name="password" type="password" label="Password" placeholder="**********"></StyledTextInput>
-                <Icon>{icon}</Icon> */}
        </div>
     )
 }

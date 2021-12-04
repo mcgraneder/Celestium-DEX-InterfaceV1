@@ -41,7 +41,7 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 750px;
+    height: 800px;
     background: rgb(35,35,52);
     text-align: center;
     padding: 10px 45px;
@@ -119,4 +119,20 @@ export const LoginLink = styled(Link)`
 export const LoginLinkWrapper = styled.p`
 
     font-size: 15px;
+`
+
+export const FieldDescriptor = styled.p`
+
+    padding-left: 10px;
+    text-align: left;
+    font-size: 15px;
+`
+
+export const ReturnHomeButton = styled(Link)`
+
+    text-align: left;
+    position: absolute;
+    display: block;
+    font-size: 20px;
+    color: rgb(22,181,127);
 `

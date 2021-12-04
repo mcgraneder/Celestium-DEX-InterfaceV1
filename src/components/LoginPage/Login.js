@@ -1,55 +1,20 @@
-import React, { useState, useContext } from "react";
-import ReactDOM from "react-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StyledTextInput, StyledLabel, FormButton, FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink } from "./LoginStyles";
-import { StyledTitle, StyledSubTitle } from "../StyledTitle";
+import React from "react";
+import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./LoginStyles";
+import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
-import { colours } from "../StyledContainer";
-import { LogoStylesWrapper, LogoStyles } from "../LogoStyles";
-import { ParticlesOptions } from "tsparticles/Options/Classes/Particles/ParticlesOptions";
+import { LogoStyles } from "../LogoStyles";
 import { Button, ButtonWrapper } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock } from "react-icons/fi";
-import { Icon } from "./LoginStyles";
-import { faAirbnb } from "@fortawesome/free-brands-svg-icons";
+import {BsArrowReturnLeft } from "react-icons/bs"
 import TextInputField from "./TextInput";
 
 const Login = () => {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-
-
-    const handleSubmit = async () => {
-
-        setError(false);
-        try {
-
-            
-            console.log("Hello");
-
-        } catch (err) {
-
-            setError(true);
-        }
-    };
-
-    const handleInput = e => {
-
-        const name = e.currentTarget.name;
-        const value = e.currentTarget.value;
-
-        if (name === "username") setUsername(value);
-        if (name === "password") setPassword(value);
-
-    };
-
-    //need to pass in props of each form for password or rmsil fix ccss
-
     return (
        <div>
            <FormWrapper>
+                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"padding-top": "15px"}}/></ReturnHomeButton>
                 <LogoStyles image={Logo} width={150} height={150}/>
                 <StyledTitle color={"white"} size={30}>
                     Login To Start Trading
@@ -57,8 +22,11 @@ const Login = () => {
                 <Wrapper/>
                 <Wrapper space={50}/>
                 <FieldWrapper>
-                    <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="email address"/>
+                    <FieldDescriptor left={"left"}>Email</FieldDescriptor>
+                    <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="Enter your email"/>
+                    <FieldDescriptor left={"left"}>Password</FieldDescriptor>
                     <TextInputField icon={<FiLock/>} placeholder="password" name="text" type="password"/>
+                    <FieldDescriptor size={12} left={"center"} style={{color: "rgb(22,181,127)"}}><LoginLink to="/passwordreset" style={{textDecoration:"none"}}>Forgot Password</LoginLink></FieldDescriptor>
                  </FieldWrapper>
                  <Wrapper space={20}/>
                  <ButtonWrapper>

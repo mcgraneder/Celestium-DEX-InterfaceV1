@@ -1,50 +1,20 @@
-import React, { useState, useContext } from "react";
-
-import { StyledTextInput, StyledLabel, FormButton, FormWrapper, FieldWrapper, LoginLink, LoginLinkWrapper } from "./SignUpStyles";
-import { StyledTitle, StyledSubTitle } from "../StyledTitle";
+import React from "react";
+import { FormWrapper, FieldWrapper, LoginLink, LoginLinkWrapper, FieldDescriptor, ReturnHomeButton } from "./SignUpStyles";
+import { StyledTitle, } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
-import { colours } from "../StyledContainer";
-import { LogoStylesWrapper, LogoStyles } from "../LogoStyles";
-import { ParticlesOptions } from "tsparticles/Options/Classes/Particles/ParticlesOptions";
+import { LogoStyles } from "../LogoStyles";
 import { Button, ButtonWrapper } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
-import { FiMail, FiLock, FiUser } from "react-icons/fi";
+import { FiMail, FiLock, FiUser} from "react-icons/fi";
+import {BsArrowReturnLeft } from "react-icons/bs"
 import TextInputField from "../LoginPage/TextInput";
 
 const SignUp = () => {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-
-
-    const handleSubmit = async () => {
-
-        setError(false);
-        try {
-
-            
-            console.log("Hello");
-
-        } catch (err) {
-
-            setError(true);
-        }
-    };
-
-    const handleInput = e => {
-
-        const name = e.currentTarget.name;
-        const value = e.currentTarget.value;
-
-        if (name === "username") setUsername(value);
-        if (name === "password") setPassword(value);
-
-    };
-
     return (
        <div>
            <FormWrapper>
+                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"padding-top": "15px"}}/></ReturnHomeButton>
                 <LogoStyles image={Logo} width={150} height={150}/>
                 <StyledTitle color={"white"} size={30}>
                     Sign Up To Start Trading
@@ -52,8 +22,11 @@ const SignUp = () => {
                 <Wrapper/>
                 <Wrapper space={50}/>
                 <FieldWrapper>
-                    <TextInputField icon={<FiUser/>} name="email" type="text" label="email" placeholder="email address"/>
+                    <FieldDescriptor>Username</FieldDescriptor>
+                    <TextInputField icon={<FiUser/>} name="email" type="text" label="email" placeholder="Username"/>
+                    <FieldDescriptor>Email</FieldDescriptor>
                     <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="email address"/>
+                    <FieldDescriptor>Password</FieldDescriptor>
                     <TextInputField icon={<FiLock/>} placeholder="password" name="text" type="password"/>
                  </FieldWrapper>
                  <Wrapper space={20}/>
