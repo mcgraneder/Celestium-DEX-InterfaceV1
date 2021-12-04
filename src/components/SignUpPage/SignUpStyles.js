@@ -31,7 +31,7 @@ export const StyledTextInput = styled.input`
 export const StyledLabel = styled.p`
 
     text-align: left;
-    font-size: 13px;
+    font-size:503px;
     font-weight: bold;
     padding: ${(props) => props.padding}px;
     margin: ${(props) => props.margin}px;
@@ -41,7 +41,7 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 730px;
+    height: 750px;
     background: rgb(35,35,52);
     text-align: center;
     padding: 10px 45px;

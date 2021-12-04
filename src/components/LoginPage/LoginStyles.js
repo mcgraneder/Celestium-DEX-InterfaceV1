@@ -34,7 +34,7 @@ export const StyledTextInput = styled.input`
 
 export const StyledLabel = styled.p`
 
-    text-align: left;
+    text-align: right;
     font-size: 13px;
     font-weight: bold;
     padding: ${(props) => props.padding}px;
@@ -45,9 +45,9 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 620px;
+    height: 660px;
     background: rgb(35,35,52);
-    text-align: center;
+    text-align: right;
     padding: 10px 45px;
     // border: 0.5px solid  rgb(26,26,39);
     border-radius: 10px;
@@ -71,6 +71,7 @@ export const FormButton = styled.button`
 `
 
 export const Wrapper = styled.div`
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,10 +108,11 @@ export const Icon = styled.p`
     color: ${colours.dark1};
     position: absolute;
     font-size: 21px;
+    // width: 5px;
     top: 20px;
-    left: 20px;
+    // left: 20px;
     ${(props) => props.right && `right: 25px;`};
-    ${(props) => props.left && `left: 25px;`};
+    ${(props) => props.left && `left: 20px;`};
 
 `
 
@@ -122,5 +124,6 @@ export const LoginLink = styled(Link)`
 
 export const LoginLinkWrapper = styled.p`
 
+    text-align: center;
     font-size: 15px;
 `

@@ -8,7 +8,8 @@ import { LogoStylesWrapper, LogoStyles } from "../LogoStyles";
 import { ParticlesOptions } from "tsparticles/Options/Classes/Particles/ParticlesOptions";
 import { Button, ButtonWrapper } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
-import { FiMail, FiLock } from "react-icons/fi";
+import { FiMail, FiLock, FiUser } from "react-icons/fi";
+import TextInputField from "../LoginPage/TextInput";
 
 const SignUp = () => {
 
@@ -51,12 +52,9 @@ const SignUp = () => {
                 <Wrapper/>
                 <Wrapper space={50}/>
                 <FieldWrapper>
-                    <StyledLabel></StyledLabel>
-                    <StyledTextInput name="name" type="text" label="Username" placeholder="myUsername123"></StyledTextInput>
-                    <Wrapper space={20}/>
-                    <StyledTextInput name="email" type="text" label="Email Address" placeholder="example-email@example.com"></StyledTextInput>
-                    <Wrapper space={20}/>
-                    <StyledTextInput name="password" type="password" label="Password" placeholder="**********"></StyledTextInput>
+                    <TextInputField icon={<FiUser/>} name="email" type="text" label="email" placeholder="email address"/>
+                    <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="email address"/>
+                    <TextInputField icon={<FiLock/>} placeholder="password" name="text" type="password"/>
                  </FieldWrapper>
                  <Wrapper space={20}/>
                  <ButtonWrapper>

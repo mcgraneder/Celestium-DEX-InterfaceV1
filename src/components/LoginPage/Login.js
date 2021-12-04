@@ -57,9 +57,8 @@ const Login = () => {
                 <Wrapper/>
                 <Wrapper space={50}/>
                 <FieldWrapper>
-                    <TextInputField icon={<FiMail/>}/>
-                    {/* <TextInputField icon={<FiMail/>}/> */}
-
+                    <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="email address"/>
+                    <TextInputField icon={<FiLock/>} placeholder="password" name="text" type="password"/>
                  </FieldWrapper>
                  <Wrapper space={20}/>
                  <ButtonWrapper>
