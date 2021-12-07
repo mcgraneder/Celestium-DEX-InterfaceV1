@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./LoginStyles";
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
@@ -11,29 +11,35 @@ import TextInputField from "./TextInput";
 
 const Login = () => {
 
+    const [username, setUsername] = useState("")
+
+    const handle = () => {
+
+        console.log(username);
+    }
     return (
        <div>
            <FormWrapper>
-                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"padding-top": "15px"}}/></ReturnHomeButton>
+               
+                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
                 <LogoStyles image={Logo} width={150} height={150}/>
                 <StyledTitle color={"white"} size={30}>
                     Login To Start Trading
                 </StyledTitle>
-                <Wrapper/>
-                <Wrapper space={50}/>
+                <Wrapper space={20}/>
                 <FieldWrapper>
                     <FieldDescriptor left={"left"}>Email</FieldDescriptor>
                     <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="Enter your email"/>
                     <FieldDescriptor left={"left"}>Password</FieldDescriptor>
                     <TextInputField icon={<FiLock/>} placeholder="password" name="text" type="password"/>
-                    <FieldDescriptor size={12} left={"center"} style={{color: "rgb(22,181,127)"}}><LoginLink to="/passwordreset" style={{textDecoration:"none"}}>Forgot Password</LoginLink></FieldDescriptor>
-                 </FieldWrapper>
-                 <Wrapper space={20}/>
-                 <ButtonWrapper>
-                     <Button type="submit" colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button>
-                 </ButtonWrapper>
-                 <Wrapper space={12}/>
-                 <LoginLinkWrapper>New Here? <LoginLink to="/signup" style={{textDecoration:"none"}}> Register</LoginLink></LoginLinkWrapper>
+                    <FieldDescriptor size={10} left={"center"} style={{color: "rgb(22,181,127)"}}><LoginLink to="/passwordreset" style={{textDecoration:"none", "font-size": "12px"}}>Forgot Password</LoginLink></FieldDescriptor>
+                </FieldWrapper>
+                <Wrapper space={20}/>
+                <ButtonWrapper>
+                    <Button type="submit" onSubmit={handle()} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button>
+                </ButtonWrapper>
+                <Wrapper space={12}/>
+                <LoginLinkWrapper>New Here? <LoginLink to="/signup" style={{textDecoration:"none"}}> Register</LoginLink></LoginLinkWrapper>
 
            </FormWrapper>
        </div>

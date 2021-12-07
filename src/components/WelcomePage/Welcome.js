@@ -12,7 +12,10 @@ const WelcomePage = () => {
                 <LogoStyles image={Logo} height={250} width={250}></LogoStyles>
             </LogoStylesWrapper>
             <Wrapper space={100}/>
-            <StyledTitle size={75}>
+            <StyledTitle size={75} margin={0}>
+                OMEGA DEX,
+            </StyledTitle>
+            <StyledTitle size={75} margin={20}>
                 Prepetuals Trading
             </StyledTitle>
             <StyledSubTitle size={30}>

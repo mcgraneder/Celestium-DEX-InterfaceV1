@@ -19,8 +19,7 @@ const SignUp = () => {
                 <StyledTitle color={"white"} size={30}>
                     Sign Up To Start Trading
                 </StyledTitle>
-                <Wrapper/>
-                <Wrapper space={50}/>
+                <Wrapper space={20}/>
                 <FieldWrapper>
                     <FieldDescriptor>Username</FieldDescriptor>
                     <TextInputField icon={<FiUser/>} name="email" type="text" label="email" placeholder="Username"/>

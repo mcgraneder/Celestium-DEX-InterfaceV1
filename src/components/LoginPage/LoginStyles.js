@@ -42,10 +42,10 @@ export const StyledLabel = styled.p`
 
 `
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.form`
 
     width: 420px;
-    height: 700px;
+    height: 680px;
     background: rgb(35,35,52);
     text-align: right;
     padding: 10px 45px;

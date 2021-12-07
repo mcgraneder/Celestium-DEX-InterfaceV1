@@ -7,7 +7,7 @@ export const StyledTitle = styled.div`
     text-align: center;
     color: ${(props) => props.color ? props.color : colours.primary};
     padding: 5px;
-    margin-bottom: 20px;
+    margin-bottom:  ${(props) => props.margin}px;
     font-weight: bold;
     background-color: transparent;
 `

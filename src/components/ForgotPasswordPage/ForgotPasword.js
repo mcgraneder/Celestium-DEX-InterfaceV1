@@ -19,8 +19,7 @@ const ResetPassword = () => {
                 <StyledTitle color={"white"} size={30}>
                     Enter Your Email To Receive A New Password
                 </StyledTitle>
-                <Wrapper/>
-                <Wrapper space={50}/>
+                <Wrapper space={20}/>
                 <FieldWrapper>
                     <FieldDescriptor left={"left"}>Email</FieldDescriptor>
                     <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="email address"/>

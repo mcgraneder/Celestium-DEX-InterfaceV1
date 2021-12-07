@@ -45,6 +45,7 @@ export const Button = styled(Link)`
         bottom: 0;
         left: 0;
         width: 100%;
+        border: 1.5px solid transparent;
         height: 100%;
         z-index: -2;
     }
@@ -56,11 +57,13 @@ export const Button = styled(Link)`
         width: 0%;
         height: 100%;
         background-color: ${(props) => props.colour};
-        transition: all .4s;
-        border-radius: 10rem;
+        transition: all .3s;
+        border-radius: 25px;
+        // border: 1.5px solid transparent;
         z-index: -1;
     }
     &:hover {
+        border: 1.5px solid transparent;
         color: #fff;
         &:before {
         width: 100%;
