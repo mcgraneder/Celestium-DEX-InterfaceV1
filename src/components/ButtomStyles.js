@@ -33,7 +33,7 @@ export const Button = styled(Link)`
     width: 200px;
     background: transparent;
     font-size: 16px;
-    border: 1.5px solid ${(props) => props.bordercolour};
+    border: 2px solid ${(props) => props.bordercolour};
     border-radius: 25px;
     color: ${colours.primary};
     text-decoration: none;
@@ -77,7 +77,7 @@ export const ButtonWrapper = styled.div`
     display: flex;
     justify-content: space-around;
     flex-direction: row;
-    margin-top: 25px;
+    // margin-top: 10px;
     // margin-bottom: 50px;
     background: transparent;
 `

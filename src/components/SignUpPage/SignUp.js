@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FormWrapper, FieldWrapper, LoginLink, LoginLinkWrapper, FieldDescriptor, ReturnHomeButton } from "./SignUpStyles";
 import { StyledTitle, } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
@@ -8,30 +8,113 @@ import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiUser} from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
 import TextInputField from "../LoginPage/TextInput";
+import { StyledLabel } from "./SignUpStyles";
+import { StyledTextInput } from "./SignUpStyles";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { Icon } from "./SignUpStyles";
+import axios from "axios";
+import { ErrorMsg } from "./SignUpStyles";
+import Loader from "react-loader-spinner";
 
-const SignUp = () => {
+const SignUp = ({ history }) => {
+
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [show, setShow] = useState(false);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+
+        if (localStorage.getItem("authToken")) {
+
+            history.push("/trade");
+        }
+
+    }, [history])
+
+    const registerHandler = async (e) => {
+
+        // e.preventDefault()
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        console.log(username);
+
+        try {
+
+            const {data} = await axios.post("/api/auth/register", {username, email, password}, config);
+            setLoading(true);
+            localStorage.setItem("authToken", data.token);
+            console.log(loading);
+            setTimeout(() => {
+
+                history.push("/trade");
+
+            }, 1000)
+
+        } catch(error) {
+
+            console.log(error.response)
+            setError(error.response.data.error);
+            setTimeout(() => {
+
+                setError("");
+
+            }, 5000)
+        }
+    }
 
     return (
        <div>
-           <FormWrapper>
+           <FormWrapper style={{position: "relative"}}>
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"padding-top": "15px"}}/></ReturnHomeButton>
                 <LogoStyles image={Logo} width={150} height={150}/>
-                <StyledTitle color={"white"} size={30}>
+                <StyledTitle color={"white"} size={30} align={"center"}>
                     Sign Up To Start Trading
                 </StyledTitle>
-                <Wrapper space={20}/>
+                <Wrapper space={5}/>
+                {error && <ErrorMsg>{error}</ErrorMsg>}   
+                <Wrapper space={40}/>
                 <FieldWrapper>
-                    <FieldDescriptor>Username</FieldDescriptor>
-                    <TextInputField icon={<FiUser/>} name="email" type="text" label="email" placeholder="Username"/>
-                    <FieldDescriptor>Email</FieldDescriptor>
-                    <TextInputField icon={<FiMail/>} name="email" type="text" label="email" placeholder="email address"/>
-                    <FieldDescriptor>Password</FieldDescriptor>
-                    <TextInputField icon={<FiLock/>} placeholder="password" name="text" type="password"/>
+                    <FieldDescriptor left={"left"}>Username</FieldDescriptor>
+                    <div style={{position: "relative"}}>
+                            <StyledLabel></StyledLabel>
+                            <StyledTextInput type="text" required id="name" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"></StyledTextInput>
+                            {/* {error && <ErrorMsg>{error}</ErrorMsg>} */}
+                            <Wrapper space={20}/>
+                            <Icon left>{<FiUser/>}</Icon>
+                    </div>
+                    <FieldDescriptor left={"left"}>Email</FieldDescriptor>
+                    <div style={{position: "relative"}}>
+                            <StyledLabel></StyledLabel>
+                            <StyledTextInput type="email" required id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email"></StyledTextInput>
+        
+                            <Wrapper space={20}/>
+                            <Icon left>{<FiMail/>}</Icon>
+                    </div>
+                    <FieldDescriptor left={"left"}>Password</FieldDescriptor>
+                    <div style={{position: "relative"}}>
+                            <StyledLabel></StyledLabel>
+                            <StyledTextInput name="password" type={show ? "text" : "password"} required id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"></StyledTextInput>
+                        
+                            <Wrapper space={20}/>
+                            <Icon left>{<FiLock/>}</Icon>
+                            <Icon onClick={() => setShow(!show)} right>
+                                {show && <FiEye/>}
+                                {!show && <FiEyeOff/>}
+                            </Icon>                   
+                    </div>
                  </FieldWrapper>
-                 <Wrapper space={20}/>
+                 <Wrapper space={50}/>
                  <ButtonWrapper>
-                     <Button type="submit" colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>SignUp</Button>
-                 </ButtonWrapper>
+                        {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
+                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={registerHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Sign Up</Button>}
+                    </ButtonWrapper>
                  <Wrapper space={12}/>
                  <LoginLinkWrapper>Already Registered? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
 

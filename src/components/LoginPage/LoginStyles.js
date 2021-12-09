@@ -42,10 +42,10 @@ export const StyledLabel = styled.p`
 
 `
 
-export const FormWrapper = styled.form`
+export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 680px;
+    height: 700px;
     background: rgb(35,35,52);
     text-align: right;
     padding: 10px 45px;
@@ -142,4 +142,24 @@ export const ReturnHomeButton = styled(Link)`
     display: block;
     font-size: 20px;
     color: rgb(22,181,127);
+`
+
+export const ErrorMsg = styled.div`
+
+    position: absolute;
+    margin-left: 0;
+    margin-right: 0;
+    left: 0;
+    right: 0;
+    font-size: 15px;
+    color: red;
+    text-align: center;
+`
+
+export const ExtractText = styled.div`
+
+    font-size: ${(props) => props.size};
+    color: ${(props) => props.colour} : ${colours.dark2};
+    padding: 2px;
+    margin-top: 10px;
 `

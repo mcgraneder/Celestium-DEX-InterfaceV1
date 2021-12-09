@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import { colours } from "../StyledContainer";
+import Logo from "../../assets/logo.png"
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAirbnb } from "@fortawesome/free-brands-svg-icons";
+
 
 export const StyledTextInput = styled.input`
 
     width: 280px;
+    image: ${ <FontAwesomeIcon icon={faAirbnb} />} 
     height: 10px;
     padding: 15px;
     padding-left: 50px;
@@ -19,7 +24,6 @@ export const StyledTextInput = styled.input`
     transition: ease-in-out 0.3s
     background-color: ${colours.light2}
 
-    
     ${(props) => props.invalid && `background-color: ${colours.red}, color: ${colours.primary}`};
 
     &:focus {
@@ -30,8 +34,8 @@ export const StyledTextInput = styled.input`
 
 export const StyledLabel = styled.p`
 
-    text-align: left;
-    font-size:503px;
+    text-align: right;
+    font-size: 13px;
     font-weight: bold;
     padding: ${(props) => props.padding}px;
     margin: ${(props) => props.margin}px;
@@ -41,9 +45,9 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 780px;
+    height: 800px;
     background: rgb(35,35,52);
-    text-align: center;
+    text-align: right;
     padding: 10px 45px;
     // border: 0.5px solid  rgb(26,26,39);
     border-radius: 10px;
@@ -67,6 +71,7 @@ export const FormButton = styled.button`
 `
 
 export const Wrapper = styled.div`
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,10 +108,11 @@ export const Icon = styled.p`
     color: ${colours.dark1};
     position: absolute;
     font-size: 21px;
-    top: 35px;
-    left: 30px;
+    // width: 5px;
+    top: 20px;
+    // left: 20px;
     ${(props) => props.right && `right: 25px;`};
-    ${(props) => props.left && `left: 25px;`};
+    ${(props) => props.left && `left: 20px;`};
 
 `
 
@@ -118,14 +124,15 @@ export const LoginLink = styled(Link)`
 
 export const LoginLinkWrapper = styled.p`
 
+    text-align: center;
     font-size: 15px;
 `
 
 export const FieldDescriptor = styled.p`
 
     padding-left: 10px;
-    text-align: left;
-    font-size: 15px;
+    text-align: ${(props) => props.left};
+    font-size: ${(props) => props.size}px;
 `
 
 export const ReturnHomeButton = styled(Link)`
@@ -135,4 +142,24 @@ export const ReturnHomeButton = styled(Link)`
     display: block;
     font-size: 20px;
     color: rgb(22,181,127);
+`
+
+export const ErrorMsg = styled.div`
+
+    position: absolute;
+    margin-left: 0;
+    margin-right: 0;
+    left: 0;
+    right: 0;
+    font-size: 15px;
+    color: red;
+    text-align: center;
+`
+
+export const ExtractText = styled.div`
+
+    font-size: ${(props) => props.size};
+    color: ${(props) => props.colour} : ${colours.dark2};
+    padding: 2px;
+    margin-top: 10px;
 `

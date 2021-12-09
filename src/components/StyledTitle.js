@@ -4,11 +4,12 @@ import { colours } from "./StyledContainer";
 export const StyledTitle = styled.div`
 
     font-size: ${(props) => props.size}px;
-    text-align: center;
+    text-align: ${(props) => props.align};
     color: ${(props) => props.color ? props.color : colours.primary};
     padding: 5px;
     margin-bottom:  ${(props) => props.margin}px;
-    font-weight: bold;
+    font-weight: ${(props) => props.weight};
+    font-style: ${(props) => props.styleds};
     background-color: transparent;
 `
 export const StyledSubTitle = styled.div`

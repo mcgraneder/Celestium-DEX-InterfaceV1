@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./ForgotPasswordStyles";
+import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./ResetPasswordStyles";
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
@@ -8,31 +8,22 @@ import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
 import TextInputField from "../LoginPage/TextInput";
-import { StyledLabel } from "./ForgotPasswordStyles";
-import { StyledTextInput } from "./ForgotPasswordStyles";
-import { Icon } from "./ForgotPasswordStyles";
+import { StyledLabel } from "./ResetPasswordStyles";
+import { StyledTextInput } from "./ResetPasswordStyles";
+import { Icon } from "./ResetPasswordStyles";
 import axios from "axios";
-import { ErrorMsg } from "./ForgotPasswordStyles";
+import { ErrorMsg } from "./ResetPasswordStyles";
 import Loader from "react-loader-spinner";
 
-const ForgotPassword = ({ history }) => {
+const ResetPassword = ({ match }) => {
 
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
 
-    useEffect(() => {
-
-        if (localStorage.getItem("authToken")) {
-
-            history.push("/");
-        }
-    }, [history])
-
-    const forgotPasswordHandler = async (e) => {
+    const resetPasswordHandler = async (e) => {
 
         e.preventDefault()
 
@@ -44,8 +35,7 @@ const ForgotPassword = ({ history }) => {
 
         try {
 
-            const {data} = await axios.post("/api/auth/forgotpassword", {email}, config);
-            localStorage.setItem("authToken", data.token);
+            const {data} = await axios.put(`/api/auth/passwordreset/${match.params.resetToken}`, {password}, config);
             setLoading(true);
             console.log(loading);
             setTimeout(() => {
@@ -74,29 +64,33 @@ const ForgotPassword = ({ history }) => {
                  <ReturnHomeButton to="/login"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
                      <LogoStyles image={Logo} width={150} height={150}/>
                      {success ? <StyledTitle color={"white"} size={30} align={"center"}>
-                        Success! Please Check Your Email For The Reset Link
+                        Success! You Can Now Login
                      </StyledTitle> : <StyledTitle color={"white"} size={30} align={"center"}>
-                         Enter Your Email To Receive A New Password
+                         Enter Your New Password
                      </StyledTitle>}
                      <Wrapper space={5}/>
                      {error && <ErrorMsg>{error}</ErrorMsg>}   
                      <Wrapper space={40}/>
                      <FieldWrapper>
-                         <FieldDescriptor left={"left"}>Email</FieldDescriptor>
-                         <div style={{position: "relative"}}>
-                             <StyledLabel></StyledLabel>
-                             <StyledTextInput name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email"></StyledTextInput>
-                             <Wrapper space={20}/>
-                             <Icon left>{<FiMail/>}</Icon>
-                         </div>
-                     </FieldWrapper>
+                        <FieldDescriptor left={"left"}>Password</FieldDescriptor>
+                            <div style={{position: "relative"}}>
+                                <StyledLabel></StyledLabel>
+                                <StyledTextInput name="password" type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"></StyledTextInput>
+                                <Wrapper space={20}/>
+                                <Icon left>{<FiLock/>}</Icon>
+                                <Icon onClick={() => setShow(!show)} right>
+                                    {show && <FiEye/>}
+                                    {!show && <FiEyeOff/>}
+                                </Icon>                      
+                            </div>
+                        </FieldWrapper>
                      <Wrapper space={40}/>
                      <ButtonWrapper>
                          {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
-                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={forgotPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button>}
+                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={resetPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Confirm</Button>}
                      </ButtonWrapper>
                      <Wrapper space={12}/>
-                     <LoginLinkWrapper>Back to login? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
+                     <LoginLinkWrapper>Back to login? <LoginLink to="/login" style={{textDecoration:"none"}}>Click Here</LoginLink></LoginLinkWrapper>
                 </form>
                 
             </FormWrapper>
@@ -104,4 +98,4 @@ const ForgotPassword = ({ history }) => {
      )
 }
 
-export default ForgotPassword;
+export default ResetPassword;
