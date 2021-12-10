@@ -1,59 +1,63 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import SideBar from "../DEX/SideBar/SideBar";
+import Navbar from "../Navbar/Navbar";
 
 const DexInterface = ({ history }) => {
 
-    const [error, setError] = useState("");
-    const [privateData, setPrivateData] = useState("");
+    // const [error, setError] = useState("");
+    // const [privateData, setPrivateData] = useState("");
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!localStorage.getItem("authToken")) {
+    //     if (!localStorage.getItem("authToken")) {
 
-            history.push("/login")
-        }
+    //         history.push("/login")
+    //     }
 
-        const fetchPrivateData = async () => {
+    //     const fetchPrivateData = async () => {
 
-            const config = {
+    //         const config = {
 
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("authToken")}`
-                }
-            }
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${localStorage.getItem("authToken")}`
+    //             }
+    //         }
 
-            try {
+    //         try {
 
-                const {data} = await axios.get("/api/private", config);
-                setPrivateData(data.data);
+    //             const {data} = await axios.get("/api/private", config);
+    //             setPrivateData(data.data);
 
-            } catch(error) {
+    //         } catch(error) {
 
-                localStorage.removeItem("authToken");
-                setError("You are not authorised please login again");
+    //             localStorage.removeItem("authToken");
+    //             setError("You are not authorised please login again");
 
-            }
-        }
+    //         }
+    //     }
 
-        fetchPrivateData();
+    //     fetchPrivateData();
 
-    }, [history])
+    // }, [history])
 
-    const logoutHandler = () => {
+    // const logoutHandler = () => {
 
-        localStorage.removeItem("authToken");
-        history.push("/login");
-    }
+    //     localStorage.removeItem("authToken");
+    //     history.push("/login");
+    // }
 
 
-    return error ? (
-
-         <span>{error}</span> 
-    ) : (
+    return (
         <>
-            <div>{privateData}</div>
-            <button onClick={logoutHandler}>Logout</button>
+            {/* <div>{privateData}</div> */}
+            {/* <button onClick={logoutHandler}>Logout</button> */}
+            <Navbar></Navbar>
+            <SideBar></SideBar>
+            {/* <SideBar></SideBar> */}
+
+            
         </>
     )
 }

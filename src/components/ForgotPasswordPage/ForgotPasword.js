@@ -14,6 +14,8 @@ import { Icon } from "./ForgotPasswordStyles";
 import axios from "axios";
 import { ErrorMsg } from "./ForgotPasswordStyles";
 import Loader from "react-loader-spinner";
+import { StyledContainer } from "../StyledContainer";
+
 
 const ForgotPassword = ({ history }) => {
 
@@ -23,14 +25,6 @@ const ForgotPassword = ({ history }) => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
-
-    useEffect(() => {
-
-        if (localStorage.getItem("authToken")) {
-
-            history.push("/");
-        }
-    }, [history])
 
     const forgotPasswordHandler = async (e) => {
 
@@ -45,7 +39,6 @@ const ForgotPassword = ({ history }) => {
         try {
 
             const {data} = await axios.post("/api/auth/forgotpassword", {email}, config);
-            localStorage.setItem("authToken", data.token);
             setLoading(true);
             console.log(loading);
             setTimeout(() => {
@@ -68,7 +61,7 @@ const ForgotPassword = ({ history }) => {
     }
 
     return (
-        <div>
+        <StyledContainer>
             <FormWrapper>
                 <form >
                  <ReturnHomeButton to="/login"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
@@ -93,14 +86,14 @@ const ForgotPassword = ({ history }) => {
                      <Wrapper space={40}/>
                      <ButtonWrapper>
                          {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
-                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={forgotPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button>}
+                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={forgotPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Send Email</Button>}
                      </ButtonWrapper>
                      <Wrapper space={12}/>
                      <LoginLinkWrapper>Back to login? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
                 </form>
                 
             </FormWrapper>
-        </div>
+        </StyledContainer>
      )
 }
 

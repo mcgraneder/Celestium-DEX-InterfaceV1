@@ -14,6 +14,8 @@ import { Icon } from "./ResetPasswordStyles";
 import axios from "axios";
 import { ErrorMsg } from "./ResetPasswordStyles";
 import Loader from "react-loader-spinner";
+import { StyledContainer } from "../StyledContainer";
+
 
 const ResetPassword = ({ match }) => {
 
@@ -58,7 +60,7 @@ const ResetPassword = ({ match }) => {
     }
 
     return (
-        <div>
+        <StyledContainer>
             <FormWrapper>
                 <form >
                  <ReturnHomeButton to="/login"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
@@ -94,7 +96,7 @@ const ResetPassword = ({ match }) => {
                 </form>
                 
             </FormWrapper>
-        </div>
+        </StyledContainer>
      )
 }
 

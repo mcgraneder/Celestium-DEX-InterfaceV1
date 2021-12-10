@@ -15,6 +15,8 @@ import { Icon } from "./SignUpStyles";
 import axios from "axios";
 import { ErrorMsg } from "./SignUpStyles";
 import Loader from "react-loader-spinner";
+import { StyledContainer } from "../StyledContainer";
+
 
 const SignUp = ({ history }) => {
 
@@ -70,7 +72,7 @@ const SignUp = ({ history }) => {
     }
 
     return (
-       <div>
+       <StyledContainer>
            <FormWrapper style={{position: "relative"}}>
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"padding-top": "15px"}}/></ReturnHomeButton>
                 <LogoStyles image={Logo} width={150} height={150}/>
@@ -119,7 +121,7 @@ const SignUp = ({ history }) => {
                  <LoginLinkWrapper>Already Registered? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
 
            </FormWrapper>
-       </div>
+       </StyledContainer>
     )
 }
 

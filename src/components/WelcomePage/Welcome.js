@@ -9,10 +9,11 @@ const WelcomePage = () => {
     return(
         <div>
             <div>
-                <LogoStylesWrapper>
-                    <LogoStyles image={Logo} height={250} width={250}></LogoStyles>
-                </LogoStylesWrapper>
+                {/* <LogoStylesWrapper>
                 <Wrapper space={100}/>
+                    <LogoStyles image={Logo} height={250} width={250}></LogoStyles>
+                </LogoStylesWrapper> */}
+                {/* <Wrapper space={50}/> */}
                 <StyledTitle size={100} margin={0} weight={900} styleds={"italic"} align={"center"}>
                     ALPHA-BAETRUM.
                 </StyledTitle>

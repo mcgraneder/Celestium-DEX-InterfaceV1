@@ -14,6 +14,8 @@ import { Icon } from "./LoginStyles";
 import axios from "axios";
 import { ErrorMsg } from "./LoginStyles";
 import Loader from "react-loader-spinner";
+import { StyledContainer } from "../StyledContainer";
+
 
 const Login = ({ history }) => {
 
@@ -71,7 +73,7 @@ const Login = ({ history }) => {
     }
 
     return (
-       <div>
+       <StyledContainer>
            <FormWrapper>
                <form >
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
@@ -113,7 +115,7 @@ const Login = ({ history }) => {
                </form>
                
            </FormWrapper>
-       </div>
+       </StyledContainer>
     )
 }
 
