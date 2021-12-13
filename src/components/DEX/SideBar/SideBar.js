@@ -14,6 +14,7 @@ import { NavLink } from "react-router-dom";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { Wrapper } from "../../StyledTitle";
 import Navbar from "../../Navbar/Navbar";
+import { Redirect } from "react-router-dom";
 
 const Container = styled.div`
   position: fixed;
@@ -35,7 +36,7 @@ export const Button = styled.button`
   border: none;
   width: 3rem;
   height: 3rem;
-  border-radius: 50%;
+//   border-radius: 50%;
   margin: 0.5rem 0 0 0.5rem;
   cursor: pointer;
   display: flex;

@@ -3,6 +3,8 @@ import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
+
+    // position: fixed;
   background: rgb(26,26,39);
   border-bottom: 2px solid rgb(35,35,52);
   height: 90px;
@@ -94,7 +96,7 @@ export const NavBtnLink = styled.button`
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    background: #fff;
+    background: rgb(77, 102, 235);
     color: #010606;
   }
 `;

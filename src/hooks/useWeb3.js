@@ -19,25 +19,32 @@ import { useWeb3React } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42, 1337],
+  supportedChainIds: [1, 3, 4, 5, 42],
 })
 // function init() {
 var web3;
 var accounts;
 var connected
 
+  
+/
+export default function UseWeb3() {
+  const { active, account, library, connector, activate, deactivate } = useWeb3React()
+  if (typeof window !== 'undefined') {
+    console.log('we are running on the client')
+} else {
+    console.log('we are running on the server');
+}
 
-export default function Navbar() {
-    const { active, account, library, connector, activate, deactivate } = useWeb3React()
-    if (typeof window !== 'undefined') {
-        console.log('we are running on the client')
-    } else {
-        console.log('we are running on the server');
-    }
+// if (typeof localStorage === "undefined" || localStorage === null) {
+//   var LocalStorage = require('node-localstorage').LocalStorage;
+//   localStorage = new LocalStorage('./scratch');
+// }
 
-
-    var acc = localStorage.getItem("account")
-    console.log(acc)
+// localStorage.setItem('myFirstKey', 'myFirstValue');
+// console.log(localStorage.getItem('myFirstKey'));
+var acc = localStorage.getItem("account")
+console.log(acc)
 // localStorage.removeItem("account");
 
 
@@ -54,62 +61,50 @@ export default function Navbar() {
 		}
 	}
 
-    async function connectOnLoad() {
+useEffect(() => {
 
-         try {
+        
+    if (acc != null) {
+        connect()
+    }
+    connectWalletHandler()
+}, [])
+
+  async function connect() {
+    
+    if (localStorage.getItem("account") == null) {
+
+        try {
             await activate(injected)
             connected = true
           } catch (ex) {
             console.log(ex)
           }
+          acc = localStorage.setItem("account", account);
+          console.log(acc)
           var accounts1 = await web3.eth.getAccounts();
           console.log(accounts1)
-          acc = localStorage.setItem("account", accounts1);
-          console.log(acc)
+    } else {
+        disconnect();
+        connected = false
     }
+    
+    // console.log(localStorage)
+  }
 
-    useEffect(() => {
-
-            
-        if (acc != null) {
-        connectOnLoad()
-        }
-        connectWalletHandler()
-    }, [])
-
-
-    async function connectOnClick() {
-        
-        if (localStorage.getItem("account") == null) {
-
-            try {
-                await activate(injected)
-                connected = true
-            } catch (ex) {
-                console.log(ex)
-            }
-            var accounts1 = await web3.eth.getAccounts();
-            console.log(accounts1)
-            acc = localStorage.setItem("account", accounts1);
-            console.log(acc)
-            
-        } else {
-
-            disconnect();
-            connected = false
-        }
-
+  async function disconnect() {
+    try {
+      deactivate()
+      localStorage.removeItem("account");
+    } catch (ex) {
+      console.log(ex)
     }
+  }
 
-    async function disconnect() {
-        try {
-        deactivate()
-        localStorage.removeItem("account");
-        } catch (ex) {
-        console.log(ex)
-        }
-    }
+  // if(address != null) {
 
+  //   connect()
+  // }
 
   return (
       
@@ -135,9 +130,11 @@ export default function Navbar() {
               {/* Second Nav */}
               {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
             </NavMenu>
+            <img style={{"alignItems": "left"}} src={logo} alt='logo' height="20px" />
             <NavBtn>
-    
-              {active ? <NavBtnLink onClick={connectOnClick}>{account.substring(0, 6)}...{account.substring(account.length - 4)}</NavBtnLink> : <NavBtnLink onClick={connectOnClick}>Connect Wallet</NavBtnLink>}
+                <img style={{"alignItems": "left"}} src={logo} alt='logo' height="20px" />
+                <div>hello</div>
+              {active ? <NavBtnLink onClick={connect}>{account.substring(0, 6)}...{account.substring(account.length - 4)}</NavBtnLink> : <NavBtnLink onClick={connect}>Connect Wallet</NavBtnLink>}
             </NavBtn>
           </Nav>
         </div>
@@ -146,7 +143,7 @@ export default function Navbar() {
 
 //   return (
 //     <div className="flex flex-col items-center justify-center">
-//       <button onClick={connectOnClick} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Connect to MetaMask</button>
+//       <button onClick={connect} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Connect to MetaMask</button>
 //       {active ? <span>Connected with <b>{account}</b></span> : <span>Not connected</span>}
 //       <button onClick={disconnect} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Disconnect</button>
 //     </div>
