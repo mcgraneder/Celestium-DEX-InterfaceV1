@@ -13,6 +13,9 @@ import Navbar from "./components/Navbar/Navbar";
 import Web3 from "web3";
 import detectEthereumProvider from '@metamask/detect-provider';
 import { Web3ReactProvider } from '@web3-react/core'
+import React, { useState } from "react"
+import PageLoad from "./components/pageLoadSpinner/PageLoadSpinner";
+
 // export const loadWeb3 = () =>
 //   new Promise( async (resolve, reject) => {
 //     let provider = await detectEthereumProvider();
@@ -33,31 +36,45 @@ function getLibrary(provider) {
   return new Web3(provider)
 }
 function App() {
+
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(function(){
+    setLoading(false)
+ }, 1800);//wait 2 seconds
+
+
   return (
 
 
-    <Router>
-       {/* <ParticleContainer className="patricle-sstyles"/> */}
+    <Web3ReactProvider getLibrary={getLibrary}>
+      {loading ? <PageLoad></PageLoad> : 
+
+        <Router>
+        {/* <ParticleContainer className="patricle-sstyles"/> */}
+        
+        {/* <ParticleContainer className="patricles"/> */}
+        {/* <Navbar/> */}
+        <Switch>
       
-      {/* <ParticleContainer className="patricles"/> */}
-      {/* <Navbar/> */}
-      <Switch>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login}/>
-        <Route exact path="/signup" component={SignUp}/>
-        <Route exact path="/forgotpassword" component={ForgotPassword}/>
-        <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
-        <ApplicationContainer>
-          <PrivateRoute exact path="/trade" component={SideBar}/>
-          <PrivateRoute exact path="/trade/wallet" component={DexInterface}/>
-          <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
-          <PrivateRoute exact path="/trade/profile" component={DexInterface}/>
-        </ApplicationContainer>
-      </Web3ReactProvider>
-      </Switch>
-      {/* <ParticleContainer className="patricle-sstyles"/> */}
-    </Router>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login}/>
+          <Route exact path="/signup" component={SignUp}/>
+          <Route exact path="/forgotpassword" component={ForgotPassword}/>
+          <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
+          <ApplicationContainer>
+            
+            <PrivateRoute exact path="/trade" component={SideBar}/>
+            <PrivateRoute exact path="/trade/wallet" component={DexInterface}/>
+            <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
+            <PrivateRoute exact path="/trade/profile" component={DexInterface}/>
+          </ApplicationContainer>
+          
+        </Switch>
+        {/* <ParticleContainer className="patricle-sstyles"/> */}
+      </Router>}
+    
+    </Web3ReactProvider>
     
   
       

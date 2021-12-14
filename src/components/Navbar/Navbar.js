@@ -19,7 +19,7 @@ import { useWeb3React } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42, 1337],
+  supportedChainIds: [1, 3, 4, 5, 42, 1337, 43114],
 })
 // function init() {
 var web3;
@@ -52,6 +52,7 @@ export default function Navbar() {
 			console.log('Need to install MetaMask');
 			// setErrorMessage('Please install MetaMask browser extension to interact');
 		}
+        console.log(web3.eth.currentProvider)
 	}
 
     async function connectOnLoad() {
@@ -87,7 +88,7 @@ export default function Navbar() {
                 connected = true
             } catch (ex) {
                 console.log(ex)
-            }
+            }window.location.reload();
             var accounts1 = await web3.eth.getAccounts();
             console.log(accounts1)
             acc = localStorage.setItem("account", accounts1);
@@ -109,6 +110,12 @@ export default function Navbar() {
         console.log(ex)
         }
     }
+
+    function accountsChanegHandler() {
+        window.location.reload();
+    }
+
+    window.ethereum.on('accountsChanged', accountsChanegHandler);
 
 
   return (
