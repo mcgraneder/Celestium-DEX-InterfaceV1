@@ -7,8 +7,10 @@ export const LogoStylesWrapper = styled.div`
     left: 0;
     background-color: transparent;
     width: 100%;
-    display: flex;
+    // display: flex;
+    padding-top: 100px;
     justify-content: flex-start;
+    z-index: -2;
 `
 export const LogoStyles = styled.div`
 

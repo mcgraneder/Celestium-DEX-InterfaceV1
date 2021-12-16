@@ -2,6 +2,8 @@ import React from "react";
 import { StyledTitle, StyledSubTitle } from "../StyledTitle";
 import { Button, ButtonWrapper } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
+import logo from "../../assets/metamask.png";
+import { LogoStyles } from "../LogoStyles";
 
 const WelcomePage = () => {
 

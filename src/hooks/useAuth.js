@@ -75,6 +75,9 @@ export default function useAuth() {
         try {
 
         deactivate()
+        setTimeout(function() {
+            alert("you are no longer connected with Metamask")
+        }, 250)
         localStorage.removeItem("account");
 
         } catch (err) {

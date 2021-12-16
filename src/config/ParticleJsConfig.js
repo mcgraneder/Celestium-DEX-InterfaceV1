@@ -26,17 +26,17 @@ const particlesConfig = {
         }
       },
       "opacity": {
-        "value": 0.75,
+        "value": 0.8,
         "random": true,
         "anim": {
           "enable": false,
           "speed": 1,
-          "opacity_min": 0.1,
+          "opacity_min": 0.45,
           "sync": false
         }
       },
       "size": {
-        "value": 160,
+        "value": 200,
         "random": false,
         "anim": {
           "enable": true,
