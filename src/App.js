@@ -15,6 +15,7 @@ import React, { useState, useEffect } from "react"
 import PageLoad from "./components/pageLoadSpinner/PageLoadSpinner";
 import useWeb3 from "./hooks/useWeb3";
 import useOnPageLoad from "./hooks/useOnPageLoad";
+import Particle from "./components/ParticleBackground/Particles"
 
 function getLibrary(provider) {
   return new Web3(provider)
@@ -27,8 +28,11 @@ function App() {
 
   return (
 
-    <>
-      {loading && <PageLoad></PageLoad>}
+    // <>
+    
+      <div>
+        <Particle></Particle>
+        {loading && <PageLoad></PageLoad>}
       <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
           <Switch>
@@ -46,7 +50,8 @@ function App() {
         </Switch>
       </Router>
     </Web3ReactProvider>
-    </>
+   
+    </div>
   );
 }
 

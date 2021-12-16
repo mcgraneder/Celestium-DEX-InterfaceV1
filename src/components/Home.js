@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import WelcomePage from "./WelcomePage/Welcome";
-import { StyledContainer } from "./StyledContainer";
+import { StyledContainer, LoginStyledContainer } from "./StyledContainer";
 import Nav from "./Navbar/Nav";
+import Login from "./LoginPage/Login";
 
 const Home = ({ history }) => {
 
@@ -17,9 +18,9 @@ const Home = ({ history }) => {
 
         <div>
             <Nav/>
-            <StyledContainer>
+            <LoginStyledContainer>
                 <WelcomePage></WelcomePage>
-            </StyledContainer>
+            </LoginStyledContainer>
         </div>
     )
 }

@@ -42,11 +42,13 @@ export const Logo = styled.div`
 export const ButtonText = styled.div`
      
     line-height: 30px;
+    letter-spacing: 1px; 
     text-align: left;
 `
 export const ButtonText1 = styled.div`
      
     line-height: 30px;
+    letter-spacing: 1px; 
     text-align: center;
 `
 
