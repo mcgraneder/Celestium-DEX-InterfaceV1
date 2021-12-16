@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./ForgotPasswordStyles";
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
-import { Button, ButtonWrapper } from "../ButtomStyles";
+import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
-import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { FiMail } from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
-import TextInputField from "../LoginPage/TextInput";
 import { StyledLabel } from "./ForgotPasswordStyles";
 import { StyledTextInput } from "./ForgotPasswordStyles";
 import { Icon } from "./ForgotPasswordStyles";
@@ -17,11 +16,9 @@ import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
 
 
-const ForgotPassword = ({ history }) => {
+const ForgotPassword = () => {
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [show, setShow] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
@@ -85,13 +82,11 @@ const ForgotPassword = ({ history }) => {
                      </FieldWrapper>
                      <Wrapper space={40}/>
                      <ButtonWrapper>
-                         {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
-                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={forgotPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Send Email</Button>}
+                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={forgotPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Send Email</ButtonStatic>}
                      </ButtonWrapper>
                      <Wrapper space={12}/>
                      <LoginLinkWrapper>Back to login? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
                 </form>
-                
             </FormWrapper>
         </StyledContainer>
      )

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SideBar from "../DEX/SideBar/SideBar";
-import Navbar from "../Navbar/Navbar";
+import Nav from "../Navbar/Nav";
 
 const DexInterface = ({ history }) => {
 
@@ -42,22 +42,16 @@ const DexInterface = ({ history }) => {
 
     }, [history])
 
-    const logoutHandler = () => {
+    console.log(privateData, error)
 
-        localStorage.removeItem("authToken");
-        history.push("/login");
-    }
+
 
 
     return (
-        <>
-            {/* <div>{privateData}</div> */}
-            {/* <button onClick={logoutHandler}>Logout</button> */}
-            <Navbar></Navbar>
-            <SideBar></SideBar>
-            {/* <SideBar></SideBar> */}
 
-            
+        <>
+            <Nav></Nav>
+            <SideBar></SideBar>   
         </>
     )
 }

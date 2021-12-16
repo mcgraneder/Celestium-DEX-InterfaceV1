@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./ResetPasswordStyles";
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
-import { Button, ButtonWrapper } from "../ButtomStyles";
+import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
-import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
-import TextInputField from "../LoginPage/TextInput";
 import { StyledLabel } from "./ResetPasswordStyles";
 import { StyledTextInput } from "./ResetPasswordStyles";
 import { Icon } from "./ResetPasswordStyles";
@@ -65,11 +64,7 @@ const ResetPassword = ({ match }) => {
                 <form >
                  <ReturnHomeButton to="/login"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
                      <LogoStyles image={Logo} width={150} height={150}/>
-                     {success ? <StyledTitle color={"white"} size={30} align={"center"}>
-                        Success! You Can Now Login
-                     </StyledTitle> : <StyledTitle color={"white"} size={30} align={"center"}>
-                         Enter Your New Password
-                     </StyledTitle>}
+                     {success ? <StyledTitle color={"white"} size={30} align={"center"}>Success! You Can Now Login</StyledTitle> : <StyledTitle color={"white"} size={30} align={"center"}>Enter Your New Password</StyledTitle>}
                      <Wrapper space={5}/>
                      {error && <ErrorMsg>{error}</ErrorMsg>}   
                      <Wrapper space={40}/>
@@ -88,13 +83,11 @@ const ResetPassword = ({ match }) => {
                         </FieldWrapper>
                      <Wrapper space={40}/>
                      <ButtonWrapper>
-                         {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
-                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={resetPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Confirm</Button>}
+                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={resetPasswordHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Confirm</ButtonStatic>}
                      </ButtonWrapper>
                      <Wrapper space={12}/>
                      <LoginLinkWrapper>Back to login? <LoginLink to="/login" style={{textDecoration:"none"}}>Click Here</LoginLink></LoginLinkWrapper>
-                </form>
-                
+                </form> 
             </FormWrapper>
         </StyledContainer>
      )

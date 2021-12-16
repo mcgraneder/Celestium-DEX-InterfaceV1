@@ -1,108 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import WelcomePage from "./WelcomePage/Welcome";
 import { StyledContainer } from "./StyledContainer";
-import Navbar from "./Navbar/Navbar";
-import { Wrapper } from "./ForgotPasswordPage/ForgotPasswordStyles";
-const Home = () => {
+import Nav from "./Navbar/Nav";
+
+const Home = ({ history }) => {
+
+    useEffect(() => {
+
+        if (localStorage.getItem("authToken")) {
+
+            history.push("/trade");
+        }
+    }, [history])
 
     return(
 
         <div>
-        <Navbar style={{"position": "fixed"}}></Navbar>
-        <StyledContainer>
-            <WelcomePage></WelcomePage>
-        </StyledContainer>
+            <Nav/>
+            <StyledContainer>
+                <WelcomePage></WelcomePage>
+            </StyledContainer>
         </div>
     )
 }
 
 export default Home;
-
-// https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
-
-// import React, {useState} from 'react'
-// import {ethers} from 'ethers'
-// import Web3 from "web3";
-// // import './WalletCard.css'
-
-
-// const WalletCard = () => {
-
-// 	const [errorMessage, setErrorMessage] = useState(null);
-// 	const [defaultAccount, setDefaultAccount] = useState(null);
-// 	const [userBalance, setUserBalance] = useState(null);
-// 	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
-
-//     var acc = localStorage.getItem("account")
-//     console.log(acc)
-   
-// 	const connectWalletHandler = () => {
-// 		if (window.ethereum && window.ethereum.isMetaMask) {
-// 			console.log('MetaMask Here!');
-
-// 			window.ethereum.request({ method: 'eth_requestAccounts'})
-// 			.then(result => {
-// 				accountChangedHandler(result[0]);
-// 				setConnButtonText('Wallet Connected');
-// 				getAccountBalance(result[0]);
-    
-// 			})
-// 			.catch(error => {
-// 				setErrorMessage(error.message);
-			
-// 			});
-
-// 		} else {
-// 			console.log('Need to install MetaMask');
-// 			setErrorMessage('Please install MetaMask browser extension to interact');
-// 		}
-// 	}
-
-//     if (acc != undefined) {
-//         connectWalletHandler()
-//     }
-
-// 	// update account, will cause component re-render
-// 	const accountChangedHandler = (newAccount) => {
-// 		setDefaultAccount(newAccount);
-// 		getAccountBalance(newAccount.toString());
-//         localStorage.setItem("account", newAccount)
-// 	}
-
-// 	const getAccountBalance = (account) => {
-// 		window.ethereum.request({method: 'eth_getBalance', params: [account, 'latest']})
-// 		.then(balance => {
-// 			setUserBalance(balance);
-// 		})
-// 		.catch(error => {
-// 			setErrorMessage(error.message);
-// 		});
-// 	};
-
-// 	const chainChangedHandler = () => {
-// 		// reload the page to avoid any errors with chain change mid use of application
-// 		window.location.reload();
-// 	}
-
-
-// 	// listen for account changes
-// 	window.ethereum.on('accountsChanged', accountChangedHandler);
-
-// 	window.ethereum.on('chainChanged', chainChangedHandler);
-	
-// 	return (
-// 		<div className='walletCard'>
-// 		<h4> {"Connection to MetaMask using window.ethereum methods"} </h4>
-// 			<button onClick={connectWalletHandler}>{defaultAccount}</button>
-// 			<div className='accountDisplay'>
-// 				<h3>Address: {defaultAccount}</h3>
-// 			</div>
-// 			<div className='balanceDisplay'>
-// 				<h3>Balance: {userBalance}</h3>
-// 			</div>
-// 			{errorMessage}
-// 		</div>
-// 	);
-// }
-
-// export default WalletCard;

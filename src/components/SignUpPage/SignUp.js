@@ -3,11 +3,10 @@ import { FormWrapper, FieldWrapper, LoginLink, LoginLinkWrapper, FieldDescriptor
 import { StyledTitle, } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
-import { Button, ButtonWrapper } from "../ButtomStyles";
+import { Button, ButtonWrapper, ButtonStatic } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiUser} from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
-import TextInputField from "../LoginPage/TextInput";
 import { StyledLabel } from "./SignUpStyles";
 import { StyledTextInput } from "./SignUpStyles";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -74,52 +73,45 @@ const SignUp = ({ history }) => {
     return (
        <StyledContainer>
            <FormWrapper style={{position: "relative"}}>
-                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"padding-top": "15px"}}/></ReturnHomeButton>
+                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
                 <LogoStyles image={Logo} width={150} height={150}/>
-                <StyledTitle color={"white"} size={30} align={"center"}>
-                    Sign Up To Start Trading
-                </StyledTitle>
+                <StyledTitle color={"white"} size={30} align={"center"}>Sign Up To Start Trading</StyledTitle>
                 <Wrapper space={5}/>
                 {error && <ErrorMsg>{error}</ErrorMsg>}   
                 <Wrapper space={40}/>
                 <FieldWrapper>
                     <FieldDescriptor left={"left"}>Username</FieldDescriptor>
                     <div style={{position: "relative"}}>
-                            <StyledLabel></StyledLabel>
-                            <StyledTextInput type="text" required id="name" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"></StyledTextInput>
-                            {/* {error && <ErrorMsg>{error}</ErrorMsg>} */}
-                            <Wrapper space={20}/>
-                            <Icon left>{<FiUser/>}</Icon>
+                        <StyledLabel></StyledLabel>
+                        <StyledTextInput type="text" required id="name" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"></StyledTextInput>
+                        <Wrapper space={20}/>
+                        <Icon left>{<FiUser/>}</Icon>
                     </div>
                     <FieldDescriptor left={"left"}>Email</FieldDescriptor>
                     <div style={{position: "relative"}}>
-                            <StyledLabel></StyledLabel>
-                            <StyledTextInput type="email" required id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email"></StyledTextInput>
-        
-                            <Wrapper space={20}/>
-                            <Icon left>{<FiMail/>}</Icon>
+                        <StyledLabel></StyledLabel>
+                        <StyledTextInput type="email" required id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email"></StyledTextInput>
+                        <Wrapper space={20}/>
+                        <Icon left>{<FiMail/>}</Icon>
                     </div>
                     <FieldDescriptor left={"left"}>Password</FieldDescriptor>
                     <div style={{position: "relative"}}>
-                            <StyledLabel></StyledLabel>
-                            <StyledTextInput name="password" type={show ? "text" : "password"} required id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"></StyledTextInput>
-                        
-                            <Wrapper space={20}/>
-                            <Icon left>{<FiLock/>}</Icon>
-                            <Icon onClick={() => setShow(!show)} right>
-                                {show && <FiEye/>}
-                                {!show && <FiEyeOff/>}
-                            </Icon>                   
+                        <StyledLabel></StyledLabel>
+                        <StyledTextInput name="password" type={show ? "text" : "password"} required id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"></StyledTextInput>    
+                        <Wrapper space={20}/>
+                        <Icon left>{<FiLock/>}</Icon>
+                        <Icon onClick={() => setShow(!show)} right>
+                            {show && <FiEye/>}
+                            {!show && <FiEyeOff/>}
+                        </Icon>                   
                     </div>
                  </FieldWrapper>
                  <Wrapper space={50}/>
                  <ButtonWrapper>
-                        {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
-                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={registerHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Sign Up</Button>}
+                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={registerHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Sign Up</ButtonStatic>}
                     </ButtonWrapper>
                  <Wrapper space={12}/>
                  <LoginLinkWrapper>Already Registered? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
-
            </FormWrapper>
        </StyledContainer>
     )

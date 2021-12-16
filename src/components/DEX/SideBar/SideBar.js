@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import logo from "../../../assets/sidebarAssets/logo.svg"
 import Home from "../../../assets/sidebarAssets/home-solid.svg"
 import Team from "../../../assets/sidebarAssets/social.svg"
 import Calender from "../../../assets/sidebarAssets/sceduled.svg"
-import Projects from "../../../assets/sidebarAssets/starred.svg"
 import Documents from "../../../assets/sidebarAssets/draft.svg"
 import PowerOff from "../../../assets/sidebarAssets/power-off-solid.svg"
-// import { Button } from "../../ButtomStyles";
-import { SidebarWrapper } from "./SideBarStyles";
 import { NavLink } from "react-router-dom";
-import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { Wrapper } from "../../StyledTitle";
-import Navbar from "../../Navbar/Navbar";
-import { Redirect } from "react-router-dom";
+
 
 const Container = styled.div`
   position: fixed;
@@ -88,13 +82,13 @@ const SidebarContainer = styled.div`
 //   transition: all 0.5s ease;
 `;
 
-const Logo = styled.div`
-  width: 2rem;
-  img {
-    width: 100%;
-    height: auto;
-  }
-`;
+// const Logo = styled.div`
+//   width: 2rem;
+//   img {
+//     width: 100%;
+//     height: auto;
+//   }
+// `;
 
 const SlickBar = styled.ul`
   color: rgb(22,181,127);
@@ -265,78 +259,40 @@ const SideBar = ({history}) => {
       localStorage.removeItem("authToken");
       history.push("/login");
   }
+  
+  console.log(error, privateData)
 
   return  (
     <Container>
         <Button hide={hide} onClick={() => handleHide()}></Button>
       <SidebarContainer hide={hide}>
         <Button clicked={click} onClick={() => handleClick()}/>
-        {/* <Logo>
-          <img src={logo} alt="logo" />
-        </Logo> */}
         <SlickBar clicked={click}>
-          <Item
-            onClick={() => setClick(false)}
-            exact
-            activeClassName="active"
-            to="/trade"
-          >
+          <Item onClick={() => setClick(false)} exact activeClassName="active" to="/trade">
             <img src={Home} alt="Home" />
             <Text clicked={click}>Home</Text>
           </Item>
           <Wrapper space={20}/>
-          <Item
-            onClick={() => setClick(false)}
-            activeClassName="active"
-            to="/trade/wallet"
-          >
+          <Item onClick={() => setClick(false)} activeClassName="active" to="/trade/wallet">
             <img src={Team} alt="Team" />
             <Text clicked={click}>Wallet</Text>
           </Item>
           <Wrapper space={20}/>
-          <Item
-            onClick={() => setClick(false)}
-            activeClassName="active"
-            to="/trade/tokeninfo"
-          >
+          <Item onClick={() => setClick(false)} activeClassName="active" to="/trade/tokeninfo">
             <img src={Calender} alt="Calender" />
             <Text clicked={click}>Token Info</Text>
           </Item>
           <Wrapper space={20}/>
-          <Item
-            onClick={() => setClick(false)}
-            activeClassName="active"
-            to="/trade/profile"
-          >
+          <Item onClick={() => setClick(false)} activeClassName="active" to="/trade/profile">
             <img src={Documents} alt="Documents" />
             <Text clicked={click}>Profile</Text>
           </Item>
-          {/* <Wrapper space={20}/>
-          <Item
-            onClick={() => setClick(false)}
-            activeClassName="active"
-            to="/projects"
-          >
-            <img src={Projects} alt="Projects" />
-            <Text clicked={click}>Projects</Text>
-          </Item> */}
         </SlickBar>
-
         <Profile clicked={profileClick}>
-          <img
-            onClick={() => handleProfileClick()}
-            src="https://picsum.photos/200"
-            alt="Profile"
-          />
+          <img onClick={() => handleProfileClick()} src="https://picsum.photos/200" alt="Profile"/>
           <Details clicked={profileClick}>
-            <Name>
-              <h4>Logout</h4>
-              <a href="/#">view&nbsp;profile</a>
-            </Name>
-
-            <Logout onClick={logoutHandler}>
-              <img src={PowerOff} alt="logout" />
-            </Logout>
+            <Name><h4>Logout</h4><a href="/#">view&nbsp;profile</a></Name>
+            <Logout onClick={logoutHandler}><img src={PowerOff} alt="logout" /></Logout>
           </Details>
         </Profile>
       </SidebarContainer>

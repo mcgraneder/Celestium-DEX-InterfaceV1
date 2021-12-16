@@ -3,11 +3,10 @@ import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
-import { Button, ButtonWrapper } from "../ButtomStyles";
+import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
-import TextInputField from "./TextInput";
 import { StyledLabel } from "./LoginStyles";
 import { StyledTextInput } from "./LoginStyles";
 import { Icon } from "./LoginStyles";
@@ -15,7 +14,6 @@ import axios from "axios";
 import { ErrorMsg } from "./LoginStyles";
 import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
-
 
 const Login = ({ history }) => {
 
@@ -68,8 +66,6 @@ const Login = ({ history }) => {
 
             }, 3000)
         }
-
-        // setLoading(false);
     }
 
     return (
@@ -78,9 +74,7 @@ const Login = ({ history }) => {
                <form >
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
                     <LogoStyles image={Logo} width={150} height={150}/>
-                    <StyledTitle color={"white"} size={30} align={"center"}>
-                        Login To Start Trading
-                    </StyledTitle>
+                    <StyledTitle color={"white"} size={30} align={"center"}>Login To Start Trading</StyledTitle>
                     <Wrapper space={5}/>
                     {error && <ErrorMsg>{error}</ErrorMsg>}   
                     <Wrapper space={40}/>
@@ -107,13 +101,11 @@ const Login = ({ history }) => {
                     </FieldWrapper>
                     <Wrapper space={50}/>
                     <ButtonWrapper>
-                        {/* <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button> */}
-                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <Button type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</Button>}
+                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</ButtonStatic>}
                     </ButtonWrapper>
                     <Wrapper space={12}/>
                     <LoginLinkWrapper>New Here? <LoginLink to="/signup" style={{textDecoration:"none"}}> Register</LoginLink></LoginLinkWrapper>
                </form>
-               
            </FormWrapper>
        </StyledContainer>
     )
