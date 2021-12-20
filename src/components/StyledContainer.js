@@ -21,7 +21,7 @@ export const StyledContainer = styled.div`
     color: white;
     // background: rgb(0,47,65);
     // background: radial-gradient(circle, rgba(0,47,65,1) 0%, rgba(10,28,61,1) 46%, rgba(0,7,31,1) 89%);
-    background: rgb(26,26,39);
+    background: rgba(26,26,39, 0.4);
 `
 
 export const ApplicationContainer = styled.div`

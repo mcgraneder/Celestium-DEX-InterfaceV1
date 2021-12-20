@@ -15,8 +15,9 @@ import axios from "axios";
 import { ErrorMsg } from "./SignUpStyles";
 import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
-
-
+import Web3 from 'web3';
+var web3;
+var publicAddress 
 const SignUp = ({ history }) => {
 
     const [email, setEmail] = useState("");
@@ -35,39 +36,131 @@ const SignUp = ({ history }) => {
 
     }, [history])
 
+
+    const nonce = Math.floor(Math.random() * 10000)
+
+    const handleSignMessage = async (publicAddress, nonce) => {
+		try {
+			const signature = await web3.eth.personal.sign(
+				`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
+				publicAddress,
+				'' // MetaMask will ignore the password argument here
+			);
+            
+
+			return { signature };
+		} catch (error) {
+
+			setError("User denied the transaction");
+                setTimeout(() => {
+
+                    setError("");
+
+                }, 5000)
+    
+		}
+	};
+
+
     const registerHandler = async (e) => {
 
-        // e.preventDefault()
+        e.preventDefault()
 
-        const config = {
-            headers: {
-                "Content-Type": "application/json"
+        // Check if MetaMask is installed
+		if (window.ethereum && window.ethereum.isMetaMask) {
+			console.log('MetaMask Here!');
+            web3 = new Web3(window.ethereum);
+
+			window.ethereum.request({ method: 'eth_requestAccounts'})
+			
+		} else {
+			console.log('Need to install MetaMask');
+			// setErrorMessage('Please install MetaMask browser extension to interact');
+		}
+
+		const coinbase = await web3.eth.getCoinbase();
+		if (!coinbase) {
+			window.alert('Please activate MetaMask first.');
+			return;
+		}
+
+		publicAddress = coinbase.toLowerCase();
+
+        fetch(
+			`/api/users?publicAddress=${publicAddress}`
+		).then((response) => response.json()).then(async (users) => {
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json"
+                }
             }
-        }
-        console.log(username);
 
-        try {
+            try {
 
-            const {data} = await axios.post("/api/auth/register", {username, email, password}, config);
-            setLoading(true);
-            localStorage.setItem("authToken", data.token);
-            console.log(loading);
-            setTimeout(() => {
+                console.log(publicAddress)
+                const {data} = await axios.post("/api/users/publicAddress", {publicAddress, username, email, password}, config);
+                console.log(data)  
 
-                history.push("/trade");
+            } catch(error) {
 
-            }, 1000)
+                console.log(error.response)
+                setError(error.response.data.error);
+                setTimeout(() => {
 
-        } catch(error) {
+                    setError("");
 
-            console.log(error.response)
-            setError(error.response.data.error);
-            setTimeout(() => {
+                }, 5000)
 
-                setError("");
+                return error
+            }
+        }).then((res) => {
 
-            }, 5000)
-        }
+
+            if(res != null) return
+
+            console.log(publicAddress)
+        
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+            console.log(username);
+    
+            try {
+    
+                handleSignMessage(publicAddress, nonce).then(async function(signature) {
+    
+                    console.log(signature)
+                    const {data} = await axios.post("/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
+                    console.log(data);
+                    setLoading(true);
+                    localStorage.setItem("authToken", data.token);
+                    console.log(loading);
+                    setTimeout(() => {
+    
+                        history.push("/trade");
+    
+                    }, 1000)
+                })
+    
+                
+    
+            } catch(error) {
+    
+                console.log(error.response)
+                setError(error.response.data.error);
+                setTimeout(() => {
+    
+                    setError("");
+    
+                }, 5000)
+            }
+
+        })
+        
     }
 
     return (

@@ -10,7 +10,7 @@ const PageLoad = () => {
         <div>
              <div className="loader-content">
                 <div className="loader-wrapper">
-                    <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/>
+                    <Loader type="ThreeDots" color={`rgb(89,115,254)`} height={50} width={100}/>
                 </div>
             </div>
         </div>
