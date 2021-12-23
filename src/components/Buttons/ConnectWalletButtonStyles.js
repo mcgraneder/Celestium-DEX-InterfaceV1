@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 export const ConnectButton = styled.div`
 
-    background: rgb(89,115,254);
+    // background: rgb(89,115,254);
     border: none;
     border-radius: 15px;
     width: 180px;
     height: 30px;
-    background: rgb(89,115,254);
+    background: ${(props) => props.col};
     padding: 5px 10px;
     color: #fff;
     font-size: 17px;

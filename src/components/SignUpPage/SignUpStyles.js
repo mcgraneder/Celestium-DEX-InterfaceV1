@@ -17,7 +17,7 @@ export const StyledTextInput = styled.input`
     letter-spacing: 1px;
     outline: 0;
     colour: ${colours.light2};
-    border: 3px solid rgb(22,181,127);
+    border: 3px solid ${(props) => props.colour};
     border-radius: 5px;
     display: block;
     margin: 5px auto 10px auto;

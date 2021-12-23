@@ -6,8 +6,9 @@ export const NavContainer = styled.div`
 // z-index: 99;
     
     background-color: rgb(26,26,39);
-    background:transparent;
+    background: rgb(26,26,39);
     width: 100%;
+    height: 60px;
     position: fixed;
     border-bottom: 2px solid rgb(35,35,52);
     
@@ -16,8 +17,8 @@ export const NavContainer = styled.div`
 export const NavWrapper = styled.div`
 
 
-    height: 50px;
-    padding: 20px;
+    height: 60px;
+    padding: 10px;
 
    
 `
@@ -26,11 +27,8 @@ export const NavElement = styled.div`
 
 
     float: right;
-    padding-left: 20px;
     border-left: 2px solid rgb(35,35,52);
     vertical-align: middle;
-    line-height: 50px;
-    
 
 
 `

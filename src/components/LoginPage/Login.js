@@ -24,7 +24,8 @@ const Login = ({ history }) => {
     const [show, setShow] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const [text, setText] = useState("Login To Start Trading")
+    const [colour, setColour] = useState("rgb(22,181,127)")
     useEffect(() => {
 
         if (localStorage.getItem("authToken")) {
@@ -42,15 +43,20 @@ const Login = ({ history }) => {
 				publicAddress,
 				'' // MetaMask will ignore the password argument here
 			)
+            
 			return { signature };
 		} catch (error) {
 
-			setError("User denied the transaction");
-                setTimeout(() => {
+            setLoading(false);
+            setText("Login To Start Trading")
+			setError("Denied! You must Confirm Your wallet To Login");
+            setColour("red")
+            setTimeout(() => {
 
-                    setError("");
+                setError("");
+                setColour("rgb(22,181,127)")
 
-                }, 5000)
+            }, 5000)
 		}
 	};
 
@@ -92,17 +98,22 @@ const Login = ({ history }) => {
 
                 console.log(publicAddress)
                 const {data} = await axios.post("/api/users/nonce", {publicAddress, email, password }, config);
-                console.log(data) 
+                console.log(data)
+                setLoading(true);
+                setText("Please Verify Your Wallet!")
+                console.log(loading) 
                 return data
 
             } catch(error) {
 
                 console.log(error.response)
                 setError(error.response.data.error);
+                setColour("red")
                 setTimeout(() => {
-
+    
                     setError("");
-
+                    setColour("rgb(22,181,127)")
+    
                 }, 5000)
 
                 return error
@@ -130,7 +141,7 @@ const Login = ({ history }) => {
                     console.log(signature)
                     const {data} = await axios.post("/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
                     console.log(data);
-                    setLoading(true);
+                    setText("Success!")
                     localStorage.setItem("authToken", data.token);
                     console.log(loading);
                     setTimeout(() => {
@@ -144,11 +155,15 @@ const Login = ({ history }) => {
     
             } catch(error) {
     
+                setLoading(false);
+                setText("Login To Start Trading")
                 console.log(error.response)
                 setError(error.response.data.error);
+                setColour("red")
                 setTimeout(() => {
     
                     setError("");
+                    setColour("rgb(22,181,127)")
     
                 }, 5000)
             }
@@ -161,7 +176,7 @@ const Login = ({ history }) => {
                <form >
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
                     <LogoStyles image={Logo} width={150} height={150}/>
-                    {loading ? <StyledTitle color={"white"} size={30} align={"center"}>Success!</StyledTitle> : <StyledTitle color={"white"} size={30} align={"center"}>Login To Start Trading</StyledTitle>}
+                    <StyledTitle color={"white"} size={30} align={"center"}>{text}</StyledTitle>
                     <Wrapper space={5}/>
                     {error && <ErrorMsg>{error}</ErrorMsg>}   
                     <Wrapper space={40}/>
@@ -169,14 +184,14 @@ const Login = ({ history }) => {
                         <FieldDescriptor left={"left"}>Email</FieldDescriptor>
                         <div style={{position: "relative"}}>
                             <StyledLabel></StyledLabel>
-                            <StyledTextInput name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email"></StyledTextInput>
+                            <StyledTextInput colour={colour} name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email"></StyledTextInput>
                             <Wrapper space={20}/>
                             <Icon left>{<FiMail/>}</Icon>
                         </div>
                         <FieldDescriptor left={"left"}>Password</FieldDescriptor>
                         <div style={{position: "relative"}}>
                             <StyledLabel></StyledLabel>
-                            <StyledTextInput name="password" type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"></StyledTextInput>
+                            <StyledTextInput colour={colour} name="password" type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"></StyledTextInput>
                             <Wrapper space={20}/>
                             <Icon left>{<FiLock/>}</Icon>
                             <Icon onClick={() => setShow(!show)} right>

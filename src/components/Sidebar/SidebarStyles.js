@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const Sidebar = styled.div`
 
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     transition: all 0.4s ease;
-    height: 100%;
-    width: ${(props) => (props.hide ? "240px" : "25px")};
+    height: 80%;
+    width: ${(props) => (props.hide ? "240px" : "30px")};
     background: rgb(26,26,39);
     padding: 6px 14px;
     border-right: 2px solid  rgb(35,35,52);
