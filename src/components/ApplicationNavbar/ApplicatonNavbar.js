@@ -7,7 +7,7 @@ export const NavContainer = styled.div`
     
     background-color: rgb(26,26,39);
     background: rgb(26,26,39);
-    width: 100%;
+    width: 85%;
     height: 60px;
     position: fixed;
     border-bottom: 2px solid rgb(35,35,52);

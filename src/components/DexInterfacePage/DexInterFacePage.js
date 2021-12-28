@@ -8,7 +8,8 @@ import AppNav from "../ApplicationNavbar/ApplicationNavbarStyles";
 const DexInterface = ({ history }) => {
 
    
-    const web3 = useWeb3();
+    const  web3  = useWeb3();
+    console.log(web3)
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
     const publicAddress = async() => {
@@ -53,7 +54,7 @@ const DexInterface = ({ history }) => {
 
     window.ethereum.on('accountsChanged', async function (accounts) {
 
-        const publicAddress = accounts[0].toLowerCase()
+        const publicAddress = await web3.eth.getCoinbase()
         // console.log("heyyyyyy", publicAddress)
         fetch(
 			`/api/users?publicAddress=${publicAddress}`

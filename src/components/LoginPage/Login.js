@@ -26,6 +26,11 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)")
+
+    
+
+    
+
     useEffect(() => {
 
         if (localStorage.getItem("authToken")) {
@@ -33,6 +38,8 @@ const Login = ({ history }) => {
             history.push("/trade");
         }
     }, [history])
+    
+    
 
     const nonce = Math.floor(Math.random() * 10000)
 
@@ -84,9 +91,7 @@ const Login = ({ history }) => {
 		publicAddress = coinbase.toLowerCase();
 
         console.log(publicAddress);
-        fetch(
-			`/api/users?publicAddress=${publicAddress}`
-		).then((response) => response.json()).then(async (users) => {
+        await web3.eth.getCoinbase().then(async (users) => {
 
             const config = {
                 headers: {

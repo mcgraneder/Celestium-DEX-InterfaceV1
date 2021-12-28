@@ -17,6 +17,8 @@ import useWeb3 from "./hooks/useWeb3";
 import useOnPageLoad from "./hooks/useOnPageLoad";
 import Particle from "./components/ParticleBackground/Particles"
 import SideBar from "./components/Sidebar/Sidebar";
+import Layout from "./components/Layout/Layout";
+import Layout1 from "./components/Layout/Layout1";
 // import "boxicons"
 
 function getLibrary(provider) {
@@ -46,8 +48,8 @@ function App() {
             <Route exact path="/forgotpassword" component={ForgotPassword}/>
             <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
             {/* <ApplicationContainer> */}
-              <PrivateRoute exact path="/trade" component={DexInterface}/>
-              <PrivateRoute exact path="/trade/wallet" component={DexInterface}/>
+              <PrivateRoute exact path="/trade" component={Layout}/>
+              <PrivateRoute exact path="/trade/wallet" component={Layout1}/>
               <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
               <PrivateRoute exact path="/trade/profile" component={DexInterface}/>
             {/* </ApplicationContainer> */}

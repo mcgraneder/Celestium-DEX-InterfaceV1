@@ -91,9 +91,8 @@ const SignUp = ({ history }) => {
 
 		publicAddress = coinbase.toLowerCase();
 
-        fetch(
-			`/api/users?publicAddress=${publicAddress}`
-		).then((response) => response.json()).then(async (users) => {
+        console.log(publicAddress);
+        await web3.eth.getCoinbase().then(async (users) => {
 
             const config = {
                 headers: {
