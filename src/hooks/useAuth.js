@@ -11,12 +11,13 @@ export const injected = new InjectedConnector({
 export default function useAuth() {
 
     const [loading, setLoading] = useState(false)
-    const { active, account, library, connector, activate, deactivate } = useWeb3React()
+    var { active, account, library, connector, activate, deactivate } = useWeb3React()
     
     var accounts;
+    var acount
     const web3 = new Web3(window.ethereum);
     var loggedInAccount = localStorage.getItem("account")
-
+    
     async function connectOnLoad() {
 
          try {
@@ -28,7 +29,7 @@ export default function useAuth() {
             console.error(err)
           }
         
-          loggedInAccount = localStorage.setItem("account", accounts);
+          loggedInAccount = localStorage.setItem("account", account);
     
     }
 
@@ -56,7 +57,7 @@ export default function useAuth() {
                 console.log(err)
             }
 
-            loggedInAccount = localStorage.setItem("account", accounts);
+            loggedInAccount = localStorage.setItem("account", account);
             setTimeout(function(){
 
                 setLoading(false)

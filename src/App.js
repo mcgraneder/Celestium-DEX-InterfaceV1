@@ -19,22 +19,20 @@ import Particle from "./components/ParticleBackground/Particles"
 import SideBar from "./components/Sidebar/Sidebar";
 import Layout from "./components/Layout/Layout";
 import Layout1 from "./components/Layout/Layout1";
+import axios from "axios";
 // import "boxicons"
-
+// import Web3 from "web3";
 function getLibrary(provider) {
   return new Web3(provider)
 }
 function App() {
 
-  useWeb3();
+  const web3 = useWeb3();
   const loading = useOnPageLoad();
-  
-  
+
 
   return (
-
-    // <>
-    
+        
       <div>
         {/* <SideBar></SideBar> */}
         <Particle></Particle>
@@ -49,7 +47,7 @@ function App() {
             <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
             {/* <ApplicationContainer> */}
               <PrivateRoute exact path="/trade" component={Layout}/>
-              <PrivateRoute exact path="/trade/wallet" component={Layout1}/>
+              <PrivateRoute exact path="/trade/wallet" component={Layout}/>
               <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
               <PrivateRoute exact path="/trade/profile" component={DexInterface}/>
             {/* </ApplicationContainer> */}

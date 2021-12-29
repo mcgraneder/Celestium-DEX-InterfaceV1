@@ -1,12 +1,30 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import AppNav from "../ApplicationNavbar/ApplicationNavbarStyles";
 import Navbar from "./Navbar";
-import { Backdrop } from "./Sidebar";
+
 import axios from "axios";
 import useWeb3 from "../../hooks/useWeb3";
+import Modal from "../AccountsChangeModal/AccountsChangeModal";
+import { StyledContainer } from "../StyledContainer";
+
+
+export const Backdrop = styled.div`
+
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    opacity: 1;
+    pointer-events: none;
+    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
+    z-index: 10000;
+    pointer-events: auto
+    
+`
 
 const Grid = styled.div`
 
@@ -38,12 +56,13 @@ const GridMain = styled.div`
     color: White;
 `
 
-const Layout = ({history}) => {
+const Layout = memo(({history}) => {
 
     const  web3  = useWeb3();
-    console.log(web3)
     const [show, setShow] = useState(0);
+    const [show1, setShow1] = useState(false);
     const toggle = () => setShow(Number(!show));
+    const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
     const publicAddress = async() => {
@@ -54,10 +73,18 @@ const Layout = ({history}) => {
 
     useEffect(() => {
 
+        if (localStorage.getItem("registered")) {
+
+            console.log("its true")
+            setShow1(true);
+         }
+
         if (!localStorage.getItem("authToken")) {
 
             history.push("/login")
         }
+
+        
 
         const fetchPrivateData = async () => {
 
@@ -84,44 +111,70 @@ const Layout = ({history}) => {
 
         fetchPrivateData();
 
+        
+
     }, [history])
 
-    window.ethereum.on('accountsChanged', async function (accounts) {
+    useEffect(() => {
 
-        const publicAddress = await web3.eth.getCoinbase()
-        // console.log("heyyyyyy", publicAddress)
-        fetch(
-			`/api/users?publicAddress=${publicAddress}`
-		).then(async (response) => {
+        window.ethereum.on('accountsChanged', async function (accounts) {
 
             const config = {
                 headers: {
                     "Content-Type": "application/json"
                 }
             }
+        var publicAddress = await web3.eth.getCoinbase()
+        publicAddress = publicAddress.toLowerCase()
+    
+        try {
 
-            console.log(response)
-            const {data} = await axios.post("/api/users/wallet", config);
-            console.log(data)
-        })
+            const {data} = await axios.post("api/users/useraddress", { publicAddress }, config)
+            setShow1(false);
+            localStorage.removeItem("registered")
+            
+
+        } catch (err) {
+
+            setShow1(true);
+            localStorage.setItem("registered", true)
+        }
     })
+
+
+    }, [web3.eth])
+    
+    const logoutHandler = () => {
+
+        localStorage.removeItem("authToken");
+        history.push("/login");
+    }
     
 
 
     return (
 
-        <Grid>
-            <GridSidebar>
-                <Sidebar visible={show} close={toggle}/>
-            </GridSidebar>
-            <GridHeader>
-                <Navbar toggle={toggle}></Navbar>
-            </GridHeader>
-            <GridMain>
-                main Content
-            </GridMain>
-        </Grid>
+        
+        
+        <>
+            <Modal visible={show1} close={toggle1}></Modal>
+            {/* <Backdrop></Backdrop> */}
+            <Grid>
+                
+                
+                <GridSidebar>
+                    <Sidebar visible={show} close={toggle} logout={logoutHandler} />
+                </GridSidebar>
+                <GridHeader>
+                    <Navbar toggle={toggle}></Navbar>
+                </GridHeader>
+                <GridMain>
+                    main Content
+                </GridMain>
+            </Grid>
+        </>
+
     )
-}
+})
 
 export default Layout

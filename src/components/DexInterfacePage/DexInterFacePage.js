@@ -52,25 +52,25 @@ const DexInterface = ({ history }) => {
 
     }, [history])
 
-    window.ethereum.on('accountsChanged', async function (accounts) {
+    // window.ethereum.on('accountsChanged', async function (accounts) {
 
-        const publicAddress = await web3.eth.getCoinbase()
-        // console.log("heyyyyyy", publicAddress)
-        fetch(
-			`/api/users?publicAddress=${publicAddress}`
-		).then(async (response) => {
+    //     const publicAddress = await web3.eth.getCoinbase()
+    //     // console.log("heyyyyyy", publicAddress)
+    //     fetch(
+	// 		`/api/users?publicAddress=${publicAddress}`
+	// 	).then(async (response) => {
 
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
+    //         const config = {
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             }
+    //         }
 
-            console.log(response)
-            const {data} = await axios.post("/api/users/wallet", config);
-            console.log(data)
-        })
-    })
+    //         console.log(response)
+    //         const {data} = await axios.post("/api/users/wallet", config);
+    //         console.log(data)
+    //     })
+    // })
 
     return (
 

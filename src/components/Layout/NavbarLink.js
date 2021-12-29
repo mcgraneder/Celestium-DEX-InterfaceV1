@@ -14,20 +14,20 @@ export const StyledLink = styled(Link)`
     align-items: center;
     padding: 5px 24px;
     font-size: 17px;
-    font-weight: 400;
+    font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
-    // box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.1);
     text-decoration: none;
 
-    .link {
+    i {
 
-        min-height: 30px;
-        min-width: 30px;
-        font-size: 18px;
+        min-height: 22px;
+        min-width: 22px;
+        font-size: 21px;
         display: flex;
         align-items: center;
         justify-content: center;
-        opacity: 
+        
     }
 
     span {
@@ -39,7 +39,9 @@ export const StyledLink = styled(Link)`
 
     &:hover {
         text-decoration: none;
-        background-color: rgba(255 255 255 / 5%);
+        background-color: rgb(35,35,52);
+        color: rgb(22,181,127);
+
     }
 
 `
@@ -50,9 +52,7 @@ const NavLink = ({ children, iconName, label, ...rest}) => {
         <StyledLink  to="/wallet" {...rest}>
             { children || (
                 <>
-                    <div className="link">
-                        {iconName}
-                    </div>
+                    <i className={iconName}></i>
                     <span className="label">{label}</span>
                 </>
             )}

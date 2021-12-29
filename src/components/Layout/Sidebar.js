@@ -10,7 +10,9 @@ import { GrTransaction, GrHistory } from "react-icons/gr"
 import { BsCashCoin } from "react-icons/bs"
 import { MdLogout} from "react-icons/md"
 import NavLink from "./NavbarLink";
+import NavLinksGroup from "./NavLinksGroup";
 import { Wrapper } from "../StyledTitle";
+import SidebarButton from "./SidebarButton";
 
 export const StyledSidebar = styled.nav`
 
@@ -25,39 +27,7 @@ export const StyledSidebar = styled.nav`
     border-right: 2px solid rgb(35,35,52);
     flex-direction: column;
     transition: width 0.3s cubic-bezier(0.4, 0, 1, 1);
-    .group {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        padding: 24px 0 14px 0;
-        margin-right: 2px;
-        overflow: hidden;
-        overflow-y: auto;
-        // background-color: rgba(35,35,52, 0.1);
-        box-shadow: none;
-        border: none;
-        min-height: 36px;
-        
-
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-            
-        }
-        
-    }
+    
     &::before {
         // content: "";
         background-color: rgba(26,26,39, 0.2);
@@ -104,6 +74,7 @@ export const Backdrop = styled.div`
     }
 `;
 
+
 const Sidebar = (props) => {
 
     const [compact, setCompact] = useState(0);
@@ -113,41 +84,13 @@ const Sidebar = (props) => {
         <>
             <Backdrop visible={props.visible} onClick={props.close}></Backdrop>
             <StyledSidebar compact={compact} {...props}>
-                
                 <Logo compact={compact}/>
-                {/* <Wrapper space={50}></Wrapper> */}
-                <div className="group">
-                    <NavLink to="/wallet">
-                        <BiWallet style={{fontSize: '25px'}}></BiWallet>
-                        <span className="label">Wallet</span>
-                    </NavLink>
-                    <NavLink to="/trade/wallet">
-                        {/* <AiOutlineStock style={{fontSize: '25px'}}></AiOutlineStock> */}
-                        <i className="fas fa-box"></i>
-                        <span className="label">Trade</span>
-                    </NavLink>
-                    <NavLink to="/Transactions">
-                        {/* <AiOutlineHistory style={{fontSize: '25px'}}></AiOutlineHistory> */}
-                        <i className="fas fa-box"/>
-                        <span className="label">Transactions</span>
-                    </NavLink>
-                    <NavLink to="/Token Info">
-                        <BsCashCoin style={{fontSize: '25px'}}></BsCashCoin>
-                        <span className="label">Token Info</span>
-                    </NavLink>
-                </div>
-                <NavLink compact={compact}to="/settings">
-                    <FiSettings style={{fontSize: '25px'}}></FiSettings>
-                    <span className="label">settings</span>
-                </NavLink>
-                <NavLink compact={compact} to="/">
-                    <MdLogout style={{fontSize: '25px'}}></MdLogout>
-                    <span className="label">Logout</span>
-                </NavLink>
-                <button className="nav-toggle" onClick={() => setCompact(Number(!compact))}>
-                    <FiMenu></FiMenu>
-                </button>
-                    
+                <NavLink style={{borderBottom: "1px solid rgba(255, 255, 255, 0.1)"}}></NavLink>
+                <NavLinksGroup compact={compact}></NavLinksGroup>
+                <NavLink  compact={compact} to="/wallet" iconName="fas fa-user" label="Profile"></NavLink>
+                <NavLink  compact={compact} to="/wallet" iconName="fas fa-cog" label="Settings"></NavLink>
+                <NavLink onClick={props.logout} compact={compact} to="/login" iconName="fas fa-sign-out" label="Logout"></NavLink>
+                <SidebarButton compact={compact} setCompact={setCompact}></SidebarButton>
             </StyledSidebar>
         </>
         
