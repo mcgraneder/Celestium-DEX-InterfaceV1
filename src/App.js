@@ -47,7 +47,7 @@ function App() {
             <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
             {/* <ApplicationContainer> */}
               <PrivateRoute exact path="/trade" component={Layout}/>
-              <PrivateRoute exact path="/trade/wallet" component={Layout}/>
+              {/* <PrivateRoute exact path="/trade/wallet" component={Layout}/> */}
               <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
               <PrivateRoute exact path="/trade/profile" component={DexInterface}/>
             {/* </ApplicationContainer> */}

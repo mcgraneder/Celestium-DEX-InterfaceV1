@@ -14,7 +14,7 @@ export const FormWrapper = styled.div`
     padding: 30px 20px;
     border: 1.5px solid  rgb(31,31,44);
     border-radius: 10px;
-    z-index: 30000;
+    z-index: 10000;
     ${(props) => props.visible && css`
 
     opacity: 1;

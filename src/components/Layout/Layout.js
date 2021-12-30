@@ -21,7 +21,7 @@ export const Backdrop = styled.div`
     backdrop-filter: blur(3px);
     background-color: rgba(0, 0, 0, 0.2);
     transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
-    z-index: 10000;
+    z-index: 20000;
     pointer-events: auto
     
 `
@@ -58,6 +58,7 @@ const GridMain = styled.div`
 
 const Layout = memo(({history}) => {
 
+    var publicAddress
     const  web3  = useWeb3();
     const [show, setShow] = useState(0);
     const [show1, setShow1] = useState(false);
@@ -65,18 +66,20 @@ const Layout = memo(({history}) => {
     const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
-    const publicAddress = async() => {
-
-       return await web3.eth.getCoinbase();
-    }
-    // const publicAddress = await web3.eth.getCoinbase();
+    
 
     useEffect(() => {
+
+        
 
         if (localStorage.getItem("registered")) {
 
             console.log("its true")
             setShow1(true);
+         }
+         else {
+
+            setShow(false)
          }
 
         if (!localStorage.getItem("authToken")) {
@@ -124,29 +127,32 @@ const Layout = memo(({history}) => {
                     "Content-Type": "application/json"
                 }
             }
-        var publicAddress = await web3.eth.getCoinbase()
-        publicAddress = publicAddress.toLowerCase()
+        publicAddress = await web3.eth.getCoinbase()
+        // publicAddress = publicAddress.toLowerCase()
     
         try {
 
-            const {data} = await axios.post("api/users/useraddress", { publicAddress }, config)
+            const {data} = await axios.post("/api/users/useraddress", { publicAddress }, config)
             setShow1(false);
+            
             localStorage.removeItem("registered")
             
 
         } catch (err) {
 
             setShow1(true);
+                
             localStorage.setItem("registered", true)
         }
     })
 
 
-    }, [web3.eth])
+    }, [publicAddress])
     
     const logoutHandler = () => {
 
         localStorage.removeItem("authToken");
+        localStorage.removeItem("email")
         history.push("/login");
     }
     

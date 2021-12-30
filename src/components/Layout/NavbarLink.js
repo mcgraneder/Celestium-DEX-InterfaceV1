@@ -35,6 +35,7 @@ export const StyledLink = styled(Link)`
         padding-left: 14px;
         line-height: 19px;
         opacity: ${(props) => Number(!props.compact)};
+        white-space: nowrap;
     }
 
     &:hover {

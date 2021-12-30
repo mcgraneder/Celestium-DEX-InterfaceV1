@@ -15,6 +15,7 @@ import { ErrorMsg } from "./LoginStyles";
 import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
 import Web3 from "web3"
+import { local } from "web3modal";
 var web3;
 var publicAddress
 const Login = ({ history }) => {
@@ -149,6 +150,7 @@ const Login = ({ history }) => {
                     setText("Success!")
                     localStorage.setItem("authToken", data.token);
                     console.log(loading);
+                    localStorage.setItem("email", email)
                     setTimeout(() => {
     
                         history.push("/trade");

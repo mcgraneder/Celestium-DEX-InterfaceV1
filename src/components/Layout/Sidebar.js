@@ -21,12 +21,12 @@ export const StyledSidebar = styled.nav`
     width: ${(props) => props.compact ? "70px" : "260px"};
     position: sticky;
     top: 0;
-    // overflow: hidden;
+    overflow: hidden;
     z-index: 1000;
     display: flex;
     border-right: 2px solid rgb(35,35,52);
     flex-direction: column;
-    transition: width 0.3s cubic-bezier(0.4, 0, 1, 1);
+    transition: width 0.3s cubic-bezier(0.4, 0, 1, 1), transform 0.3s cubic-bezier(0.4, 0, 1, 1) !important;
     
     &::before {
         // content: "";
@@ -58,20 +58,21 @@ export const Backdrop = styled.div`
     width: 100vw;
     opacity: 0;
     pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
     transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
     ${(props) => props.visible && css`
 
         opacity: 1;
         pointer-events: all;
+        pointer: cursor;
     `}
 
-    @media(min-width: ${bp.desktop}) {
+    // @media(min-width: ${bp.desktop}) {
 
-        opacity: 0;
-        pointer-events: none;
-        opacityL 0.3s 
-    }
+    //     opacity: 0;
+    //     pointer-events: none;
+    //     opacityL 0.3s 
+    // }
 `;
 
 

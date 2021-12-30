@@ -14,6 +14,9 @@ const StyledLink = styled(Link)`
     // padding: 0 20px 0 20px;
     // border-bottom: 2px solid rgb(35,35,52);
     text-decoration: none;
+    overflow: hidden;
+    whitespace: nowarp;
+    
 
 
     &:hover {
@@ -26,6 +29,9 @@ const StyledLink = styled(Link)`
         color: rgba(255, 255, 255, 0.9);
         opacity: ${(props) => Number(!props.compact)};
         transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1);
+        overflow: hidden;
+        white-space: nowrap;
+        
     }
     
 `;
@@ -36,7 +42,7 @@ const Logo = (props) => {
     
         <StyledLink {...props} to="/">
             <img src={metamaskLogo} width="45"></img>
-            {props.compact ? <span></span> : <span>Alpha-Baetrum</span>}
+             <span>Alpha-Baetrum</span>
             
         </StyledLink>
     )

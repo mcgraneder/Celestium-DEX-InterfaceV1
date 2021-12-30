@@ -148,7 +148,9 @@ const SignUp = ({ history }) => {
                     console.log(data);
                     setText("Success!")
                     localStorage.setItem("authToken", data.token);
+                    localStorage.removeItem("registered")
                     console.log(loading);
+                    localStorage.setItem("email", email)
                     setTimeout(() => {
     
                         history.push("/trade");
