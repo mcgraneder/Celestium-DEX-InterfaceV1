@@ -8,6 +8,7 @@ import logo1 from "../../assets/metamask.png"
 import Web3 from "web3";
 import axios from "axios";
 import Loader from "react-loader-spinner";
+import { Wrapper } from "../LoginPage/LoginStyles";
 // export const Backdrop = styled.div`
 
 //     position: fixed;
@@ -86,6 +87,7 @@ export const ModalTextWrapper = styled.div`
     align-items: left !important;
     // width: 4px;
     overflow: hidden;
+    margin-bottom: 15px;
 // white-space: nowrap;
 //   white-space: nowrap;
 //   word-wrap: break-word !important;
@@ -153,13 +155,100 @@ export const VerifyButton = styled.button`
     }
 `
 
+export const IconWrapper = styled.div`
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 60px;
+    width: 100%;
+    margin-bottom: 25px;
+`
+export const IconContainer = styled.div`
+
+    display: flex;
+    width: 100%;
+    height: 60px;
+
+`
+export const Icon = styled.div`
+
+    margin: 5px 0px;
+    width: 75px;
+    height: 60px;
+    border: 2px solid rgb(22,181,127);
+    background:rgb(47,47,60);
+    text-align: center;
+    border-radius: 50%;
+    line-height: 60px;
+    // left: 0%;
+`;
+
+export const TextContainer = styled.div`
+
+    // display: flex;
+    // width: 100%;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-top: 5px;
+    height: 60px;
+    color: rgb(141,141,149);
+    text-align: left;
+    word-wrap: break-word;
+    
+
+`
+export const IconText = styled.div`
+
+    padding-bottom: 10px;
+    height: 20px;
+    font-size: ${(props) => props.size}px;
+    font-weight: ${(props) => props.bold};
+    color: ${(props) => props.colour};
+    word-wrap: break-word;
+`
+
+export const SeperatorText = styled.div`
+
+    height: 23px;
+    font-size: 16px;
+    font-weight: bold;
+    color: White;
+    text-align: center;
+`
+
+export const IconContents2 = styled.i`
+
+    // position: absolute:
+    bottom: 10%;
+    text-align: left;
+    width: 50%;
+    padding-left: 52px;
+    padding-bottom: 90px;
+    font-size: 25px;
+    color: rgb(141,141,149);;
+`
+
+export const IconContents = styled.i`
+
+    // position: absolute:
+    bottom: 10%;
+    text-align: left;
+    width: 50%;
+    padding-left: 52px;
+    padding-bottom: 206px;
+    font-size: 25px;
+    color: rgb(141,141,149);
+`
+
 const Modal = (props) => {
 
     
     const email = localStorage.getItem("email")
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [text, setText] = useState("Login To Start Trading")
+    const [text, setText] = useState("Link Your Wallet To Proceed")
     const [colour, setColour] = useState("rgb(22,181,127)")
     var publicAddress;
     var web3;
@@ -177,7 +266,7 @@ const Modal = (props) => {
 		} catch (error) {
 
             setLoading(false);
-            setText("Login To Start Trading")
+            setText("Link Your Wallet To Proceed")
 			setError("Denied! You must Confirm Your wallet To Login");
             setColour("red")
             setTimeout(() => {
@@ -227,7 +316,7 @@ const Modal = (props) => {
                 const {data} = await axios.post("/api/users/getNonce", {email}, config);
                 console.log(data)
                 setLoading(true);
-                setText("Please Verify Your Wallet!")
+                setText("Sending Signature Request")
                 console.log(loading) 
                 return data
 
@@ -281,7 +370,7 @@ const Modal = (props) => {
             } catch(error) {
     
                 setLoading(false);
-                setText("Login To Start Trading")
+                setText("Link Your Wallet To Proceed")
                 console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")
@@ -301,15 +390,43 @@ const Modal = (props) => {
         <>
          <Backdrop visible={props.visible}></Backdrop>
             <FormWrapper visible={props.visible}>
+            <IconContents className="fa-stack-1x text-primary">1</IconContents>
+            <IconContents2 className="fa-stack-1x text-primary">2</IconContents2>
                 <TitleContainer>
                     <Logo width={50}><img src={logo1} width={50} /></Logo>
-                    {loading ? <ModalTitle>Sending Signature Request</ModalTitle> : <ModalTitle>Link Your Wallet To Proceed</ModalTitle>}
+                    <ModalTitle>{text}</ModalTitle>
                 </TitleContainer>
                 <ModalTextWrapper>
                     <ModalText>This Wallet is not registered with this account. In order to continue using this DApp Either switch back to your other wallet or add this wallet to your account by clicking the "VERIFY" button below to proove your ownership</ModalText>
                 </ModalTextWrapper>
+                {/* <Wrapper space={5}></Wrapper> */}
+                <IconWrapper>
+                    <IconContainer>
+                    {/* <IconContents className="fa-stack-1x text-primary" style={{color: "White"}}>1</IconContents> */}
+                        <Icon>
+                            
+
+                        </Icon>
+                        <TextContainer>
+                            <IconText colour={"rgb(221,221,229);"} size={19} bold={"bold"}>Switch back to other wallet</IconText>
+                            <IconText size={15}>Switch back to other wallet to continue trading</IconText>
+                        </TextContainer>   
+                    </IconContainer>  
+                </IconWrapper>
+                <SeperatorText size={17} bold={"bold"}>OR</SeperatorText>
+                <IconWrapper>
+                    <IconContainer>
+                        <Icon>
+                        </Icon>
+                        <TextContainer>
+                            <IconText colour={"rgb(221,221,229);"} size={19} bold={"bold"}>Verify your new wallet</IconText>
+                            <IconText size={15}>To use this wallet confirm that you are the owner</IconText>
+                        </TextContainer>   
+                    </IconContainer>  
+                </IconWrapper>
               
                     {loading ?  <ButtonWrapper><Loader type="ThreeDots" color={`rgb(77, 102, 235)`} height={30} width={70}/></ButtonWrapper> : <VerifyButton onClick={loginHandler}>Verify Wallet</VerifyButton>}
+
                 
               
                 

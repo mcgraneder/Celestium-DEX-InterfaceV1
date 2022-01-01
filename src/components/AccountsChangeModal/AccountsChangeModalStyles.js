@@ -9,7 +9,7 @@ export const FormWrapper = styled.div`
     width: 350px;
     height: 450px;
     opacity: 0;
-    background-color: rgb(28,28,41);
+    background-color: rgb(36,36,49);
     text-align: right;
     padding: 30px 20px;
     border: 1.5px solid  rgb(31,31,44);

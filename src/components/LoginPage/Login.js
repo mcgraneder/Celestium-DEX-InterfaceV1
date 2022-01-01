@@ -16,6 +16,7 @@ import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
 import Web3 from "web3"
 import { local } from "web3modal";
+import Alogo from "../../assets/logo_transparent_background.png"
 var web3;
 var publicAddress
 const Login = ({ history }) => {
@@ -150,6 +151,7 @@ const Login = ({ history }) => {
                     setText("Success!")
                     localStorage.setItem("authToken", data.token);
                     console.log(loading);
+                    localStorage.removeItem("registered")
                     localStorage.setItem("email", email)
                     setTimeout(() => {
     
