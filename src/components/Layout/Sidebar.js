@@ -67,12 +67,12 @@ export const Backdrop = styled.div`
         pointer: cursor;
     `}
 
-    // @media(min-width: ${bp.desktop}) {
+    @media(min-width: ${bp.desktop}) {
 
-    //     opacity: 0;
-    //     pointer-events: none;
-    //     opacityL 0.3s 
-    // }
+        opacity: 0;
+        pointer-events: none;
+    
+    }
 `;
 
 

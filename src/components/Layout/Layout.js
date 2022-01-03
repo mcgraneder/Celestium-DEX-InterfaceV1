@@ -166,8 +166,6 @@ const Layout = memo(({history}) => {
             <Modal visible={show1} close={toggle1}></Modal>
             {/* <Backdrop></Backdrop> */}
             <Grid>
-                
-                
                 <GridSidebar>
                     <Sidebar visible={show} close={toggle} logout={logoutHandler} />
                 </GridSidebar>

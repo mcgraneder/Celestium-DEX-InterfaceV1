@@ -52,6 +52,7 @@ export const DenseNavLinks = styled(NavLink)`
         
             font-size: 22px;
         }
+        transition: opacity 0.2s cubic-bezier(0.4, 0, 1, 1);
 
     }
     

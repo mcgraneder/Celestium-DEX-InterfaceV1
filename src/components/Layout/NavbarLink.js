@@ -18,6 +18,8 @@ export const StyledLink = styled(Link)`
     color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.1);
     text-decoration: none;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 1, 1);
+
 
     i {
 
@@ -36,6 +38,8 @@ export const StyledLink = styled(Link)`
         line-height: 19px;
         opacity: ${(props) => Number(!props.compact)};
         white-space: nowrap;
+        transition: opacity 0.2s cubic-bezier(0.4, 0, 1, 1);
+
     }
 
     &:hover {
