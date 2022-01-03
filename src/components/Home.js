@@ -8,6 +8,7 @@ import Pl2 from "./pageLoadSpinner/Pl2";
 import MetamaskPopup from "./MetaMaskPopup/MetaMaskPopup";
 import Web3Modal from "./Web3Modal/Web3Modal";
 
+
 const Home = ({ history }) => {
 
 
@@ -49,6 +50,7 @@ const Home = ({ history }) => {
     return(
 
         <div>
+            
             <Web3Modal visible={show1} close={toggle1}></Web3Modal>
             <Nav close={toggle1}/>
             {/* {loading && <Pl2></Pl2>} */}

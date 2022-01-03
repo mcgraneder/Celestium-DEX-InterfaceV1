@@ -6,6 +6,7 @@ const ConnectWalletButton = ({close, color, width, fontsize, height}) => {
 
     const { active, account } = useAuth()
 
+    
     return (
 
         <div>
