@@ -17,7 +17,14 @@ import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
 import Web3 from 'web3';
 import Fortmatic from 'fortmatic';
-var web3;
+import { PortisConnector } from '@web3-react/portis-connector'
+import useAuth from "../../hooks/useAuth";
+import useWeb3 from "../../hooks/useWeb3";
+import Portis from "@portis/web3"
+import Torus from "@toruslabs/torus-embed";
+import { toruss } from "../../connectors/providers";
+import WalletConnectProvider from "@walletconnect/web3-provider"
+import { ethers } from "ethers";
 var publicAddress 
 const SignUp = ({ history }) => {
 
@@ -28,7 +35,12 @@ const SignUp = ({ history }) => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
-    const [colour, setColour] = useState("rgb(22,181,127)")
+    const [colour, setColour] = useState("rgb(22,181,127)");
+    const provider = localStorage.getItem("provider")
+    var provider1
+    var web3
+    console.log(web3)
+    // console.log(accounts = await web3.eth.getAccounts())
 
     // const fm = new Fortmatic('pk_test_C102027C0649EF66');
     // window.web3 = new Web3(fm.getProvider());
@@ -45,6 +57,26 @@ const SignUp = ({ history }) => {
         // web3 = window.web3
     useEffect(() => {
 
+        // {
+        //     if(localStorage.getItem("provider") === "formatic") {
+
+        //         const fm = new Fortmatic('pk_test_C102027C0649EF66');
+        //         window.web3 = new Web3(fm.getProvider());
+        //         web3 = window.web3
+        //         console.log(web3)
+        //     }
+
+        //     else if(localStorage.getItem("provider") === "portis") {
+
+        //         window.web3 = new Web3(portis.provider);
+        //         web3 = window.web3
+        //     }
+        //     else {
+        //         web3 = new Web3(window.ethereum);
+        //     }
+        // }
+        
+
         if (localStorage.getItem("authToken")) {
 
             history.push("/trade");
@@ -56,12 +88,25 @@ const SignUp = ({ history }) => {
     const nonce = Math.floor(Math.random() * 10000)
 
     const handleSignMessage = async (publicAddress, nonce) => {
+        var signature;
 		try {
-			const signature = await web3.eth.personal.sign(
-				`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
-				publicAddress,
-				'' // MetaMask will ignore the password argument here
-			);
+
+            if (localStorage.getItem("provider") == "walletconnect") {
+
+               console.log("trueeeeeeeeeeeeeeeeeeeee")
+                signature = await provider1.send(
+                    'personal_sign',
+                    [ ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`)), publicAddress ]
+                );
+                
+            }
+            else {
+                signature = await web3.eth.personal.sign(
+                    `Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
+                    publicAddress,
+                    '' // MetaMask will ignore the password argument here
+                );
+                }
             
 
 			return { signature };
@@ -84,26 +129,64 @@ const SignUp = ({ history }) => {
     const registerHandler = async (e) => {
 
         e.preventDefault()
+        
+            if(localStorage.getItem("provider") == "fortmatic") {
+
+                const fm = new Fortmatic('pk_test_C102027C0649EF66');
+                window.web3 = new Web3(fm.getProvider());
+                web3 = window.web3
+                console.log(web3)
+            }
+
+            else if(localStorage.getItem("provider") == "portis") {
+
+                const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
+                web3 = new Web3(portis.provider);
+
+                
+            }
+            else if(localStorage.getItem("provider") == "torus") {
+
+                const torus = new Torus()
+                web3 = new Web3(torus.provider);
+
+                
+            }
+            else if (localStorage.getItem("provider") == "walletconnect") {
+
+                provider1 = new WalletConnectProvider({
+                    infuraId: "ba5ee6592e68419cab422190121eca4c",
+                  });
+                  
+                  //  Enable session (triggers QR Code modal)
+                  await provider1.enable();
+                  web3 = new Web3(provider1);
+            }
+            else {
+                web3 = new Web3(window.ethereum);
+            }
+        
 
         // Check if MetaMask is installed
-        if (window.ethereum && window.ethereum.isMetaMask) {
-			console.log('MetaMask Here!');
-            web3 = new Web3(window.ethereum);
+        // if (window.ethereum && window.ethereum.isMetaMask) {
+		// 	console.log('MetaMask Here!');
+        //     web3 = new Web3(window.ethereum);
 
-			window.ethereum.request({ method: 'eth_requestAccounts'})
+		// 	window.ethereum.request({ method: 'eth_requestAccounts'})
 			
-		} else {
-			console.log('Need to install MetaMask');
-			// setErrorMessage('Please install MetaMask browser extension to interact');
-		}
+		// } else {
+		// 	console.log('Need to install MetaMask');
+		// 	// setErrorMessage('Please install MetaMask browser extension to interact');
+		// }
 
-		const coinbase = await web3.eth.getCoinbase();
+		const coinbase = await web3.eth.getAccounts();
+        console.log(coinbase)
 		if (!coinbase) {
 			window.alert('Please activate MetaMask first.');
 			return;
 		}
 
-		publicAddress = coinbase.toLowerCase();
+		publicAddress = coinbase[0].toLowerCase();
 
 		
 		// const coinbase = await web3.eth.getAccounts();

@@ -17,6 +17,15 @@ import { StyledContainer } from "../StyledContainer";
 import Web3 from "web3"
 import { local } from "web3modal";
 import Alogo from "../../assets/logo_transparent_background.png"
+import Fortmatic from 'fortmatic';
+import { PortisConnector } from '@web3-react/portis-connector'
+import useAuth from "../../hooks/useAuth";
+import useWeb3 from "../../hooks/useWeb3";
+import Portis from "@portis/web3"
+import Torus from "@toruslabs/torus-embed";
+import { ethers } from "ethers";
+import WalletConnectProvider from "@walletconnect/web3-provider"
+
 var web3;
 var publicAddress
 const Login = ({ history }) => {
@@ -28,8 +37,7 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)")
-
-    
+    var provider1;
 
     
 
@@ -46,12 +54,25 @@ const Login = ({ history }) => {
     const nonce = Math.floor(Math.random() * 10000)
 
     const handleSignMessage = async (publicAddress, nonce) => {
+		var signature;
 		try {
-			const signature = await web3.eth.personal.sign(
-				`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
-				publicAddress,
-				'' // MetaMask will ignore the password argument here
-			)
+
+            if (localStorage.getItem("provider") == "walletconnect") {
+
+               console.log("trueeeeeeeeeeeeeeeeeeeee")
+                signature = await provider1.send(
+                    'personal_sign',
+                    [ ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`)), publicAddress ]
+                );
+                
+            }
+            else {
+                signature = await web3.eth.personal.sign(
+                    `Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
+                    publicAddress,
+                    '' // MetaMask will ignore the password argument here
+                );
+                }
             
 			return { signature };
 		} catch (error) {
@@ -72,25 +93,63 @@ const Login = ({ history }) => {
     const loginHandler = async (e) => {
 
         e.preventDefault()
-       // Check if MetaMask is installed
-		if (window.ethereum && window.ethereum.isMetaMask) {
-			console.log('MetaMask Here!');
+        if(localStorage.getItem("provider") == "fortmatic") {
+
+            const fm = new Fortmatic('pk_test_C102027C0649EF66');
+            window.web3 = new Web3(fm.getProvider());
+            web3 = window.web3
+            console.log(web3)
+        }
+
+        else if(localStorage.getItem("provider") == "portis") {
+
+            const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
+            web3 = new Web3(portis.provider);
+
+            
+        }
+        else if(localStorage.getItem("provider") == "torus") {
+
+            const torus = new Torus()
+            web3 = new Web3(torus.provider);
+
+            
+        }
+        else if (localStorage.getItem("provider") == "walletconnect") {
+
+            provider1 = new WalletConnectProvider({
+                infuraId: "ba5ee6592e68419cab422190121eca4c",
+              });
+              
+              //  Enable session (triggers QR Code modal)
+              await provider1.enable();
+              web3 = new Web3(provider1);
+        }
+        else {
             web3 = new Web3(window.ethereum);
+        }
 
-			window.ethereum.request({ method: 'eth_requestAccounts'})
-			
-		} else {
-			console.log('Need to install MetaMask');
-			// setErrorMessage('Please install MetaMask browser extension to interact');
-		}
 
-		const coinbase = await web3.eth.getCoinbase();
-		if (!coinbase) {
-			window.alert('Please activate MetaMask first.');
-			return;
-		}
+// Check if MetaMask is installed
+// if (window.ethereum && window.ethereum.isMetaMask) {
+// 	console.log('MetaMask Here!');
+//     web3 = new Web3(window.ethereum);
 
-		publicAddress = coinbase.toLowerCase();
+// 	window.ethereum.request({ method: 'eth_requestAccounts'})
+    
+// } else {
+// 	console.log('Need to install MetaMask');
+// 	// setErrorMessage('Please install MetaMask browser extension to interact');
+// }
+
+const coinbase = await web3.eth.getAccounts();
+console.log(coinbase)
+if (!coinbase) {
+    window.alert('Please activate MetaMask first.');
+    return;
+}
+
+publicAddress = coinbase[0].toLowerCase();
 
         console.log(publicAddress);
         await web3.eth.getCoinbase().then(async (users) => {

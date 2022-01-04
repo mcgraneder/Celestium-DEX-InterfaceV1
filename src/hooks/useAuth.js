@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import Web3 from 'web3';
+import Fortmatic from 'fortmatic';
 import { useWeb3React } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { FortmaticConnector } from '@web3-react/fortmatic-connector'
 import { PortisConnector } from '@web3-react/portis-connector'
 import { TorusConnector } from '@web3-react/torus-connector'
+import { local } from 'web3modal';
 
 export const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 1337, 43114],
@@ -23,70 +25,57 @@ export const portis = new PortisConnector({ dAppId:
 
 export const torus = new TorusConnector({ chainId: 1 })
 
+export const walletconnect = new WalletConnectConnector({
+    rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
+    qrcode: true
+})
+
 export default function useAuth() {
 
     const [loading, setLoading] = useState(false);
 
 
     const [acc, setAcc] = useState("")
+    var [web3, setWeb3] = useState("");
     var { active, account, library, connector, activate, deactivate } = useWeb3React()
     
     var accounts;
     var acount
-    const web3 = new Web3(window.ethereum);
+    
     var loggedInAccount = localStorage.getItem("account")
     var provider = localStorage.getItem("provider")
     
     async function connectOnLoad() {
 
-        if ( localStorage.getItem("provider") == "injected") provider = injected;
-        else if ( localStorage.getItem("provider") == "fortmatic") {
+        if ( localStorage.getItem("provider") == "fortmatic") provider = fortmatic
+        if ( localStorage.getItem("provider") == "injected") provider = injected
+        if ( localStorage.getItem("provider") == "walletconnect") provider = walletconnect
+        if ( localStorage.getItem("provider") == "portis") provider = portis
+        if ( localStorage.getItem("provider") == "torus") provider = torus
 
-          
-            console.log(true)
-            provider = fortmatic;
-        } 
-        else if ( localStorage.getItem("provider") == "torus") {
-
-           
-            console.log("torus")
-            provider = torus;
-        } 
-
+        setLoading(true)
 
          try {
 
-            await activate(portis).then(function(res) {
-
-                console.log(res)
-            })
-            
+            await activate(provider, undefined, true);
+            await deactivate()
+            await activate(provider, undefined, true);
           
-        
           } catch (err) {
 
             console.error(err)
+            deactivate()
+            setLoading(false)
           }
-          setTimeout(async function(){
-
-            await activate(portis)
-
-         }, 1600);
-        
-          loggedInAccount = localStorage.setItem("account", account);
-    
+          setLoading(false)
+       
     }
 
     useEffect(() => {
  
         if (loggedInAccount != null) {
-
-            setTimeout(function(){
-
-                // connectOnLoad()
-    
-             }, 1600);
-            //  connectOnLoad()
+            
+             connectOnLoad()
         }
 
     }, [])
@@ -105,23 +94,24 @@ export default function useAuth() {
            
             try {
                 await activate(injected)
-                accounts = await web3.eth.getAccounts()[0];
-        
+                loggedInAccount = localStorage.setItem("account", account);
+                provider = localStorage.setItem("provider", "injected");
+                setTimeout(() => {
+
+                    setLoading(false)
+                }, 800)
+
             } catch (err) {
 
                 console.log(err)
+                deactivate()
+                setLoading(false)
             }
-
-            loggedInAccount = localStorage.setItem("account", account);
-            provider = localStorage.setItem("provider", "injected");
-            setLoading(false)
-            
-      
-
     }
 
     async function connectOnClickFortmatic() {
         
+        console.log(active)
         if(active) {
 
             alert("You must dissconnect first")
@@ -133,19 +123,17 @@ export default function useAuth() {
            
             try {
                 await activate(fortmatic)
-                accounts = await web3.eth.getAccounts()[0];
+                loggedInAccount = localStorage.setItem("account", account);
+                provider = localStorage.setItem("provider", "fortmatic");
+                setLoading(false)
         
             } catch (err) {
 
                 console.log(err)
+                deactivate()
+                setLoading(false)
             }
-
-            loggedInAccount = localStorage.setItem("account", account);
-            provider = localStorage.setItem("provider", "fortmatic");
-            setLoading(false)
             
-        
-
     }
 
     async function connectOnClickTorus() {
@@ -161,18 +149,16 @@ export default function useAuth() {
             
             try {
                 await activate(torus)
-                accounts = await web3.eth.getAccounts()[0];
+                loggedInAccount = localStorage.setItem("account", account);
+                provider = localStorage.setItem("provider", "torus");
+                setLoading(false)
         
             } catch (err) {
 
                 console.log(err)
+                deactivate()
+                setLoading(false)
             }
-
-            loggedInAccount = localStorage.setItem("account", account);
-            provider = localStorage.setItem("provider", "torus");
-            setLoading(false)
-            
-        
 
     }
 
@@ -189,19 +175,53 @@ export default function useAuth() {
            
             try {
                 await activate(portis)
-                accounts = await web3.eth.getAccounts()[0];
+                loggedInAccount = localStorage.setItem("account", account);
+                provider = localStorage.setItem("provider", "portis");
+                setLoading(false)
         
             } catch (err) {
 
                 console.log(err)
+                deactivate()
+                setLoading(false)
             }
 
-            loggedInAccount = localStorage.setItem("account", account);
-            provider = localStorage.setItem("provider", "portis");
-            setLoading(false)
+            // console.log(localStorage.getItem("walletconnect"))
+
             
-            
+    }
+
+    async function connectOnClickWalletConnect() {
         
+        if(active) {
+
+            alert("You must dissconnect first")
+            return
+        }
+
+        setLoading(true)
+
+           
+            try {
+                await activate(walletconnect, undefined, true)
+                
+                loggedInAccount = localStorage.setItem("account", account);
+                provider = localStorage.setItem("provider", "walletconnect");
+                setTimeout(() => {
+
+                    setLoading(false)
+                }, 800)
+               
+            } catch (err) {
+
+                console.log(err)
+                deactivate()
+                setLoading(false)
+            }
+
+            // const data = localStorage.getItem("walletconnect")
+            // local.setItem("walletconnect", data)
+
 
     }
 
@@ -209,6 +229,7 @@ export default function useAuth() {
         try {
 
         deactivate()
+        web3 = undefined;
         setTimeout(function() {
             alert("you are no longer connected with Metamask")
         }, 250)
@@ -222,5 +243,5 @@ export default function useAuth() {
     }
 
 
-  return { connectOnLoad, connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, disconnect,  active, account, loading}
+  return { connectOnLoad, connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect,  active, account, loading, web3}
 }

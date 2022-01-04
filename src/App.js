@@ -29,7 +29,8 @@ function getLibrary(provider) {
 }
 function App() {
 
-  const web3 = useWeb3();
+  const web3 = useWeb3(getLibrary);
+  console.log(web3)
   const loading = useOnPageLoad();
 
 

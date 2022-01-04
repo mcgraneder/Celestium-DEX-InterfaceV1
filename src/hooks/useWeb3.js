@@ -7,15 +7,15 @@ export const injected = new InjectedConnector({
 })
 
 
-export default function useWeb3() {
+export default function useWeb3(provider) {
 
 	// var web3;
 	const connectWalletHandler = useCallback(() => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
 			console.log('MetaMask Here!');
-            window.web3 = new Web3(window.ethereum)
+            window.web3 = new Web3(provider)
 
-			window.ethereum.request({ method: 'eth_requestAccounts'})
+			// window.ethereum.request({ method: 'eth_requestAccounts'})
 
 			
 			

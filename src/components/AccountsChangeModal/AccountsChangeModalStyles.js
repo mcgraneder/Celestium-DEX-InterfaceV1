@@ -14,9 +14,9 @@ export const FormWrapper = styled.div`
     padding: 30px 20px;
     border: 1.5px solid  rgb(31,31,44);
     border-radius: 10px;
-    z-index: 10000;
+    z-index: -10000;
     ${(props) => props.visible && css`
-
+    z-index: -10000;
     opacity: 1;
     pointer-events: all;
     transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;

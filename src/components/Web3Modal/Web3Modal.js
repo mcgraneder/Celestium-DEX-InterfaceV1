@@ -33,9 +33,9 @@ export const FormWrapper = styled.div`
     padding: 30px 20px;
     border: 1.5px solid  rgb(31,31,44);
     border-radius: 10px;
-    z-index: 10000;
+    z-index: -10000;
     ${(props) => props.visible && css`
-
+    z-index: 10000;
     opacity: 1;
     pointer-events: all;
     transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
@@ -344,7 +344,7 @@ const Web3Modal = ({visible, close}) => {
     var publicAddress;
     var web3;
     
-    const { connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, disconnect, active, account, loading } = useAuth()
+    const { connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect, active, account, loading } = useAuth()
    
     console.log(account)
     
@@ -363,7 +363,7 @@ const Web3Modal = ({visible, close}) => {
                     <Provider margin={"20px"} width1={50} logo={fortmatic} width2={27} title={"Fortmatic"} connect={connectOnClickFortmatic}></Provider>
                     <Provider margin={"20px"} width1={50} logo={torus} width2={27} title={"Torus"} connect={connectOnClickTorus}></Provider>
                     <Provider margin={"20px"} width1={50} logo={portis} width2={25} title={"Portis"} connect={connectOnClickPortis}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Wallet Connect"}></Provider>
+                    <Provider margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Wallet Connect"} connect={connectOnClickWalletConnect}></Provider>
                     <Disconnect margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect}></Disconnect>
                     {/* <Logo><Loader style={{paddingTop: "5px"}} type="Oval" height={40} color="rgb(77, 102, 235)"></Loader></Logo> */}
                 </ButtonContainer>
