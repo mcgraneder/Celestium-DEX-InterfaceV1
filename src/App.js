@@ -6,7 +6,7 @@ import SignUp from "./components/SignUpPage/SignUp";
 import ForgotPassword from "./components/ForgotPasswordPage/ForgotPasword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import PrivateRoute from "./components/Routing/PrivateRoute";
-import DexInterface from "./components/DexInterfacePage/DexInterFacePage";
+
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 // import SideBar from "./components/DEX/SideBar/SideBar";
 import Web3 from "web3";
@@ -49,8 +49,8 @@ function App() {
             <Route exact path="/forgotpassword" component={ForgotPassword}/>
             <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
               <PrivateRoute exact path="/trade" component={Layout}/>
-              <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
-              <PrivateRoute exact path="/trade/profile" component={DexInterface}/>
+              {/* <PrivateRoute exact path="/trade/tokeninfo" component={DexInterface}/>
+              <PrivateRoute exact path="/trade/profile" component={DexInterface}/> */}
         </Switch>
       </Router>
     </Web3ReactProvider>
