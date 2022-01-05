@@ -165,7 +165,7 @@ publicAddress = coinbase[0].toLowerCase();
             try {
 
                 console.log(publicAddress)
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com//api/users/nonce", {publicAddress, email, password }, config);
+                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/nonce", {publicAddress, email, password }, config);
                 console.log(data)
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
