@@ -2,7 +2,7 @@
   "name": "prepetuals-dex-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://alpha-baetrum.herokuapp.com",
+  "proxy": "",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
