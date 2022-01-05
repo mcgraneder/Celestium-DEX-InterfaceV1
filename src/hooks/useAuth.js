@@ -33,7 +33,7 @@ export const walletconnect = new WalletConnectConnector({
 export default function useAuth() {
 
     const [loading, setLoading] = useState(false);
-
+    const [onPageLoading, setOnPageLoading] = useState(false)
 
     const [acc, setAcc] = useState("")
     var [web3, setWeb3] = useState("");
@@ -53,7 +53,7 @@ export default function useAuth() {
         if ( localStorage.getItem("provider") == "portis") provider = portis
         if ( localStorage.getItem("provider") == "torus") provider = torus
 
-        setLoading(true)
+        setOnPageLoading(true)
 
          try {
 
@@ -65,16 +65,16 @@ export default function useAuth() {
 
             console.error(err)
             deactivate()
-            setLoading(false)
+            setOnPageLoading(false)
           }
-          setLoading(false)
+          setOnPageLoading(false)
        
     }
 
     useEffect(() => {
  
         if (loggedInAccount != null) {
-            
+
              connectOnLoad()
         }
 
@@ -243,5 +243,5 @@ export default function useAuth() {
     }
 
 
-  return { connectOnLoad, connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect,  active, account, loading, web3}
+  return { connectOnLoad, connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect,  active, account, loading, web3, onPageLoading}
 }

@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 import Pl2 from "./pageLoadSpinner/Pl2";
 import MetamaskPopup from "./MetaMaskPopup/MetaMaskPopup";
 import Web3Modal from "./Web3Modal/Web3Modal";
+import { StyledTitle } from "./StyledTitle";
 
 
 const Home = ({ history }) => {
@@ -16,7 +17,7 @@ const Home = ({ history }) => {
     const [show1, setShow1] = useState(false);
     const toggle = () => setShow(Number(!show));
     const toggle1 = () => setShow1(!show1);
-    const { connectOnClick, active, account, web3 } = useAuth()
+    const { connectOnClick, active, account, web3, onPageLoading } = useAuth()
     console.log(web3)
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -55,9 +56,12 @@ const Home = ({ history }) => {
             <Web3Modal visible={show1} close={toggle1}></Web3Modal>
             <Nav close={toggle1}/>
             {/* {loading && <Pl2></Pl2>} */}
-            {active ? (loading ? <Pl2></Pl2> : <LoginStyledContainer>
+            {/* {active ? (loading ? <Pl2></Pl2> : <LoginStyledContainer>
                 <WelcomePage></WelcomePage>
-            </LoginStyledContainer>) : (<MetamaskPopup></MetamaskPopup>)}
+            </LoginStyledContainer>) : (<MetamaskPopup></MetamaskPopup>)} */}
+            {onPageLoading ? <div></div> : (active ? <LoginStyledContainer>
+                <WelcomePage></WelcomePage>
+            </LoginStyledContainer> : <MetamaskPopup></MetamaskPopup>)}
         </div>
     )
 }

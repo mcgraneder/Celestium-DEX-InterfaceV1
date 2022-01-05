@@ -313,7 +313,7 @@ const Modal = (props) => {
             try {
 
                 console.log(publicAddress)
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/getNonce", {email}, config);
+                const {data} = await axios.post("/api/users/getNonce", {email}, config);
                 console.log(data)
                 setLoading(true);
                 setText("Sending Signature Request")
@@ -352,7 +352,7 @@ const Modal = (props) => {
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
                     console.log(signature)
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/updateAddress", { signature, nonce, publicAddress, email}, config);
+                    const {data} = await axios.post("/api/users/updateAddress", { signature, nonce, publicAddress, email}, config);
                     console.log(data);
                     setText("Success!")
                     console.log(loading);

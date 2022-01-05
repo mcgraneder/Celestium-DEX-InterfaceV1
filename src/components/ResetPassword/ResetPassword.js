@@ -36,7 +36,7 @@ const ResetPassword = ({ match }) => {
 
         try {
 
-            const {data} = await axios.put(`https://alpha-baetrum.herokuapp.com/api/auth/passwordreset/${match.params.resetToken}`, {password}, config);
+            const {data} = await axios.put(`/api/auth/passwordreset/${match.params.resetToken}`, {password}, config);
             setLoading(true);
             console.log(loading);
             setTimeout(() => {

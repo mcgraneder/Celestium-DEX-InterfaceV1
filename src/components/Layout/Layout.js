@@ -101,7 +101,7 @@ const Layout = memo(({history}) => {
 
             try {
 
-                const {data} = await axios.get("https://alpha-baetrum.herokuapp.com/api/private", config);
+                const {data} = await axios.get("/api/private", config);
                 setPrivateData(data.data);
 
             } catch(error) {
@@ -132,7 +132,7 @@ const Layout = memo(({history}) => {
     
         try {
 
-            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress }, config)
+            const {data} = await axios.post("/api/users/useraddress", { publicAddress }, config)
             setShow1(false);
             
             localStorage.removeItem("registered")

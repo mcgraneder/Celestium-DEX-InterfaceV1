@@ -5,6 +5,7 @@ export const LogoStylesWrapper = styled.div`
     position: absolute;
     top: 4%;
     left: 0;
+    margin-top: 50px;
     background-color: transparent;
     width: 100%;
     // display: flex;

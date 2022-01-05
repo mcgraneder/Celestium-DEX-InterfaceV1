@@ -18,6 +18,8 @@ export const ConnectButton = styled.div`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     vertical-align: middle;
+  
+    
     
 
 
@@ -34,7 +36,7 @@ export const Logo = styled.div`
    height: ${(props) => props.width}px;
    float: left;
    align-items: center;
-   line-height: 40px;
+   line-height: 45px;
 
    
 `;
