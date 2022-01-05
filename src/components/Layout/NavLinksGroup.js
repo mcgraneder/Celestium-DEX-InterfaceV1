@@ -62,22 +62,22 @@ export const DenseNavLinks = styled(NavLink)`
 const links = [
 
     {
-        to: "/trade/wallet",
+        to: "/trade",
         icon: "fas fa-wallet",
         label: "Wallet"
     },
     {
-        to: "/trade/trade",
+        to: "/trade",
         icon: "fa fa-exchange",
         label: "Trade"
     },
     {
-        to: "/trade/history",
+        to: "/trade",
         icon: "fa fa-history",
         label: "Transactions"
     },
     {
-        to: "/trade/tokeninfo",
+        to: "/trade",
         icon: "fas fa-coins",
         label: "Token Info"
     },
