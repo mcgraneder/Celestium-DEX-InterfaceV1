@@ -4,12 +4,19 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import AppNav from "../ApplicationNavbar/ApplicationNavbarStyles";
 import Navbar from "./Navbar";
-
+import Web3 from "web3";
 import axios from "axios";
 import useWeb3 from "../../hooks/useWeb3";
 import Modal from "../AccountsChangeModal/AccountsChangeModal";
 import { StyledContainer } from "../StyledContainer";
-
+import Fortmatic from 'fortmatic';
+import { PortisConnector } from '@web3-react/portis-connector'
+import useAuth from "../../hooks/useAuth";
+import Portis from "@portis/web3"
+import Torus from "@toruslabs/torus-embed";
+import { toruss } from "../../connectors/providers";
+import WalletConnectProvider from "@walletconnect/web3-provider"
+import { ethers } from "ethers";
 
 export const Backdrop = styled.div`
 
@@ -59,13 +66,18 @@ const GridMain = styled.div`
 const Layout = memo(({history}) => {
 
     var publicAddress
-    const  web3  = useWeb3();
+    var  web3
+    var provider1
     const [show, setShow] = useState(0);
     const [show1, setShow1] = useState(false);
     const toggle = () => setShow(Number(!show));
     const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
+
+    
+    
+    
     
 
     useEffect(() => {
@@ -127,6 +139,45 @@ const Layout = memo(({history}) => {
                     "Content-Type": "application/json"
                 }
             }
+
+            if(localStorage.getItem("provider") == "fortmatic") {
+
+                const fm = new Fortmatic('pk_test_C102027C0649EF66');
+                window.web3 = new Web3(fm.getProvider());
+                web3 = window.web3
+                console.log(web3)
+            }
+
+            else if(localStorage.getItem("provider") == "portis") {
+
+                const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
+                web3 = new Web3(portis.provider);
+
+                
+            }
+            else if(localStorage.getItem("provider") == "torus") {
+
+                const torus = new Torus()
+                await torus.init();
+                await torus.login(); // await torus.ethereum.enable()
+                web3 = new Web3(torus.provider);
+
+                
+            }
+            else if (localStorage.getItem("provider") == "walletconnect") {
+
+                provider1 = new WalletConnectProvider({
+                    infuraId: "ba5ee6592e68419cab422190121eca4c",
+                  });
+                  
+                  //  Enable session (triggers QR Code modal)
+                  await provider1.enable();
+                  web3 = new Web3(provider1);
+            }
+            else {
+                web3 = new Web3(window.ethereum);
+            }
+        
         publicAddress = await web3.eth.getCoinbase()
         // publicAddress = publicAddress.toLowerCase()
     
