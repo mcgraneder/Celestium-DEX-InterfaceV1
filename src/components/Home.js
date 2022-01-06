@@ -17,8 +17,8 @@ const Home = ({ history }) => {
     const [show1, setShow1] = useState(false);
     const toggle = () => setShow(Number(!show));
     const toggle1 = () => setShow1(!show1);
-    const { connectOnClick, active, account, web3, onPageLoading } = useAuth()
-    console.log(web3)
+    const { connectOnClick, active, account, onPageLoading } = useAuth()
+
     const [loading, setLoading] = useState(false)
     useEffect(() => {
 
