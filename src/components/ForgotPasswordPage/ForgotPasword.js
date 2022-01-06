@@ -35,7 +35,7 @@ const ForgotPassword = () => {
 
         try {
 
-            const {data} = await axios.post("/api/auth/forgotpassword", {email}, config);
+            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/forgotpassword", {email}, config);
             setLoading(true);
             console.log(loading);
             setTimeout(() => {

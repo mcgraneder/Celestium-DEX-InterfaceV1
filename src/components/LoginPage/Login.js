@@ -175,7 +175,7 @@ publicAddress = coinbase[0].toLowerCase();
             try {
 
                 console.log(publicAddress)
-                const {data} = await axios.post("/api/users/nonce", {publicAddress, email, password }, config);
+                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/nonce", {publicAddress, email, password }, config);
                 console.log(data)
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
@@ -217,7 +217,7 @@ publicAddress = coinbase[0].toLowerCase();
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
                     console.log(signature)
-                    const {data} = await axios.post("/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
+                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
                     console.log(data);
                     setText("Success!")
                     localStorage.setItem("authToken", data.token);
