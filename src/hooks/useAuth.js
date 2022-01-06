@@ -44,6 +44,8 @@ export default function useAuth() {
     
     var loggedInAccount = localStorage.getItem("account")
     var provider = localStorage.getItem("provider")
+
+    
     
     async function connectOnLoad() {
 

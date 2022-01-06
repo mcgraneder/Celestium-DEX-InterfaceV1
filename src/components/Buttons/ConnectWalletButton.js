@@ -19,8 +19,8 @@ export const Logo1 = styled.div`
 //    align-items: center;
    justify-content: center;
 //    line-height: 75px;
-   left: 82%;
-   top: 31%;
+    left: ${(props) => props.left};
+    top: ${(props) => props.top};
 //    background: rgb(89, 115, 254);
     
    &:hover {
@@ -34,12 +34,13 @@ export const Logo1 = styled.div`
    
 `;
 
-const ConnectWalletButton = ({close, color, fontsize, height}) => {
+const ConnectWalletButton = ({close, color, fontsize, height, left, top}) => {
 
     const { active, account, onPageLoading} = useAuth()
     var logo
     var width1;
     var width2;
+   
 
     if(localStorage.getItem("provider") === "injected") {
         logo = metamask;
@@ -75,7 +76,11 @@ const ConnectWalletButton = ({close, color, fontsize, height}) => {
 
         <div>
 
-            {active ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo width={width1}><img src={logo} width={width2} /></Logo><ButtonText >{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton> : (!onPageLoading ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText1>Connect Wallet</ButtonText1></ConnectButton> :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo1><Loader style={{paddingTop: "5px"}} type="Oval" height={25} height={25} color="rgb(89,115,254)"></Loader></Logo1><ButtonText1>Connecting..</ButtonText1></ConnectButton>)}
+            {active ? 
+            <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo width={width1}><img src={logo} width={width2} /></Logo><ButtonText >{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton> 
+            : (!onPageLoading ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText1>Connect Wallet</ButtonText1></ConnectButton> 
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo1 left={left} top={top}><Loader style={{paddingTop: "5px"}} type="Oval" height={25} height={25} color="rgb(89,115,254)"></Loader></Logo1><ButtonText1>Connecting..</ButtonText1></ConnectButton>)
+            }
         </div>
     )
 }

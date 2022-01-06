@@ -18,6 +18,7 @@ import Disconnect from "./Disconnect";
 import useAuth from "../../hooks/useAuth";
 import { injected, fortmaticc, toruss, portiss } from "../../connectors/providers";
 import ConnectSpinner from "./ConnectSpinner";
+
 export const FormWrapper = styled.div`
 
 
@@ -26,7 +27,7 @@ export const FormWrapper = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
     width: 450px;
-    height: 740px;
+    height: 660px;
     opacity: 0;
     background-color: rgb(35,35,52);
     text-align: right;
@@ -359,7 +360,6 @@ const Web3Modal = ({visible, close}) => {
                 </DisclaimerContainer>
                 <ButtonContainer>
                     <Provider margin={"20px"} width1={50} logo={metamask} width2={30} title={"MetaMask"} connect={connectOnClick}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={coinbase} width2={30} title={"Coinbase"} ></Provider>
                     <Provider margin={"20px"} width1={50} logo={fortmatic} width2={27} title={"Fortmatic"} connect={connectOnClickFortmatic}></Provider>
                     <Provider margin={"20px"} width1={50} logo={torus} width2={27} title={"Torus"} connect={connectOnClickTorus}></Provider>
                     <Provider margin={"20px"} width1={50} logo={portis} width2={25} title={"Portis"} connect={connectOnClickPortis}></Provider>
@@ -368,7 +368,7 @@ const Web3Modal = ({visible, close}) => {
                     {/* <Logo><Loader style={{paddingTop: "5px"}} type="Oval" height={40} color="rgb(77, 102, 235)"></Loader></Logo> */}
                 </ButtonContainer>
             </FormWrapper>
-            {loading ? <ConnectSpinner></ConnectSpinner> : <div></div>}
+            {loading ? <ConnectSpinner loading={loading}></ConnectSpinner> : <div></div>}
         </>
        
         

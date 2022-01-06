@@ -53,7 +53,7 @@ const Navbar = ({toggle}) => {
             <div>
                 {/* <div>mcgrane5</div> */}
                 {/* <ConnectWalletButton>Sign Out</ConnectWalletButton> */}
-                <ConnectWalletButton height="150" fontsize="15" colour="rgb(89, 115, 254)" width="35"></ConnectWalletButton>
+                <ConnectWalletButton left={"85.5%"} top={"1.5%"} height="150" fontsize="15" colour="rgb(89, 115, 254)" width="35"></ConnectWalletButton>
             </div>
         </Grid>
     )
