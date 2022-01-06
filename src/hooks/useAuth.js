@@ -67,6 +67,8 @@ export default function useAuth() {
 
             console.error(err)
             deactivate()
+            localStorage.removeItem("provider");
+
             setOnPageLoading(false)
           }
           setOnPageLoading(false)
@@ -107,6 +109,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
     }
@@ -133,6 +137,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
             
@@ -159,6 +165,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
 
@@ -185,6 +193,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
 
@@ -218,6 +228,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
 
