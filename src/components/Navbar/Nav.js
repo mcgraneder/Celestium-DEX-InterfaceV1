@@ -13,7 +13,7 @@ export default function Nav({close}) {
                     <NavLogo>ALPHA-BAETRUM</NavLogo>
                     <NavElement>
                         <NavItem>
-                            <ConnectWalletButton close={close} height="180" fontsize="17" colour="rgb(89, 115, 254)" width="40"></ConnectWalletButton>
+                            <ConnectWalletButton left={"82%"} top={"31%"} close={close} height="180" fontsize="17" colour="rgb(89, 115, 254)" width="40"></ConnectWalletButton>
                         </NavItem>
                     </NavElement>
                 </NavWrapper>

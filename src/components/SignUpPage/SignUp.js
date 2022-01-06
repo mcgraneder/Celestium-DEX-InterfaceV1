@@ -34,7 +34,7 @@ const SignUp = ({ history }) => {
     const [show, setShow] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [text, setText] = useState("Login To Start Trading")
+    const [text, setText] = useState("Sign Up To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)");
     const provider = localStorage.getItem("provider")
     var provider1
@@ -113,7 +113,7 @@ const SignUp = ({ history }) => {
 		} catch (error) {
 
             setLoading(false);
-            setText("Login To Start Trading")
+            setText("Sign Up To Start Trading")
 			 setColour("red")
             setTimeout(() => {
 
@@ -130,6 +130,7 @@ const SignUp = ({ history }) => {
 
         e.preventDefault()
         
+        setText("Logging In!")
             if(localStorage.getItem("provider") == "fortmatic") {
 
                 const fm = new Fortmatic('pk_test_C102027C0649EF66');
@@ -212,7 +213,7 @@ const SignUp = ({ history }) => {
             try {
 
                 console.log(publicAddress)
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/publicAddress", {publicAddress, username, email, password}, config);
+                const {data} = await axios.post("/api/users/publicAddress", {publicAddress, username, email, password}, config);
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
                 console.log(data)  
@@ -220,7 +221,7 @@ const SignUp = ({ history }) => {
             } catch(error) {
 
                 setLoading(false);
-                setText("Login To Start Trading")
+                setText("Sign Up To Start Trading")
                 console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")
@@ -253,7 +254,7 @@ const SignUp = ({ history }) => {
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
                     console.log(signature)
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
+                    const {data} = await axios.post("/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
                     console.log(data);
                     console.log(data.token)
                     setText("Success!")
@@ -273,7 +274,7 @@ const SignUp = ({ history }) => {
             } catch(error) {
     
                 setLoading(false);
-                setText("Login To Start Trading")
+                setText("Sign Up To Start Trading")
                 console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")

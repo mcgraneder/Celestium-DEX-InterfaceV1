@@ -44,6 +44,8 @@ export default function useAuth() {
     
     var loggedInAccount = localStorage.getItem("account")
     var provider = localStorage.getItem("provider")
+
+    
     
     async function connectOnLoad() {
 
@@ -65,6 +67,8 @@ export default function useAuth() {
 
             console.error(err)
             deactivate()
+            localStorage.removeItem("provider");
+
             setOnPageLoading(false)
           }
           setOnPageLoading(false)
@@ -105,6 +109,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
     }
@@ -131,6 +137,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
             
@@ -157,6 +165,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
 
@@ -183,6 +193,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
 
@@ -216,6 +228,8 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
+                localStorage.removeItem("provider");
+
                 setLoading(false)
             }
 
@@ -231,7 +245,7 @@ export default function useAuth() {
         deactivate()
         web3 = undefined;
         setTimeout(function() {
-            alert("you are no longer connected with Metamask")
+            alert("you are no longer connected")
         }, 250)
         localStorage.removeItem("account");
         localStorage.removeItem("provider");
