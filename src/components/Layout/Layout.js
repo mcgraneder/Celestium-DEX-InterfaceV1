@@ -17,6 +17,7 @@ import Torus from "@toruslabs/torus-embed";
 import { toruss } from "../../connectors/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import { ethers } from "ethers";
+import { local } from "web3modal";
 
 export const Backdrop = styled.div`
 
@@ -74,7 +75,7 @@ const Layout = memo(({history}) => {
     const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
-
+    const email = localStorage.getItem("email")
     
     
     
@@ -183,7 +184,7 @@ const Layout = memo(({history}) => {
     
         try {
 
-            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress }, config)
+            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress, email }, config)
             setShow1(false);
             
             localStorage.removeItem("registered")
