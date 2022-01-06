@@ -185,15 +185,16 @@ const Layout = memo(({history}) => {
         try {
 
             const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress, email }, config)
-            setShow1(false);
-            
+            setShow1(true);
+            console.log(data.type)
+           
             localStorage.removeItem("registered")
+           
             
 
         } catch (err) {
 
-            setShow1(true);
-                
+            setShow1(flase); 
             localStorage.setItem("registered", true)
         }
     })
