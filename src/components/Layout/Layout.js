@@ -17,6 +17,7 @@ import Torus from "@toruslabs/torus-embed";
 import { toruss } from "../../connectors/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import { ethers } from "ethers";
+import NotCurrentUserModal from "../AccountsChangeModal/NotCurrentUserModal";
 
 export const Backdrop = styled.div`
 
@@ -68,13 +69,14 @@ const Layout = memo(({history}) => {
     var publicAddress
     var  web3
     var provider1
-    const [show, setShow] = useState(0);
+    const [show, setShow] = useState(false);
     const [show1, setShow1] = useState(false);
-    const toggle = () => setShow(Number(!show));
+    const toggle = () => setShow(!show);
     const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
     
+    const email = localStorage.getItem("email")
     
     
     
@@ -87,7 +89,14 @@ const Layout = memo(({history}) => {
         if (localStorage.getItem("registered")) {
 
             console.log("its true")
-            setShow1(true);
+            if(localStorage.getItem("notCurrent")) {
+
+                setShow(true)
+            }
+            else {
+                setShow1(true);
+            }
+           
          }
          else {
 
@@ -183,17 +192,33 @@ const Layout = memo(({history}) => {
     
         try {
 
-            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress }, config)
-            setShow1(false);
-            
-            localStorage.removeItem("registered")
+            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress, email }, config)
+            console.log(data)
+
+            if(data.type == "currentUser") {
+
+                setShow1(false);
+                setShow(false);   
+                localStorage.removeItem("registered")
+                localStorage.removeItem("notCurrent")
+            }
+            if (data.type == "notCurrentUser") {
+
+                localStorage.setItem("notCurrent", true)
+                setShow1(false);
+                setShow(true);   
+                localStorage.setItem("registered", true)
+                
+            }
+           
             
 
         } catch (err) {
 
-            setShow1(true);
-                
+            setShow1(true); 
+            setShow(false);   
             localStorage.setItem("registered", true)
+            localStorage.removeItem("notCurrent")
         }
     })
 
@@ -214,6 +239,7 @@ const Layout = memo(({history}) => {
         
         
         <>
+            <NotCurrentUserModal visible={show} close={toggle}></NotCurrentUserModal>
             <Modal visible={show1} close={toggle1}></Modal>
             {/* <Backdrop></Backdrop> */}
             <Grid>

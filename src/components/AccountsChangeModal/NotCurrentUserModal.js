@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormWrapper } from "./AccountsChangeModalStyles";
+
 import { StyledContainer } from "../StyledContainer";
 import styled, { css } from "styled-components";
 import { breakpoints as bp } from "../GlobalStyle";
@@ -31,11 +31,36 @@ import { Wrapper } from "../LoginPage/LoginStyles";
 //     @media(min-width: ${bp.desktop}) {
 
 //         opacity: 0;
-//         pointer-events: none;https://alpha-baetrum.herokuapp.com
+//         pointer-events: none;
 //         opacityL 0.3s 
 //     }
     
 // `
+
+export const FormWrapper = styled.div`
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 370px;
+    opacity: 0;
+    background-color: rgb(35,35,52);
+    text-align: right;
+    padding: 30px 20px;
+    border: 1.5px solid  rgb(31,31,44);
+    border-radius: 10px;
+    z-index: -10000;
+    ${(props) => props.visible && css`
+    z-index: 10000;
+    opacity: 1;
+    pointer-events: all;
+    transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
+`}
+    
+`
+
 
 export const Backdrop = styled.div`
 
@@ -221,11 +246,11 @@ export const SeperatorText = styled.div`
 export const IconContents2 = styled.i`
 
     // position: absolute:
-    bottom: 10%;
+    bottom: 0%;
     text-align: left;
     width: 50%;
     padding-left: 52px;
-    padding-bottom: 90px;
+    padding-bottom: 60px;
     font-size: 25px;
     color: rgb(141,141,149);;
 `
@@ -233,157 +258,17 @@ export const IconContents2 = styled.i`
 export const IconContents = styled.i`
 
     // position: absolute:
-    bottom: 10%;
+    bottom: 0%;
     text-align: left;
     width: 50%;
     padding-left: 52px;
-    padding-bottom: 206px;
+    padding-bottom: 180px;
     font-size: 25px;
     color: rgb(141,141,149);
 `
 
-const Modal = (props) => {
+const NotCurrentUserModal = (props) => {
 
-    
-    const email = localStorage.getItem("email")
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [text, setText] = useState("Link Your Wallet To Proceed")
-    const [colour, setColour] = useState("rgb(22,181,127)")
-    var publicAddress;
-    var web3;
-    
-
-    const handleSignMessage = async (publicAddress, nonce) => {
-		try {
-			const signature = await web3.eth.personal.sign(
-				`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
-				publicAddress,
-				'' // MetaMask will ignore the password argument here
-			)
-            
-			return { signature };
-		} catch (error) {
-
-            setLoading(false);
-            setText("Link Your Wallet To Proceed")
-			setError("Denied! You must Confirm Your wallet To Login");
-            setColour("red")
-            setTimeout(() => {
-
-                setError("");
-                setColour("rgb(22,181,127)")
-
-            }, 5000)
-		}
-	};
-
-    const loginHandler = async (e) => {
-
-        e.preventDefault()
-       // Check if MetaMask is installed
-		if (window.ethereum && window.ethereum.isMetaMask) {
-			console.log('MetaMask Here!');
-            web3 = new Web3(window.ethereum);
-
-			window.ethereum.request({ method: 'eth_requestAccounts'})
-			
-		} else {
-			console.log('Need to install MetaMask');
-			// setErrorMessage('Please install MetaMask browser extension to interact');
-		}
-
-		const coinbase = await web3.eth.getCoinbase();
-		if (!coinbase) {
-			window.alert('Please activate MetaMask first.');
-			return;
-		}
-
-		publicAddress = coinbase.toLowerCase();
-
-        console.log(publicAddress);
-        await web3.eth.getCoinbase().then(async (users) => {
-
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
-
-            try {
-
-                console.log(publicAddress)
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/getNonce", {email}, config);
-                console.log(data)
-                setLoading(true);
-                setText("Sending Signature Request")
-                console.log(loading) 
-                return data
-
-            } catch(error) {
-
-                console.log(error.response)
-                setError(error.response.data.error);
-                setColour("red")
-                setTimeout(() => {
-    
-                    setError("");
-                    setColour("rgb(22,181,127)")
-    
-                }, 5000)
-
-                return error
-            }
-        }).then((res) => {
-
-
-            // console.log(res.success != true) return
-            if(res.success != true) return
-            const nonce = res.nonce
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
-            // console.log(username);
-    
-            try {
-    
-                handleSignMessage(publicAddress, nonce).then(async function(signature) {
-    
-                    console.log(signature)
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/updateAddress", { signature, nonce, publicAddress, email}, config);
-                    console.log(data);
-                    setText("Success!")
-                    console.log(loading);
-                    localStorage.removeItem("registered")
-                    window.location.reload()
-                    // setTimeout(() => {
-    
-                      
-        
-                    // }, 1000)
-                })
-    
-                
-    
-            } catch(error) {
-    
-                setLoading(false);
-                setText("Link Your Wallet To Proceed")
-                console.log(error.response)
-                setError(error.response.data.error);
-                setColour("red")
-                setTimeout(() => {
-    
-                    setError("");
-                    setColour("rgb(22,181,127)")
-    
-                }, 5000)
-            }
-        })
-    }
-   
     return (
 
         // <StyledContainer>
@@ -394,10 +279,10 @@ const Modal = (props) => {
             <IconContents2 className="fa-stack-1x text-primary">2</IconContents2>
                 <TitleContainer>
                     <Logo width={50}><img src={logo1} width={50} /></Logo>
-                    <ModalTitle>{text}</ModalTitle>
+                    <ModalTitle>Cannot Use This Wallet!</ModalTitle>
                 </TitleContainer>
                 <ModalTextWrapper>
-                    <ModalText>This Wallet is not registered with this account. In order to continue using this DApp Either switch back to your other wallet or add this wallet to your account by clicking the "VERIFY" button below to proove your ownership</ModalText>
+                    <ModalText>This Wallet is registered with another account. In order to continue using this DApp Either switch back to your other wallet or log out and sign into your other account which is registered with this wallet</ModalText>
                 </ModalTextWrapper>
                 {/* <Wrapper space={5}></Wrapper> */}
                 <IconWrapper>
@@ -409,7 +294,7 @@ const Modal = (props) => {
                         </Icon>
                         <TextContainer>
                             <IconText colour={"rgb(221,221,229);"} size={19} bold={"bold"}>Switch back to other wallet</IconText>
-                            <IconText size={15}>Switch back to other wallet to continue trading</IconText>
+                            <IconText size={15}>Switch back to your other wallet to continue trading</IconText>
                         </TextContainer>   
                     </IconContainer>  
                 </IconWrapper>
@@ -419,18 +304,11 @@ const Modal = (props) => {
                         <Icon>
                         </Icon>
                         <TextContainer>
-                            <IconText colour={"rgb(221,221,229);"} size={19} bold={"bold"}>Verify your new wallet</IconText>
-                            <IconText size={15}>To use this wallet confirm that you are the owner</IconText>
+                            <IconText colour={"rgb(221,221,229);"} size={19} bold={"bold"}>Change Email Accounts</IconText>
+                            <IconText size={15}>Login with the email this wallet is registered with</IconText>
                         </TextContainer>   
                     </IconContainer>  
                 </IconWrapper>
-              
-                    {loading ?  <ButtonWrapper><Loader type="ThreeDots" color={`rgb(77, 102, 235)`} height={30} width={70}/></ButtonWrapper> : <VerifyButton onClick={loginHandler}>Verify Wallet</VerifyButton>}
-
-                
-              
-                
-                
             </FormWrapper>
         </>
        
@@ -438,4 +316,4 @@ const Modal = (props) => {
     )
 }
 
-export default Modal;
+export default NotCurrentUserModal;

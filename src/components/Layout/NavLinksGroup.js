@@ -67,17 +67,17 @@ const links = [
         label: "Wallet"
     },
     {
-        to: "/trade",
+        to: "/trade/wallet",
         icon: "fa fa-exchange",
         label: "Trade"
     },
     {
-        to: "/trade",
+        to: "/trade/ech",
         icon: "fa fa-history",
         label: "Transactions"
     },
     {
-        to: "/trade",
+        to: "/trade/token",
         icon: "fas fa-coins",
         label: "Token Info"
     },
