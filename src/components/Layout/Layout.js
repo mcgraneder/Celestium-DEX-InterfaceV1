@@ -194,7 +194,7 @@ const Layout = memo(({history}) => {
 
         } catch (err) {
 
-            setShow1(flase); 
+            setShow1(false); 
             localStorage.setItem("registered", true)
         }
     })
