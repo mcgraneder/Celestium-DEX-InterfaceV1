@@ -1,9 +1,12 @@
 import styled from "styled-components"
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { FiMenu } from "react-icons/fi";
 import { breakpoints as bp } from "../GlobalStyle";
 import ConnectWalletButton from "../Buttons/ConnectWalletButton";
+import Web3Modal from "../Web3Modal/Web3Modal";
+
 const Grid = styled.div`
 
     display: Grid;
@@ -43,6 +46,7 @@ const Grid = styled.div`
 `;
 const Navbar = ({toggle}) => {
 
+    
     return (
 
         <Grid>

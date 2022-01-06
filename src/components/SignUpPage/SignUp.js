@@ -258,6 +258,7 @@ const SignUp = ({ history }) => {
                     console.log(data);
                     console.log(data.token)
                     setText("Success!")
+                    localStorage.setItem("firstTimeAccess", true);
                     localStorage.setItem("authToken", data.token);
                     localStorage.removeItem("registered")
                     console.log(loading);

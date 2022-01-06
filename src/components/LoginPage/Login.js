@@ -25,6 +25,7 @@ import Portis from "@portis/web3"
 import Torus from "@toruslabs/torus-embed";
 import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider"
+import LoginModal from "../LoginModal/LoginModal";
 
 var web3;
 var publicAddress
@@ -33,11 +34,14 @@ const Login = ({ history }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
+    const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)")
     var provider1;
+
 
     
 
@@ -46,6 +50,11 @@ const Login = ({ history }) => {
         if (localStorage.getItem("authToken")) {
 
             history.push("/trade");
+        }
+
+        if(localStorage.getItem("firstTimeAccess")) {
+
+            toggle1()
         }
     }, [history])
     
@@ -213,6 +222,7 @@ publicAddress = coinbase[0].toLowerCase();
                     setText("Success!")
                     localStorage.setItem("authToken", data.token);
                     console.log(loading);
+                    localStorage.removeItem("firstTimeAccess")
                     localStorage.removeItem("registered")
                     localStorage.setItem("email", email)
                     setTimeout(() => {
@@ -243,6 +253,7 @@ publicAddress = coinbase[0].toLowerCase();
 
     return (
        <StyledContainer>
+             <LoginModal visible={show1} close={toggle1}></LoginModal>
            <FormWrapper>
                <form >
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
