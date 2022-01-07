@@ -1,38 +1,20 @@
-import React, { useState } from "react"
-import { ConnectButton, Logo, ButtonText, ButtonText1 } from "./ConnectWalletButtonStyles"
+import React from "react"
 import useAuth from "../../hooks/useAuth"
-import logo1 from "../../assets/metamask.png"
 import Loader from "react-loader-spinner"
 import styled from "styled-components"
 import metamask from "../../assets/metamask.svg"
 import walletConnect from "../../assets/wallet_connect.svg"
-import coinbase from "../../assets/coinbase.svg"
 import fortmatic from "../../assets/fortmatic.svg"
 import torus from "../../assets/torus.svg"
 import portis from "../../assets/portis.svg"
-export const Logo1 = styled.div`
+import { 
+    ConnectButton, 
+    Logo, 
+    ButtonText,
+    ButtonText1,
+    Logo1
+} from "./ConnectWalletButtonStyles"
 
-    position: absolute;
-//    width: 70px;
-//    height: 50px;
-   float: left;
-//    align-items: center;
-   justify-content: center;
-//    line-height: 75px;
-    left: ${(props) => props.left};
-    top: ${(props) => props.top};
-//    background: rgb(89, 115, 254);
-    
-   &:hover {
-    transition: all 0.2s ease-in-out;
-    background: rgb(77, 102, 235);
-}
-
-
-
-
-   
-`;
 
 const ConnectWalletButton = ({close, color, fontsize, height, left, top}) => {
 

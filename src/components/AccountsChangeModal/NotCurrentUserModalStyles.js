@@ -7,7 +7,7 @@ export const FormWrapper = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
     width: 350px;
-    height: 450px;
+    height: 390px;
     opacity: 0;
     background-color: rgb(35,35,52);
     text-align: right;
@@ -23,6 +23,7 @@ export const FormWrapper = styled.div`
 `}
     
 `
+
 
 export const Backdrop = styled.div`
 
@@ -208,11 +209,11 @@ export const SeperatorText = styled.div`
 export const IconContents2 = styled.i`
 
     // position: absolute:
-    bottom: 10%;
+    bottom: 4%;
     text-align: left;
     width: 50%;
     padding-left: 52px;
-    padding-bottom: 90px;
+    padding-bottom: 60px;
     font-size: 25px;
     color: rgb(141,141,149);;
 `
@@ -220,11 +221,11 @@ export const IconContents2 = styled.i`
 export const IconContents = styled.i`
 
     // position: absolute:
-    bottom: 10%;
+    bottom: 4%;
     text-align: left;
     width: 50%;
     padding-left: 52px;
-    padding-bottom: 206px;
+    padding-bottom: 180px;
     font-size: 25px;
     color: rgb(141,141,149);
 `

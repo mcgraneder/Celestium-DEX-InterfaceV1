@@ -1,10 +1,14 @@
 import React from 'react';
-import { NavContainer, NavWrapper, NavElement, NavItem, NavLink, ConnectButton, NavLogo, Logo, ButtonText, ButtonText1 } from './NavbarStyles';
 import ConnectWalletButton from '../Buttons/ConnectWalletButton';
+import { NavContainer, 
+         NavWrapper, 
+         NavElement, 
+         NavItem, 
+         NavLogo
+} from './NavbarStyles';
 
 export default function Nav({close}) {
 
-   
   return (
       
         <div>
@@ -21,5 +25,4 @@ export default function Nav({close}) {
            
         </div>
       );
-
 }

@@ -2,8 +2,6 @@ import React from "react";
 import Loader from "react-loader-spinner";
 import "./PageLoadSpinnerStyles.css"
 
-
-
 const PageLoad = () => {
 
     return (
@@ -14,8 +12,6 @@ const PageLoad = () => {
                 </div>
             </div>
         </div>
-        
-       
     )
 }
 

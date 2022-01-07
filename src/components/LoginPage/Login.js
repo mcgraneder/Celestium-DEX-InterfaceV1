@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./LoginStyles";
+import Web3 from "web3"
+import Fortmatic from 'fortmatic';
+import Portis from "@portis/web3"
+import Torus from "@toruslabs/torus-embed";
+import { ethers } from "ethers";
+import axios from "axios";
+import { ErrorMsg } from "./LoginStyles";
+import Loader from "react-loader-spinner";
+
+import WalletConnectProvider from "@walletconnect/web3-provider"
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
@@ -10,25 +19,17 @@ import {BsArrowReturnLeft } from "react-icons/bs"
 import { StyledLabel } from "./LoginStyles";
 import { StyledTextInput } from "./LoginStyles";
 import { Icon } from "./LoginStyles";
-import axios from "axios";
-import { ErrorMsg } from "./LoginStyles";
-import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
-import Web3 from "web3"
-import { local } from "web3modal";
-import Alogo from "../../assets/logo_transparent_background.png"
-import Fortmatic from 'fortmatic';
-import { PortisConnector } from '@web3-react/portis-connector'
-import useAuth from "../../hooks/useAuth";
-import useWeb3 from "../../hooks/useWeb3";
-import Portis from "@portis/web3"
-import Torus from "@toruslabs/torus-embed";
-import { ethers } from "ethers";
-import WalletConnectProvider from "@walletconnect/web3-provider"
 import LoginModal from "../LoginModal/LoginModal";
+import { FormWrapper, 
+         FieldWrapper, 
+         LoginLinkWrapper, 
+         LoginLink, 
+         FieldDescriptor, 
+         ReturnHomeButton 
+} from "./LoginStyles";
 
-var web3;
-var publicAddress
+
 const Login = ({ history }) => {
 
     const [email, setEmail] = useState("");
@@ -40,10 +41,10 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)")
-    var provider1;
-  https://alpha-baetrum.herokuapp.com
 
-    
+    var web3;
+    var publicAddress
+    var provider1;
 
     useEffect(() => {
 
@@ -56,11 +57,13 @@ const Login = ({ history }) => {
 
             toggle1()
         }
-    }, [history])
-    
-    
 
-    const nonce = Math.floor(Math.random() * 10000)
+        if (localStorage.getItem("provider") == null || localStorage.getItem("provider") == undefined) {
+
+            history.push("/")
+        }
+
+    }, [history])
 
     const handleSignMessage = async (publicAddress, nonce) => {
 		var signature;
@@ -68,22 +71,21 @@ const Login = ({ history }) => {
 
             if (localStorage.getItem("provider") == "walletconnect") {
 
-               console.log("trueeeeeeeeeeeeeeeeeeeee")
                 signature = await provider1.send(
                     'personal_sign',
                     [ ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`)), publicAddress ]
                 );
-                
             }
             else {
                 signature = await web3.eth.personal.sign(
                     `Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
                     publicAddress,
-                    '' // MetaMask will ignore the password argument here
+                    '' 
                 );
-                }
+            }
             
 			return { signature };
+
 		} catch (error) {
 
             setLoading(false);
@@ -103,67 +105,52 @@ const Login = ({ history }) => {
 
         e.preventDefault()
         setText("Logging In!")
-        if(localStorage.getItem("provider") == "fortmatic") {
+
+        if(localStorage.getItem("provider") === "fortmatic") {
 
             const fm = new Fortmatic('pk_test_C102027C0649EF66');
             window.web3 = new Web3(fm.getProvider());
             web3 = window.web3
-            console.log(web3)
         }
 
-        else if(localStorage.getItem("provider") == "portis") {
+        else if(localStorage.getItem("provider") === "portis") {
 
             const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
             web3 = new Web3(portis.provider);
 
             
         }
-        else if(localStorage.getItem("provider") == "torus") {
+        else if(localStorage.getItem("provider") === "torus") {
 
             const torus = new Torus()
             await torus.init();
-            await torus.login(); // await torus.ethereum.enable()
+            await torus.login(); 
             web3 = new Web3(torus.provider);
 
-            
         }
-        else if (localStorage.getItem("provider") == "walletconnect") {
+        else if (localStorage.getItem("provider") === "walletconnect") {
 
             provider1 = new WalletConnectProvider({
                 infuraId: "ba5ee6592e68419cab422190121eca4c",
-              });
+            });
               
-              //  Enable session (triggers QR Code modal)
-              await provider1.enable();
-              web3 = new Web3(provider1);
+            await provider1.enable();
+            web3 = new Web3(provider1);
+
         }
         else {
+
             web3 = new Web3(window.ethereum);
         }
 
 
-// Check if MetaMask is installed
-// if (window.ethereum && window.ethereum.isMetaMask) {
-// 	console.log('MetaMask Here!');
-//     web3 = new Web3(window.ethereum);
+        const coinbase = await web3.eth.getAccounts();
+        if (!coinbase) {
+            window.alert('Please activate MetaMask first.');
+            return;
+        }
 
-// 	window.ethereum.request({ method: 'eth_requestAccounts'})
-    
-// } else {
-// 	console.log('Need to install MetaMask');
-// 	// setErrorMessage('Please install MetaMask browser extension to interact');
-// }
-
-const coinbase = await web3.eth.getAccounts();
-console.log(coinbase)
-if (!coinbase) {
-    window.alert('Please activate MetaMask first.');
-    return;
-}
-
-publicAddress = coinbase[0].toLowerCase();
-
-        console.log(publicAddress);
+        publicAddress = coinbase[0].toLowerCase();
         await web3.eth.getCoinbase().then(async (users) => {
 
             const config = {
@@ -174,17 +161,14 @@ publicAddress = coinbase[0].toLowerCase();
 
             try {
 
-                console.log(publicAddress)
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/nonce", {publicAddress, email, password }, config);
-                console.log(data)
+                const {data} = await axios.post("/api/users/nonce", {publicAddress, email, password }, config);
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
-                console.log(loading) 
+    
                 return data
 
             } catch(error) {
 
-                console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")
                 setTimeout(() => {
@@ -196,35 +180,30 @@ publicAddress = coinbase[0].toLowerCase();
 
                 return error
             }
+
         }).then((res) => {
 
-
-            // console.log(res.success != true) return
             if(res.success != true) return
             const nonce = res.nonce
-            console.log(publicAddress)
-        
 
             const config = {
                 headers: {
                     "Content-Type": "application/json"
                 }
             }
-            // console.log(username);
     
             try {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    console.log(signature)
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
-                    console.log(data);
+                    const {data} = await axios.post("/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
                     setText("Success!")
+
                     localStorage.setItem("authToken", data.token);
-                    console.log(loading);
                     localStorage.removeItem("firstTimeAccess")
                     localStorage.removeItem("registered")
                     localStorage.setItem("email", email)
+
                     setTimeout(() => {
     
                         history.push("/trade");
@@ -232,13 +211,10 @@ publicAddress = coinbase[0].toLowerCase();
                     }, 1000)
                 })
     
-                
-    
             } catch(error) {
     
                 setLoading(false);
                 setText("Login To Start Trading")
-                console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")
                 setTimeout(() => {

@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { FormWrapper, FieldWrapper, LoginLink, LoginLinkWrapper, FieldDescriptor, ReturnHomeButton } from "./SignUpStyles";
+import React, { useState, useEffect } from "react";import Web3 from 'web3';
+import axios from "axios";
+import Fortmatic from 'fortmatic';
+import Portis from "@portis/web3"
+import Torus from "@toruslabs/torus-embed";
+import WalletConnectProvider from "@walletconnect/web3-provider"
+import { ethers } from "ethers";
 import { StyledTitle, } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
-import { Button, ButtonWrapper, ButtonStatic } from "../ButtomStyles";
+import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiUser} from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
@@ -11,21 +16,17 @@ import { StyledLabel } from "./SignUpStyles";
 import { StyledTextInput } from "./SignUpStyles";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Icon } from "./SignUpStyles";
-import axios from "axios";
 import { ErrorMsg } from "./SignUpStyles";
 import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
-import Web3 from 'web3';
-import Fortmatic from 'fortmatic';
-import { PortisConnector } from '@web3-react/portis-connector'
-import useAuth from "../../hooks/useAuth";
-import useWeb3 from "../../hooks/useWeb3";
-import Portis from "@portis/web3"
-import Torus from "@toruslabs/torus-embed";
-import { toruss } from "../../connectors/providers";
-import WalletConnectProvider from "@walletconnect/web3-provider"
-import { ethers } from "ethers";
-var publicAddress 
+import { FormWrapper, 
+         FieldWrapper, 
+         LoginLink, 
+         LoginLinkWrapper, 
+         FieldDescriptor, 
+         ReturnHomeButton 
+} from "./SignUpStyles";
+
 const SignUp = ({ history }) => {
 
     const [email, setEmail] = useState("");
@@ -36,64 +37,34 @@ const SignUp = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Sign Up To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)");
-    const provider = localStorage.getItem("provider")
+
+    const nonce = Math.floor(Math.random() * 10000)
     var provider1
     var web3
-    console.log(web3)
-    // console.log(accounts = await web3.eth.getAccounts())
-
-    // const fm = new Fortmatic('pk_test_C102027C0649EF66');
-    // window.web3 = new Web3(fm.getProvider());
-
-        // if (window.ethereum) {
-        //     // Use MetaMask provider
-        //     window.web3 = new Web3(window.ethereum);
-        //   } else {
-        //     // Use Fortmatic provider
-        //     window.web3 = new Web3(fm.getProvider());
-        //   }
-        // //   web3.currentProvider.enable();
-
-        // web3 = window.web3
+    var publicAddress 
+   
     useEffect(() => {
-
-        // {
-        //     if(localStorage.getItem("provider") === "formatic") {
-
-        //         const fm = new Fortmatic('pk_test_C102027C0649EF66');
-        //         window.web3 = new Web3(fm.getProvider());
-        //         web3 = window.web3
-        //         console.log(web3)
-        //     }
-
-        //     else if(localStorage.getItem("provider") === "portis") {
-
-        //         window.web3 = new Web3(portis.provider);
-        //         web3 = window.web3
-        //     }
-        //     else {
-        //         web3 = new Web3(window.ethereum);
-        //     }
-        // }
-        
 
         if (localStorage.getItem("authToken")) {
 
             history.push("/trade");
         }
 
+        if (localStorage.getItem("provider") == null || localStorage.getItem("provider") == undefined) {
+
+            history.push("/")
+        }
+
     }, [history])
 
-
-    const nonce = Math.floor(Math.random() * 10000)
-
     const handleSignMessage = async (publicAddress, nonce) => {
+
         var signature;
+
 		try {
 
-            if (localStorage.getItem("provider") == "walletconnect") {
+            if (localStorage.getItem("provider") === "walletconnect") {
 
-               console.log("trueeeeeeeeeeeeeeeeeeeee")
                 signature = await provider1.send(
                     'personal_sign',
                     [ ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`)), publicAddress ]
@@ -104,17 +75,17 @@ const SignUp = ({ history }) => {
                 signature = await web3.eth.personal.sign(
                     `Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`,
                     publicAddress,
-                    '' // MetaMask will ignore the password argument here
+                    ''
                 );
-                }
+            }
             
-
 			return { signature };
+
 		} catch (error) {
 
             setLoading(false);
             setText("Sign Up To Start Trading")
-			 setColour("red")
+			setColour("red")
             setTimeout(() => {
 
                 setError("");
@@ -129,39 +100,37 @@ const SignUp = ({ history }) => {
     const registerHandler = async (e) => {
 
         e.preventDefault()
-        
         setText("Logging In!")
-            if(localStorage.getItem("provider") == "fortmatic") {
+
+            if(localStorage.getItem("provider") === "fortmatic") {
 
                 const fm = new Fortmatic('pk_test_C102027C0649EF66');
                 window.web3 = new Web3(fm.getProvider());
                 web3 = window.web3
-                console.log(web3)
             }
 
-            else if(localStorage.getItem("provider") == "portis") {
+            else if(localStorage.getItem("provider") === "portis") {
 
                 const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
                 web3 = new Web3(portis.provider);
 
                 
             }
-            else if(localStorage.getItem("provider") == "torus") {
+            else if(localStorage.getItem("provider") === "torus") {
 
                 const torus = new Torus()
                 await torus.init();
-                await torus.login(); // await torus.ethereum.enable()
+                await torus.login();
                 web3 = new Web3(torus.provider);
 
                 
             }
-            else if (localStorage.getItem("provider") == "walletconnect") {
+            else if (localStorage.getItem("provider") === "walletconnect") {
 
                 provider1 = new WalletConnectProvider({
                     infuraId: "ba5ee6592e68419cab422190121eca4c",
                   });
                   
-                  //  Enable session (triggers QR Code modal)
                   await provider1.enable();
                   web3 = new Web3(provider1);
             }
@@ -170,39 +139,14 @@ const SignUp = ({ history }) => {
             }
         
 
-        // Check if MetaMask is installed
-        // if (window.ethereum && window.ethereum.isMetaMask) {
-		// 	console.log('MetaMask Here!');
-        //     web3 = new Web3(window.ethereum);
-
-		// 	window.ethereum.request({ method: 'eth_requestAccounts'})
-			
-		// } else {
-		// 	console.log('Need to install MetaMask');
-		// 	// setErrorMessage('Please install MetaMask browser extension to interact');
-		// }
-
 		const coinbase = await web3.eth.getAccounts();
-        console.log(coinbase)
 		if (!coinbase) {
 			window.alert('Please activate MetaMask first.');
 			return;
 		}
 
 		publicAddress = coinbase[0].toLowerCase();
-
-		
-		// const coinbase = await web3.eth.getAccounts();
-        // console.log(coinbase)
-		// if (!coinbase) {
-		// 	window.alert('Please activate MetaMask first.');
-		// 	return;
-		// }
-
-		
-
-        console.log(publicAddress);
-        await web3.eth.getCoinbase().then(async (users) => {
+        await web3.eth.getCoinbase().then(async () => {
 
             const config = {
                 headers: {
@@ -212,8 +156,7 @@ const SignUp = ({ history }) => {
 
             try {
 
-                console.log(publicAddress)
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/publicAddress", {publicAddress, username, email, password}, config);
+                const {data} = await axios.post("/api/users/publicAddress", {publicAddress, username, email, password}, config);
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
                 console.log(data)  
@@ -222,7 +165,6 @@ const SignUp = ({ history }) => {
 
                 setLoading(false);
                 setText("Sign Up To Start Trading")
-                console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")
                 setTimeout(() => {
@@ -234,35 +176,31 @@ const SignUp = ({ history }) => {
 
                 return error
             }
+            
         }).then((res) => {
 
 
             if(res != null) return
-
             console.log(publicAddress)
         
-
             const config = {
                 headers: {
                     "Content-Type": "application/json"
                 }
             }
-            console.log(username);
     
             try {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    console.log(signature)
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
+                    const {data} = await axios.post("/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
                     console.log(data);
-                    console.log(data.token)
                     setText("Success!")
                     localStorage.setItem("firstTimeAccess", true);
                     localStorage.setItem("authToken", data.token);
                     localStorage.removeItem("registered")
-                    console.log(loading);
                     localStorage.setItem("email", email)
+
                     setTimeout(() => {
     
                         history.push("/trade");
@@ -270,13 +208,10 @@ const SignUp = ({ history }) => {
                     }, 1000)
                 })
     
-                
-    
             } catch(error) {
     
                 setLoading(false);
                 setText("Sign Up To Start Trading")
-                console.log(error.response)
                 setError(error.response.data.error);
                 setColour("red")
                 setTimeout(() => {

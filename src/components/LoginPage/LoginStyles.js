@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { colours } from "../StyledContainer";
-import Logo from "../../assets/logo.png"
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAirbnb } from "@fortawesome/free-brands-svg-icons";

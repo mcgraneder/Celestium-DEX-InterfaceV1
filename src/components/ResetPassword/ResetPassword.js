@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./ResetPasswordStyles";
+import React, { useState, useEffect } from "react";
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
@@ -14,15 +13,31 @@ import axios from "axios";
 import { ErrorMsg } from "./ResetPasswordStyles";
 import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
+import { FormWrapper, 
+         FieldWrapper, 
+         LoginLinkWrapper, 
+         LoginLink, 
+         FieldDescriptor, 
+         ReturnHomeButton 
+} from "./ResetPasswordStyles";
 
 
-const ResetPassword = ({ match }) => {
+const ResetPassword = ({ history, match }) => {
 
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
+
+    useEffect(() => {
+
+        if (localStorage.getItem("provider") == null || localStorage.getItem("provider") == undefined) {
+
+            history.push("/")
+        }
+
+    }, [history])
 
     const resetPasswordHandler = async (e) => {
 
@@ -38,15 +53,13 @@ const ResetPassword = ({ match }) => {
 
             const {data} = await axios.put(`https://alpha-baetrum.herokuapp.com/api/auth/passwordreset/${match.params.resetToken}`, {password}, config);
             setLoading(true);
-            console.log(loading);
             setTimeout(() => {
 
                 setSuccess(data.data);
                 setLoading(false);
 
             }, 2000)
-           
-
+        
         } catch(error) {
 
             setError(error.response.data.error);

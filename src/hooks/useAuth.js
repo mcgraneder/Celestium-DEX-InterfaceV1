@@ -243,7 +243,7 @@ export default function useAuth() {
         try {
 
         deactivate()
-        web3 = undefined;
+        setLoading(false)
         setTimeout(function() {
             alert("you are no longer connected")
         }, 250)
