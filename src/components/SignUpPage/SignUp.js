@@ -156,7 +156,7 @@ const SignUp = ({ history }) => {
 
             try {
 
-                const {data} = await axios.post("/api/users/publicAddress", {publicAddress, username, email, password}, config);
+                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/publicAddress", {publicAddress, username, email, password}, config);
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
                 console.log(data)  
@@ -193,7 +193,7 @@ const SignUp = ({ history }) => {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    const {data} = await axios.post("/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
+                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
                     console.log(data);
                     setText("Success!")
                     localStorage.setItem("firstTimeAccess", true);
