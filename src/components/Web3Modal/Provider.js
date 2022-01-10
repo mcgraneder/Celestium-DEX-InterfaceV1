@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import useAuth from "../../hooks/useAuth";
 
 
@@ -16,6 +16,13 @@ export const ConnectButton = styled.div`
 
         border: 1px solid rgb(77, 102, 235);
     }
+
+    ${(props) => props.active && css`
+
+    background: rgb(45,45,62);
+    border: 1px solid rgb(75,75,92);;
+    
+`}
 `
 
 export const TitleContainer = styled.div`
@@ -82,18 +89,30 @@ const Provider = ({margin, width1, logo, width2, title, connect}) => {
 
     const { active } = useAuth();
 
+    const provider = localStorage.getItem("provider")
+
     return (
 
-        <ConnectButton onClick={connect}>
-            <TitleContainer margin={margin}>
+        // <ConnectButton onClick={connect}>
+        //     <TitleContainer margin={margin}>
                 
-                <Logo width={width1}><img src={logo} width={width2} /></Logo>
-               <ModalTitle>
-               {active && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
-               <span className="sp"></span>
-                   {title}
-                   </ModalTitle>
+        //         <Logo width={width1}><img src={logo} width={width2} /></Logo>
+        //        <ModalTitle>
+        //        {active && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+        //        <span className="sp"></span>
+        //            {title}
+        //            </ModalTitle>
                
+        //     </TitleContainer>
+        // </ConnectButton>
+        <ConnectButton active={active && provider=== provider} onClick={connect}>
+            <TitleContainer margin={"20px"}>
+                <Logo width={width1}><img src={logo} width={width2} /></Logo>
+                <ModalTitle>
+                    {provider === provider && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                    <span className="sp"></span>
+                    {title}
+                </ModalTitle>
             </TitleContainer>
         </ConnectButton>
     )
