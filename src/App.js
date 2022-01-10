@@ -9,7 +9,7 @@ import PrivateRoute from "./components/Routing/PrivateRoute";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Web3 from "web3";
 import { Web3ReactProvider } from '@web3-react/core'
-import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner"
+import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
 import useOnPageLoad from "./hooks/useOnPageLoad";
 import Particle from "./components/ParticleBackground/Particles"
 import Layout from "./components/Layout/Layout";
