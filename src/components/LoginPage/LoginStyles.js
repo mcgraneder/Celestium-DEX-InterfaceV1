@@ -44,7 +44,7 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 700px;
+    height: 650px;
     background: rgb(35,35,52);
     text-align: right;
     padding: 10px 45px;
@@ -97,9 +97,9 @@ export const Wrapper = styled.div`
 
 export const FieldWrapper = styled.div`
 
-    padding: 30px 30px;
+    padding: 20px 30px;
     background: rgb(26,26,39);
-    border-radius: 15px;
+    border-radius: 10px;
 `
 
 export const Icon = styled.p`

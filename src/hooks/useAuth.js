@@ -132,6 +132,8 @@ export default function useAuth() {
                 loggedInAccount = localStorage.setItem("account", account);
                 provider = localStorage.setItem("provider", "fortmatic");
                 setLoading(false)
+               
+                
         
             } catch (err) {
 
@@ -140,6 +142,7 @@ export default function useAuth() {
                 localStorage.removeItem("provider");
 
                 setLoading(false)
+               
             }
             
     }

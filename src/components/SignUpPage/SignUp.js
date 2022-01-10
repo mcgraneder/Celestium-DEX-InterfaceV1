@@ -234,7 +234,7 @@ const SignUp = ({ history }) => {
                 <StyledTitle color={"white"} size={30} align={"center"}>{text}</StyledTitle>
                 <Wrapper space={5}/>
                 {error && <ErrorMsg>{error}</ErrorMsg>}   
-                <Wrapper space={40}/>
+                <Wrapper space={20}/>
                 <FieldWrapper>
                     <FieldDescriptor left={"left"}>Username</FieldDescriptor>
                     <div style={{position: "relative"}}>
@@ -262,7 +262,7 @@ const SignUp = ({ history }) => {
                         </Icon>                   
                     </div>
                  </FieldWrapper>
-                 <Wrapper space={50}/>
+                 <Wrapper space={40}/>
                  <ButtonWrapper>
                         {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={registerHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Sign Up</ButtonStatic>}
                     </ButtonWrapper>

@@ -110,7 +110,7 @@ export const ConnectButton = styled.div`
 
     ${(props) => props.active && css`
 
-        background: rgb(45,45,62);
+        background: rgb(50,50,75);
         border: 1px solid rgb(75,75,92);;
         
     `}
@@ -361,7 +361,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={metamask} width={30} /></Logo>
                             <ModalTitle>
-                                {provider ==="injected" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="injected" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
                                 <span className="sp"></span>
                                 MetaMask
                             </ModalTitle>
@@ -371,7 +371,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={fortmatic} width={27} /></Logo>
                             <ModalTitle>
-                                {provider ==="fortmatic" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="fortmatic" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
                                 <span className="sp"></span>
                                 Fortmatic
                             </ModalTitle>
@@ -381,7 +381,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={torus} width={27} /></Logo>
                             <ModalTitle>
-                                {provider ==="torus" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="torus" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
                                 <span className="sp"></span>
                                 Torus
                             </ModalTitle>
@@ -391,7 +391,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={portis} width={25} /></Logo>
                             <ModalTitle>
-                                {provider ==="portis" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="portis" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
                                 <span className="sp"></span>
                                 Portis
                             </ModalTitle>
@@ -401,7 +401,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={walletConnect} width={35} /></Logo>
                             <ModalTitle>
-                                {provider ==="walletconnect" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="walletconnect" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
                                 <span className="sp"></span>
                                 WalletConnect
                             </ModalTitle>
