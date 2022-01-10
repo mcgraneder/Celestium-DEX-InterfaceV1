@@ -6,38 +6,47 @@ import useAuth from "../hooks/useAuth";
 import MetamaskPopup from "./MetaMaskPopup/MetaMaskPopup";
 import Web3Modal from "./Web3Modal/Web3Modal";
 
+
+
 const Home = ({ history }) => {
 
     const [show1, setShow1] = useState(false);
     const toggle1 = () => setShow1(!show1);
-
     const { active, onPageLoading } = useAuth()
-
+    const [loading, setLoading] = useState(false)
+    
     useEffect(() => {
 
         if (localStorage.getItem("authToken")) {
 
             history.push("/trade");
         }
-
-        if (localStorage.getItem("authToken")) {
-
-            history.push("/trade");
-        }
-
     }, [history])
+
+
+     useEffect(() => {
+
+        if (active) {
+
+            console.log(active)
+            setLoading(true)
+            setTimeout(function(){
+                setLoading(false)
+            }, 800);//wait 2 seconds
+            
+        }
+    }, [history, active])
+
 
     return(
 
         <div>
-            
             <Web3Modal visible={show1} close={toggle1}></Web3Modal>
             <Nav close={toggle1}/>
-            {onPageLoading ? <div></div> 
-            : (active ? <LoginStyledContainer>
-                            <WelcomePage></WelcomePage>
-                        </LoginStyledContainer> 
-
+            {onPageLoading ? <div></div> : (active ? 
+            <LoginStyledContainer>
+                <WelcomePage></WelcomePage>
+            </LoginStyledContainer> 
             : <MetamaskPopup></MetamaskPopup>)}
         </div>
     )

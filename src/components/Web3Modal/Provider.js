@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import useAuth from "../../hooks/useAuth";
 
 
 export const ConnectButton = styled.div`
@@ -42,8 +43,15 @@ export const ModalTitle = styled.div`
     line-height: 60px;
     // float-left;
     left: 0%;
+
+    .sp {
+
+        padding-right: 10px;
+    }
     
 `;
+
+
 
 const providers = [
 
@@ -72,12 +80,20 @@ const providers = [
 
 const Provider = ({margin, width1, logo, width2, title, connect}) => {
 
+    const { active } = useAuth();
+
     return (
 
         <ConnectButton onClick={connect}>
             <TitleContainer margin={margin}>
+                
                 <Logo width={width1}><img src={logo} width={width2} /></Logo>
-                <ModalTitle>{title}</ModalTitle>
+               <ModalTitle>
+               {active && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+               <span className="sp"></span>
+                   {title}
+                   </ModalTitle>
+               
             </TitleContainer>
         </ConnectButton>
     )
