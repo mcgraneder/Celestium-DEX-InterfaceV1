@@ -25,6 +25,7 @@ function App() {
 
   return (
         
+    
       <div>
         <Particle></Particle>
         {loading && <PageLoad></PageLoad>}
