@@ -85,7 +85,7 @@ const providers = [
 ]
 
 
-const Provider = ({margin, width1, logo, width2, title, connect}) => {
+const Provider = ({margin, width1, logo, width2, title, connect, activee}) => {
 
     const { active } = useAuth();
 
