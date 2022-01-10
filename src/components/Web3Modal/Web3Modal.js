@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { StyledContainer } from "../StyledContainer";
+import React from "react";
 import styled, { css } from "styled-components";
 import { breakpoints as bp } from "../GlobalStyle";
-// import { Logo } from "../Buttons/ConnectWalletButtonStyles"
 import metamask from "../../assets/metamask.svg"
 import walletConnect from "../../assets/wallet_connect.svg"
-import coinbase from "../../assets/coinbase.svg"
 import fortmatic from "../../assets/fortmatic.svg"
 import torus from "../../assets/torus.svg"
 import portis from "../../assets/portis.svg"
-import Web3 from "web3";
-import axios from "axios";
-import Loader from "react-loader-spinner";
-import { Wrapper } from "../LoginPage/LoginStyles";
 import Provider from "./Provider";
 import Disconnect from "./Disconnect";
 import useAuth from "../../hooks/useAuth";
-import { injected, fortmaticc, toruss, portiss } from "../../connectors/providers";
 import ConnectSpinner from "./ConnectSpinner";
+// import { walletconnect } from "web3modal/dist/providers/connectors";
+
 export const FormWrapper = styled.div`
 
 
@@ -26,7 +20,7 @@ export const FormWrapper = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
     width: 450px;
-    height: 740px;
+    height: 660px;
     opacity: 0;
     background-color: rgb(35,35,52);
     text-align: right;
@@ -34,19 +28,14 @@ export const FormWrapper = styled.div`
     border: 1.5px solid  rgb(31,31,44);
     border-radius: 10px;
     z-index: -10000;
+    // transition: opacity 0.1s ease-in-out !important;
     ${(props) => props.visible && css`
-    z-index: 10000;
-    opacity: 1;
-    pointer-events: all;
-    transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
-`}
+        z-index: 10000;
+        opacity: 1;
+        pointer-events: all;
+        // transition: opacity 0.1s ease-in-out !important;
+    `}
 
-    // @media(max-width: ${bp.desktop}) {
-
-    //     width: 300px;
-    //     height: 700px;
-        
-    // };
 `
 
 
@@ -118,6 +107,13 @@ export const ConnectButton = styled.div`
         // height: 60.5px;
 
     }
+
+    ${(props) => props.active && css`
+
+        background: rgb(50,50,75);
+        border: 1px solid rgb(75,75,92);;
+        
+    `}
 `
 export const TitleContainer = styled.div`
 
@@ -131,23 +127,31 @@ export const TitleContainer = styled.div`
 
 `;
 
-export const Logo = styled.div`
+// export const Logo = styled.div`
 
-    position: absolute;
-   width: 70px;
-   height: 50px;
-   float: right;
-   align-items: center;
-   justify-content: center;
-//    line-height: 75px;
-   right: 9%;
-   bottom: 16.8%;
-   background: rgb(35,35,52);;
+//     position: absolute;
+//    width: 70px;
+//    height: 50px;
+//    float: right;
+//    align-items: center;
+//    justify-content: center;
+// //    line-height: 75px;
+//    right: 9%;
+//    bottom: 16.8%;
+//    background: rgb(35,35,52);;
 
 
 
 
    
+// `;
+
+export const Logo = styled.div`
+
+   width: ${(props) => props.width}px;
+   height: ${(props) => props.width}px;
+   float: right;
+   line-height: 75px;
 `;
 
 export const ModalTitle = styled.div`
@@ -162,6 +166,11 @@ export const ModalTitle = styled.div`
     line-height: 60px;
     // float-left;
     left: 0%;
+
+    .sp {
+
+        padding-right: 10px;
+    }
    
     
     
@@ -334,20 +343,10 @@ export const IconContents = styled.i`
 
 
 const Web3Modal = ({visible, close}) => {
-
-    
-    const email = localStorage.getItem("email")
-    const [error, setError] = useState("");
-    // const [loading, setLoading] = useState(false);
-    const [text, setText] = useState("Link Your Wallet To Proceed")
-    const [colour, setColour] = useState("rgb(22,181,127)")
-    var publicAddress;
-    var web3;
     
     const { connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect, active, account, loading } = useAuth()
-   
-    console.log(account)
-    
+  
+    const provider = localStorage.getItem("provider")
     return (
         <>
          <Backdrop visible={visible} onClick={close}></Backdrop>
@@ -358,20 +357,66 @@ const Web3Modal = ({visible, close}) => {
                     </ModalTextWrapper>
                 </DisclaimerContainer>
                 <ButtonContainer>
-                    <Provider margin={"20px"} width1={50} logo={metamask} width2={30} title={"MetaMask"} connect={connectOnClick}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={coinbase} width2={30} title={"Coinbase"} ></Provider>
+                    <ConnectButton active={active && provider==="injected"} onClick={connectOnClick}>
+                        <TitleContainer margin={"20px"}>
+                            <Logo width={50}><img src={metamask} width={30} /></Logo>
+                            <ModalTitle>
+                                {active && provider ==="injected" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                <span className="sp"></span>
+                                MetaMask
+                            </ModalTitle>
+                        </TitleContainer>
+                    </ConnectButton>
+                    <ConnectButton active={active && provider==="fortmatic"} onClick={connectOnClickFortmatic}>
+                        <TitleContainer margin={"20px"}>
+                            <Logo width={50}><img src={fortmatic} width={27} /></Logo>
+                            <ModalTitle>
+                                {active && provider ==="fortmatic" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                <span className="sp"></span>
+                                Fortmatic
+                            </ModalTitle>
+                        </TitleContainer>
+                    </ConnectButton>
+                    <ConnectButton active={active && provider==="torus"} onClick={connectOnClickTorus}>
+                        <TitleContainer margin={"20px"}>
+                            <Logo width={50}><img src={torus} width={27} /></Logo>
+                            <ModalTitle>
+                                {active && provider ==="torus" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                <span className="sp"></span>
+                                Torus
+                            </ModalTitle>
+                        </TitleContainer>
+                    </ConnectButton>
+                    <ConnectButton active={active && provider==="portis"} onClick={connectOnClickPortis}>
+                        <TitleContainer margin={"20px"}>
+                            <Logo width={50}><img src={portis} width={25} /></Logo>
+                            <ModalTitle>
+                                {active && provider ==="portis" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                <span className="sp"></span>
+                                Portis
+                            </ModalTitle>
+                        </TitleContainer>
+                    </ConnectButton>
+                    <ConnectButton active={active && provider==="walletconnect"} onClick={connectOnClickWalletConnect}>
+                        <TitleContainer margin={"20px"}>
+                            <Logo width={50}><img src={walletConnect} width={35} /></Logo>
+                            <ModalTitle>
+                                {active && provider ==="walletconnect" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                <span className="sp"></span>
+                                WalletConnect
+                            </ModalTitle>
+                        </TitleContainer>
+                    </ConnectButton>
+                    {/* <Provider active={active && provider==="injected"} margin={"20px"} width1={50} logo={metamask} width2={30} title={"MetaMask"} connect={connectOnClick}></Provider>
                     <Provider margin={"20px"} width1={50} logo={fortmatic} width2={27} title={"Fortmatic"} connect={connectOnClickFortmatic}></Provider>
                     <Provider margin={"20px"} width1={50} logo={torus} width2={27} title={"Torus"} connect={connectOnClickTorus}></Provider>
                     <Provider margin={"20px"} width1={50} logo={portis} width2={25} title={"Portis"} connect={connectOnClickPortis}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Wallet Connect"} connect={connectOnClickWalletConnect}></Provider>
+                    <Provider margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Wallet Connect"} connect={connectOnClickWalletConnect}></Provider> */}
                     <Disconnect margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect}></Disconnect>
-                    {/* <Logo><Loader style={{paddingTop: "5px"}} type="Oval" height={40} color="rgb(77, 102, 235)"></Loader></Logo> */}
                 </ButtonContainer>
             </FormWrapper>
-            {loading ? <ConnectSpinner></ConnectSpinner> : <div></div>}
+            {loading ? <ConnectSpinner loading={loading}></ConnectSpinner> : <div></div>}
         </>
-       
-        
     )
 }
 

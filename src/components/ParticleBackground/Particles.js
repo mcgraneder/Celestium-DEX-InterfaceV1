@@ -1,5 +1,4 @@
 import React from "react";
-import Loader from "react-loader-spinner";
 import "./particleStyles.css"
 import Particles from "react-tsparticles"
 import particlesConfig from "../../config/ParticleJsConfig"

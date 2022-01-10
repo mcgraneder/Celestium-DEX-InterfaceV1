@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormWrapper, FieldWrapper, LoginLinkWrapper, LoginLink, FieldDescriptor, ReturnHomeButton } from "./ForgotPasswordStyles";
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
@@ -16,12 +16,21 @@ import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
 
 
-const ForgotPassword = () => {
+const ForgotPassword = ({history}) => {
 
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
+
+    useEffect(() => {
+
+        if (localStorage.getItem("provider") == null || localStorage.getItem("provider") == undefined) {
+
+            history.push("/")
+        }
+
+    }, [history])
 
     const forgotPasswordHandler = async (e) => {
 
@@ -35,7 +44,7 @@ const ForgotPassword = () => {
 
         try {
 
-            const {data} = await axios.post("/api/auth/forgotpassword", {email}, config);
+            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/forgotpassword", {email}, config);
             setLoading(true);
             console.log(loading);
             setTimeout(() => {
