@@ -23,5 +23,7 @@ export const LogoStyles = styled.div`
     background-color: transparent;
     background-position: center;
     margin: auto;
-    // margin-bottom: 100px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+
 `

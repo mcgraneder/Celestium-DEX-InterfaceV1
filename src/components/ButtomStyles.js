@@ -94,6 +94,8 @@ export const ButtonStatic = styled.button`
         &:before {
         width: 100%;
         }
+    
+
   }
 `
 

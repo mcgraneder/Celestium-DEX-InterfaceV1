@@ -14,7 +14,7 @@ export default function Nav({close}) {
         <div>
             <NavContainer>
                 <NavWrapper>
-                    <NavLogo>ALPHA-BAETRUM</NavLogo>
+                    <NavLogo>CELESTIUM</NavLogo>
                     <NavElement>
                         <NavItem>
                             <ConnectWalletButton left={"82%"} top={"31%"} close={close} height="180" fontsize="17" colour="rgb(89, 115, 254)" width="40"></ConnectWalletButton>

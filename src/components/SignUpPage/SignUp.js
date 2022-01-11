@@ -7,6 +7,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider"
 import { ethers } from "ethers";
 import { StyledTitle, } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
+import Log from "../../assets/logo_transparent_background1.png"
 import { LogoStyles } from "../LogoStyles";
 import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
@@ -60,7 +61,7 @@ const SignUp = ({ history }) => {
     const handleSignMessage = async (publicAddress, nonce) => {
 
         var signature;
-
+        
 		try {
 
             if (localStorage.getItem("provider") === "walletconnect") {
@@ -100,7 +101,8 @@ const SignUp = ({ history }) => {
     const registerHandler = async (e) => {
 
         e.preventDefault()
-        setText("Logging In!")
+        
+        setText("Creating Account!")
 
             if(localStorage.getItem("provider") === "fortmatic") {
 
@@ -228,9 +230,9 @@ const SignUp = ({ history }) => {
 
     return (
        <StyledContainer>
-           <FormWrapper style={{position: "relative"}}>
+           <FormWrapper>
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
-                <LogoStyles image={Logo} width={150} height={150}/>
+                <LogoStyles image={Log} width={110} height={110}/>
                 <StyledTitle color={"white"} size={30} align={"center"}>{text}</StyledTitle>
                 <Wrapper space={5}/>
                 {error && <ErrorMsg>{error}</ErrorMsg>}   

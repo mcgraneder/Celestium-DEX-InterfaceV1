@@ -44,10 +44,10 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 650px;
+    height: 630px;
     background: rgb(35,35,52);
     text-align: right;
-    padding: 10px 45px;
+    padding: 10px 35px;
     // border: 0.5px solid  rgb(26,26,39);
     border-radius: 10px;
 `

@@ -15,11 +15,12 @@ padding: 20px 20px;
 border: 1.5px solid  rgb(31,31,44);
 border-radius: 10px;
 z-index: 10000;
+transition: opacity 1s cubic-bezier(0.4, 0, 1, 1) !important;
 ${(props) => props.visible && css`
 
 opacity: 1;
 pointer-events: all;
-transition: transform 1s cubic-bezier(0.4, 0, 1, 1) !important;
+transition: opacity 1s cubic-bezier(0.4, 0, 1, 1) !important;
 `}
 
 `

@@ -250,6 +250,7 @@ export default function useAuth() {
         setTimeout(function() {
             alert("you are no longer connected")
         }, 250)
+        setLoading(false)
         localStorage.removeItem("account");
         localStorage.removeItem("provider");
 

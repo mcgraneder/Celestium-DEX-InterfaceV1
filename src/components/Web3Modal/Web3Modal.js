@@ -27,13 +27,14 @@ export const FormWrapper = styled.div`
     padding: 30px 20px;
     border: 1.5px solid  rgb(31,31,44);
     border-radius: 10px;
+    pointer-events: none;
     z-index: -10000;
-    // transition: opacity 0.1s ease-in-out !important;
+    transition: opacity 0.2s ease-in-out !important;
     ${(props) => props.visible && css`
         z-index: 10000;
         opacity: 1;
         pointer-events: all;
-        // transition: opacity 0.1s ease-in-out !important;
+        transition: opacity 0.2s ease-in-out !important;
     `}
 
 `
@@ -48,13 +49,13 @@ export const Backdrop = styled.div`
     pointer-events: none;
     backdrop-filter: blur(5px);
     background-color: rgba(0, 0, 0, 0.2);
-    transition: opacity 0.05s ease-in-out !important;
+    transition: opacity 0.2s ease-in-out !important;
     z-index: 10000;
     ${(props) => props.visible && css`
 
         opacity: 1;
         pointer-events: all;
-        transition: opacity 0.05s ease-in-out !important;
+        transition: opacity 0.2s ease-in-out !important;
     `}
 
    
@@ -103,15 +104,15 @@ export const ConnectButton = styled.div`
    
     &:hover {
 
-        border: 1px solid rgb(77, 102, 235);
+        border: ${(props) => !props.active ? `1px solid rgb(77, 102, 235)` : ` 1px solid rgb(75,75,92)`};
         // height: 60.5px;
 
     }
 
     ${(props) => props.active && css`
 
-        background: rgb(50,50,75);
-        border: 1px solid rgb(75,75,92);;
+        background: rgb(50,50,70);
+        border: 1px solid rgb(75,75,92);
         
     `}
 `

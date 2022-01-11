@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import { ErrorMsg } from "./LoginStyles";
 import Loader from "react-loader-spinner";
-
+import Log from "../../assets/logo_transparent_background1.png"
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
@@ -104,7 +104,7 @@ const Login = ({ history }) => {
     const loginHandler = async (e) => {
 
         e.preventDefault()
-        setText("Logging In!")
+        setText("Logging In. Please Wait!")
 
         if(localStorage.getItem("provider") === "fortmatic") {
 
@@ -232,8 +232,8 @@ const Login = ({ history }) => {
              <LoginModal visible={show1} close={toggle1}></LoginModal>
            <FormWrapper>
                <form >
-                <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
-                    <LogoStyles image={Logo} width={150} height={150}/>
+                <ReturnHomeButton to="/"><BsArrowReturnLeft/></ReturnHomeButton>
+                    <LogoStyles image={Log} width={110} height={110}/>
                     <StyledTitle color={"white"} size={30} align={"center"}>{text}</StyledTitle>
                     <Wrapper space={5}/>
                     {error && <ErrorMsg>{error}</ErrorMsg>}   

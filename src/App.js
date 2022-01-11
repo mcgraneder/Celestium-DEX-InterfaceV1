@@ -13,6 +13,8 @@ import PageLoad from "./components/pageLoadSpinner/PageLoadSpinner";
 import useOnPageLoad from "./hooks/useOnPageLoad";
 import Particle from "./components/ParticleBackground/Particles"
 import Layout from "./components/Layout/Layout";
+import useProvider from "./hooks/useProvider";
+import WalletConnectProvider from "@walletconnect/web3-provider"
 
 function getLibrary(provider) {
   return new Web3(provider)
@@ -22,6 +24,15 @@ function App() {
  
   const loading = useOnPageLoad();
 
+  const  web3  = useProvider();
+
+  console.log(web3);
+  web3.eth.getAccounts().then((accounts) => {
+
+
+    console.log(accounts)
+  });
+   
 
   return (
         

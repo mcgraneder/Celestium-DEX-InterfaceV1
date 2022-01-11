@@ -44,7 +44,7 @@ export const StyledLabel = styled.p`
 export const FormWrapper = styled.div`
 
     width: 420px;
-    height: 740px;
+    height: 730px;
     background: rgb(35,35,52);
     text-align: right;
     padding: 10px 45px;
@@ -136,7 +136,6 @@ export const FieldDescriptor = styled.p`
     text-align: ${(props) => props.left};
     font-size: ${(props) => props.size}px;
 `
-
 export const ReturnHomeButton = styled(Link)`
 
     text-align: left;
