@@ -130,50 +130,14 @@ const Login = ({ history }) => {
         e.preventDefault()
        
         setText("Logging In. Please Wait!")
-        // console.log(web3.provider)
-
-        // web3 = library
         
-
-        // else if(localStorage.getItem("provider") === "portis") {
-
-        //     const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
-        //     web3 = new Web3(portis.provider);
-
-            
-        // }
-        // else if(localStorage.getItem("provider") === "torus") {
-
-        //     const torus = new Torus()
-        //     await torus.init();
-        //     await torus.login(); 
-        //     web3 = new Web3(torus.provider);
-
-        // }
-        // else if (localStorage.getItem("provider") === "walletconnect") {
-
-            provider1 = new WalletConnectProvider({
-                infuraId: "ba5ee6592e68419cab422190121eca4c",
-            });
+        provider1 = new WalletConnectProvider({
+            infuraId: "ba5ee6592e68419cab422190121eca4c",
+        });
+        await provider1.enable();
+        
+        setWeb3(new Web3(provider1))
               
-        //     await provider1.enable();
-        //     web3 = new Web3(provider1);
-
-        // }
-        // else {
-
-        //     web3 = new Web3(window.ethereum);
-        // }
-
-
-        const coinbase = await web3.eth.getAccounts();
-        if (!coinbase) {
-            window.alert('Please activate MetaMask first.');
-            return;
-        }
-
-        // console.log(library.getAccount())
-
         publicAddress = account.toLocaleLowerCase();
         console.log(publicAddress)
         await web3.eth.getAccounts().then(async (users) => {

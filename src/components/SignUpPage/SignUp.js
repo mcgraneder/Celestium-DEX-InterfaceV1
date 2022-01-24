@@ -9,7 +9,7 @@ import { StyledTitle, } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import Log from "../../assets/logo_transparent_background1.png"
 import { LogoStyles } from "../LogoStyles";
-import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
+import { ButtonWrapper, ButtonStatic, ButtonLoading } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiUser} from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
@@ -20,6 +20,7 @@ import { Icon } from "./SignUpStyles";
 import { ErrorMsg } from "./SignUpStyles";
 import Loader from "react-loader-spinner";
 import { StyledContainer } from "../StyledContainer";
+import useAuth from "../../hooks/useAuth";
 import { FormWrapper, 
          FieldWrapper, 
          LoginLink, 
@@ -27,6 +28,7 @@ import { FormWrapper,
          FieldDescriptor, 
          ReturnHomeButton 
 } from "./SignUpStyles";
+import Nav2 from "../Navbar/Nav2";
 
 const SignUp = ({ history }) => {
 
@@ -34,14 +36,31 @@ const SignUp = ({ history }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
+    const toggle1 = () => setShow1(!show1);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Sign Up To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)");
+    const [web3, setWeb3] = useState()
+    var web32
+    const {active, account, library, onPageLoading,  connectOn} = useAuth()
+    const provider = localStorage.getItem("provider")
+   
 
+    var publicAddress
+    var provider1;
+
+    useEffect(() => {
+
+        if(active) {
+          
+           setWeb3(library)
+        }
+       
+    }, [active, library])
     const nonce = Math.floor(Math.random() * 10000)
     var provider1
-    var web3
     var publicAddress 
    
     useEffect(() => {
@@ -103,52 +122,17 @@ const SignUp = ({ history }) => {
         e.preventDefault()
         
         setText("Creating Account!")
+        provider1 = new WalletConnectProvider({
+            infuraId: "ba5ee6592e68419cab422190121eca4c",
+        });
 
-            if(localStorage.getItem("provider") === "fortmatic") {
-
-                const fm = new Fortmatic('pk_test_C102027C0649EF66');
-                window.web3 = new Web3(fm.getProvider());
-                web3 = window.web3
-            }
-
-            else if(localStorage.getItem("provider") === "portis") {
-
-                const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
-                web3 = new Web3(portis.provider);
-
-                
-            }
-            else if(localStorage.getItem("provider") === "torus") {
-
-                const torus = new Torus()
-                await torus.init();
-                await torus.login();
-                web3 = new Web3(torus.provider);
-
-                
-            }
-            else if (localStorage.getItem("provider") === "walletconnect") {
-
-                provider1 = new WalletConnectProvider({
-                    infuraId: "ba5ee6592e68419cab422190121eca4c",
-                  });
-                  
-                  await provider1.enable();
-                  web3 = new Web3(provider1);
-            }
-            else {
-                web3 = new Web3(window.ethereum);
-            }
+        await provider1.enable();
         
-
-		const coinbase = await web3.eth.getAccounts();
-		if (!coinbase) {
-			window.alert('Please activate MetaMask first.');
-			return;
-		}
-
-		publicAddress = coinbase[0].toLowerCase();
-        await web3.eth.getCoinbase().then(async () => {
+        setWeb3(new Web3(provider1))
+              
+        publicAddress = account.toLocaleLowerCase();
+        console.log(publicAddress)
+        await web3.eth.getAccounts().then(async (users) => {
 
             const config = {
                 headers: {
@@ -158,7 +142,7 @@ const SignUp = ({ history }) => {
 
             try {
 
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/publicAddress", {publicAddress, username, email, password}, config);
+                const {data} = await axios.post("api/users/publicAddress", {publicAddress, username, email, password}, config);
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
                 console.log(data)  
@@ -195,7 +179,7 @@ const SignUp = ({ history }) => {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
+                    const {data} = await axios.post("api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
                     console.log(data);
                     setText("Success!")
                     localStorage.setItem("firstTimeAccess", true);
@@ -229,6 +213,9 @@ const SignUp = ({ history }) => {
     }
 
     return (
+        <>
+         <Nav2 close={toggle1}/>
+      
        <StyledContainer>
            <FormWrapper>
                 <ReturnHomeButton to="/"><BsArrowReturnLeft style={{"paddingTop": "15px"}}/></ReturnHomeButton>
@@ -266,12 +253,13 @@ const SignUp = ({ history }) => {
                  </FieldWrapper>
                  <Wrapper space={40}/>
                  <ButtonWrapper>
-                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={registerHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Sign Up</ButtonStatic>}
+                        {!active ? (!onPageLoading ? <ButtonLoading colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`} onClick={() => connectOn(provider)}>Connect Wallet</ButtonLoading> : <ButtonLoading colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Connecting...</ButtonLoading>) : (loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={registerHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Sign Up</ButtonStatic>)}
                     </ButtonWrapper>
                  <Wrapper space={12}/>
                  <LoginLinkWrapper>Already Registered? <LoginLink to="/login" style={{textDecoration:"none"}}> Login</LoginLink></LoginLinkWrapper>
            </FormWrapper>
        </StyledContainer>
+       </>
     )
 }
 
