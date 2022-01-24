@@ -132,7 +132,7 @@ export default function useAuth() {
 
                 console.log(err)
                 deactivate()
-                // localStorage.removeItem("provider");
+                localStorage.removeItem("provider");
 
                 setLoading(false)
             }

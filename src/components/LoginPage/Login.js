@@ -33,7 +33,7 @@ import { useWeb3React } from "@web3-react/core";
 import useAuth from "../../hooks/useAuth";
 import Nav2 from "../Navbar/Nav2";
 
-
+import Web3Status from "../../connectors/web3Status";
 
 const Login = ({ history }) => {
 
@@ -46,26 +46,21 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)")
-    const web32 = useRef()
+    const [web3, setWeb3] = useState()
+    var web32
     const {active, account, library, onPageLoading,  connectOn} = useAuth()
     // const {library, provider} = useWeb3React()
    const provider = localStorage.getItem("provider")
    
-    console.log("hellloooooo", web32)
-    
-    
-    var web3;
+
     var publicAddress
     var provider1;
 
     useEffect(() => {
 
-        console.log(library)
         if(active) {
-           console.log(account)
-           web32.current = library
-           console.log("helllooooooooooo", web32)
-           web3 = new Web3(library)
+          
+           setWeb3(library)
         }
        
     }, [active, library])
@@ -137,7 +132,7 @@ const Login = ({ history }) => {
         setText("Logging In. Please Wait!")
         // console.log(web3.provider)
 
-        web3 = library
+        // web3 = library
         
 
         // else if(localStorage.getItem("provider") === "portis") {
