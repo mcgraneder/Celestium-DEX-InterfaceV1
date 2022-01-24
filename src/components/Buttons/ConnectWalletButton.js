@@ -34,7 +34,7 @@ export const Logo1 = styled.div`
    
 `;
 
-const ConnectWalletButton = ({close, color, fontsize, height, left, top}) => {
+const ConnectWalletButton = ({close, color, fontsize, height, left, top, onclick}) => {
 
     const { active, account, onPageLoading} = useAuth()
     var logo
@@ -68,6 +68,7 @@ const ConnectWalletButton = ({close, color, fontsize, height, left, top}) => {
         width2=23
     }
 
+    const provider = localStorage.getItem("provider")
 
     
     console.log(onPageLoading)
@@ -78,7 +79,7 @@ const ConnectWalletButton = ({close, color, fontsize, height, left, top}) => {
 
             {active ? 
             <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo width={width1}><img src={logo} width={width2} /></Logo><ButtonText >{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton> 
-            : (!onPageLoading ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText1>Connect Wallet</ButtonText1></ConnectButton> 
+            : (!onPageLoading ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={() => onclick(provider)}><ButtonText1>Connect Wallet</ButtonText1></ConnectButton> 
             :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo1 left={left} top={top}><Loader style={{paddingTop: "5px"}} type="Oval" height={25} height={25} color="rgb(89,115,254)"></Loader></Logo1><ButtonText1>Connecting..</ButtonText1></ConnectButton>)
             }
         </div>

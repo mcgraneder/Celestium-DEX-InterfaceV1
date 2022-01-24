@@ -12,8 +12,11 @@ const Home = ({ history }) => {
 
     const [show1, setShow1] = useState(false);
     const toggle1 = () => setShow1(!show1);
-    const { active, onPageLoading } = useAuth()
+    const { active, onPageLoading, account } = useAuth()
     const [loading, setLoading] = useState(false)
+
+    
+   
     
     useEffect(() => {
 
@@ -21,6 +24,7 @@ const Home = ({ history }) => {
 
             history.push("/trade");
         }
+        
     }, [history])
 
 
@@ -28,7 +32,10 @@ const Home = ({ history }) => {
 
         if (active) {
 
-            console.log(active)
+            if(localStorage.getItem("account2") == null || localStorage.getItem("account2") == undefined) {
+
+                localStorage.setItem("account2", account)
+            }
             setLoading(true)
             setTimeout(function(){
                 setLoading(false)

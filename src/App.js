@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Home from "./components/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/LoginPage/Login";
@@ -15,23 +15,33 @@ import Particle from "./components/ParticleBackground/Particles"
 import Layout from "./components/Layout/Layout";
 import useProvider from "./hooks/useProvider";
 import WalletConnectProvider from "@walletconnect/web3-provider"
+import useAuth from "./hooks/useAuth";
 
 function getLibrary(provider) {
   return new Web3(provider)
 }
-function App() {
+let web3
+function App({ web3 }) {
 
- 
+  
   const loading = useOnPageLoad();
 
-  const  web3  = useProvider();
+  // const  web3  = useProvider();
 
-  console.log(web3);
-  web3.eth.getAccounts().then((accounts) => {
+  // console.log(web3);
+  // web3.eth.getAccounts().then((accounts) => {
 
 
-    console.log(accounts)
-  });
+  //   console.log(accounts)
+  // });
+
+  
+  // web3.eth.getAccounts().then((accounts) => {
+
+
+  //   console.log(accounts)
+  // });
+
    
 
   return (
@@ -40,7 +50,8 @@ function App() {
       <div>
         <Particle></Particle>
         {loading && <PageLoad></PageLoad>}
-          <Web3ReactProvider getLibrary={getLibrary}>
+          <Web3ReactProvider getLibrary={getLibrary} 
+      libraryName={'ethers.js'|'web3.js'|null}>
           <Router>
             <Switch>
               <Route exact path="/" component={Home} />

@@ -66,7 +66,7 @@ const Layout = memo(({history}) => {
 
             try {
 
-                const {data} = await axios.get("https://alpha-baetrum.herokuapp.com/api/private", config);
+                const {data} = await axios.get("api/private", config);
                 setPrivateData(data.data);
 
             } catch(error) {

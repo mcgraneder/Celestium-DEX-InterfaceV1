@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Web3 from "web3"
 import Fortmatic from 'fortmatic';
 import Portis from "@portis/web3"
@@ -12,7 +12,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider"
 import { StyledTitle } from "../StyledTitle";
 import Logo from "../../assets/logo.png";
 import { LogoStyles } from "../LogoStyles";
-import { ButtonWrapper, ButtonStatic } from "../ButtomStyles";
+import { ButtonWrapper, ButtonStatic, ButtonLoading } from "../ButtomStyles";
 import { Wrapper } from "../StyledTitle";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import {BsArrowReturnLeft } from "react-icons/bs"
@@ -28,6 +28,11 @@ import { FormWrapper,
          FieldDescriptor, 
          ReturnHomeButton 
 } from "./LoginStyles";
+import useProvider from "../../hooks/useProvider";
+import { useWeb3React } from "@web3-react/core";
+import useAuth from "../../hooks/useAuth";
+import Nav2 from "../Navbar/Nav2";
+
 
 
 const Login = ({ history }) => {
@@ -41,10 +46,31 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState("Login To Start Trading")
     const [colour, setColour] = useState("rgb(22,181,127)")
-
+    const web32 = useRef()
+    const {active, account, library, onPageLoading,  connectOn} = useAuth()
+    // const {library, provider} = useWeb3React()
+   const provider = localStorage.getItem("provider")
+   
+    console.log("hellloooooo", web32)
+    
+    
     var web3;
     var publicAddress
     var provider1;
+
+    useEffect(() => {
+
+        console.log(library)
+        if(active) {
+           console.log(account)
+           web32.current = library
+           console.log("helllooooooooooo", web32)
+           web3 = new Web3(library)
+        }
+       
+    }, [active, library])
+
+    
 
     useEffect(() => {
 
@@ -71,6 +97,9 @@ const Login = ({ history }) => {
 
             if (localStorage.getItem("provider") == "walletconnect") {
 
+                // provider1 = new WalletConnectProvider({
+                //             infuraId: "ba5ee6592e68419cab422190121eca4c",
+                //         });
                 signature = await provider1.send(
                     'personal_sign',
                     [ ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`)), publicAddress ]
@@ -104,44 +133,42 @@ const Login = ({ history }) => {
     const loginHandler = async (e) => {
 
         e.preventDefault()
+       
         setText("Logging In. Please Wait!")
+        // console.log(web3.provider)
 
-        if(localStorage.getItem("provider") === "fortmatic") {
+        web3 = library
+        
 
-            const fm = new Fortmatic('pk_test_C102027C0649EF66');
-            window.web3 = new Web3(fm.getProvider());
-            web3 = window.web3
-        }
+        // else if(localStorage.getItem("provider") === "portis") {
 
-        else if(localStorage.getItem("provider") === "portis") {
-
-            const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
-            web3 = new Web3(portis.provider);
+        //     const portis = new Portis("10c2a4ba-93fc-46d3-8c27-9b9019bea48f", "rinkeby");
+        //     web3 = new Web3(portis.provider);
 
             
-        }
-        else if(localStorage.getItem("provider") === "torus") {
+        // }
+        // else if(localStorage.getItem("provider") === "torus") {
 
-            const torus = new Torus()
-            await torus.init();
-            await torus.login(); 
-            web3 = new Web3(torus.provider);
+        //     const torus = new Torus()
+        //     await torus.init();
+        //     await torus.login(); 
+        //     web3 = new Web3(torus.provider);
 
-        }
-        else if (localStorage.getItem("provider") === "walletconnect") {
+        // }
+        // else if (localStorage.getItem("provider") === "walletconnect") {
 
             provider1 = new WalletConnectProvider({
                 infuraId: "ba5ee6592e68419cab422190121eca4c",
             });
               
-            await provider1.enable();
-            web3 = new Web3(provider1);
+        //     await provider1.enable();
+        //     web3 = new Web3(provider1);
 
-        }
-        else {
+        // }
+        // else {
 
-            web3 = new Web3(window.ethereum);
-        }
+        //     web3 = new Web3(window.ethereum);
+        // }
 
 
         const coinbase = await web3.eth.getAccounts();
@@ -150,9 +177,13 @@ const Login = ({ history }) => {
             return;
         }
 
-        publicAddress = coinbase[0].toLowerCase();
-        await web3.eth.getCoinbase().then(async (users) => {
+        // console.log(library.getAccount())
 
+        publicAddress = account.toLocaleLowerCase();
+        console.log(publicAddress)
+        await web3.eth.getAccounts().then(async (users) => {
+
+            console.log(users)
             const config = {
                 headers: {
                     "Content-Type": "application/json"
@@ -161,7 +192,7 @@ const Login = ({ history }) => {
 
             try {
 
-                const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/nonce", {publicAddress, email, password }, config);
+                const {data} = await axios.post("api/users/nonce", {publicAddress, email, password }, config);
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
     
@@ -196,7 +227,7 @@ const Login = ({ history }) => {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
+                    const {data} = await axios.post("api/auth/login", {signature, nonce, publicAddress, email, password}, config);
                     setText("Success!")
 
                     localStorage.setItem("authToken", data.token);
@@ -228,7 +259,12 @@ const Login = ({ history }) => {
     }
 
     return (
+        
+        <>
+         <Nav2 close={toggle1}/>
+        
        <StyledContainer>
+           
              <LoginModal visible={show1} close={toggle1}></LoginModal>
            <FormWrapper>
                <form >
@@ -261,13 +297,14 @@ const Login = ({ history }) => {
                     </FieldWrapper>
                     <Wrapper space={40}/>
                     <ButtonWrapper>
-                        {loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</ButtonStatic>}
+                        {!active ? (!onPageLoading ? <ButtonLoading colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`} onClick={() => connectOn(provider)}>Connect Wallet</ButtonLoading> : <ButtonLoading colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Connecting...</ButtonLoading>) : (loading ? <Loader type="ThreeDots" color={`rgb(22,181,127)`} height={50} width={100}/> : <ButtonStatic type="submit" onClick={loginHandler} colour={`rgb(22,181,127)`} bordercolour={`rgb(22,181,127)`}>Login</ButtonStatic>)}
                     </ButtonWrapper>
                     <Wrapper space={12}/>
                     <LoginLinkWrapper>New Here? <LoginLink to="/signup" style={{textDecoration:"none"}}> Register</LoginLink></LoginLinkWrapper>
                </form>
            </FormWrapper>
        </StyledContainer>
+       </>
     )
 }
 

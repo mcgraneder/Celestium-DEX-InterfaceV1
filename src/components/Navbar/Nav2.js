@@ -5,23 +5,20 @@ import { NavContainer,
          NavElement, 
          NavItem, 
          NavLogo
-} from './NavbarStyles';
+} from './Nav2Styles';
+import useAuth from '../../hooks/useAuth';
 
-export default function Nav({close}) {
+export default function Nav2({close}) {
 
-    function filler(arg) {
-
-        return;
-    }
+  const {connectOn} = useAuth()
   return (
       
         <div>
             <NavContainer>
                 <NavWrapper>
-                    <NavLogo>CELESTIUM</NavLogo>
                     <NavElement>
                         <NavItem>
-                            <ConnectWalletButton left={"82%"} top={"31%"} close={close} onclick={close} height="180" fontsize="17" colour="rgb(89, 115, 254)" width="40"></ConnectWalletButton>
+                            <ConnectWalletButton left={"82%"} top={"31%"} close={close} onclick={connectOn}height="180" fontsize="17" colour="rgb(89, 115, 254)" width="40"></ConnectWalletButton>
                         </NavItem>
                     </NavElement>
                 </NavWrapper>

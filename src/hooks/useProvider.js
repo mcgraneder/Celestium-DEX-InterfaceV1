@@ -6,12 +6,14 @@ import Torus from "@toruslabs/torus-embed";
 import { ethers } from "ethers";
 import axios from "axios";
 import WalletConnectProvider from "@walletconnect/web3-provider"
+import { injected, toruss, fortmaticc, portiss, walletconnect } from "../connectors/providers"
 
 const useProvider = () => {
 
 
     var web3;
     var provider1;
+    
     
     if(localStorage.getItem("provider") === "fortmatic") {
 
@@ -27,14 +29,15 @@ const useProvider = () => {
 
         
     }
-    else if(localStorage.getItem("provider") === "torus") {
+    // else if(localStorage.getItem("provider") === "torus") {
 
-        const torus = new Torus()
-        torus.init();
-        torus.login(); 
-        web3 = new Web3(torus.provider);
+    //     const torus = new Torus()
+    //     await torus.init();
+    //     await torus.login(); 
+    //     web3 = new Web3(torus.provider);
 
-    }
+    // }
+
     else if (localStorage.getItem("provider") === "walletconnect") {
 
         provider1 = new WalletConnectProvider({

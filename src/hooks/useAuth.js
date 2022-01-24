@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Web3 from 'web3';
 import Fortmatic from 'fortmatic';
 import { useWeb3React } from "@web3-react/core"
@@ -8,6 +8,7 @@ import { FortmaticConnector } from '@web3-react/fortmatic-connector'
 import { PortisConnector } from '@web3-react/portis-connector'
 import { TorusConnector } from '@web3-react/torus-connector'
 import { local } from 'web3modal';
+import { TorusInpageProvider } from '@toruslabs/torus-embed';
 
 export const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 1337, 43114],
@@ -27,47 +28,55 @@ export const torus = new TorusConnector({ chainId: 1 })
 
 export const walletconnect = new WalletConnectConnector({
     rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
+    bridge: 'https://bridge.walletconnect.org',
     qrcode: true
+})
+
+export const walletconnect1 = new WalletConnectConnector({
+    rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
+    bridge: 'https://bridge.walletconnect.org',
+    qrcode: false
 })
 
 export default function useAuth() {
 
     const [loading, setLoading] = useState(false);
     const [onPageLoading, setOnPageLoading] = useState(false)
-
     const [acc, setAcc] = useState("")
-    var [web3, setWeb3] = useState("");
+    const web32 = useRef(null)
+    let web3
+
     var { active, account, library, connector, activate, deactivate } = useWeb3React()
-    
-    var accounts;
-    var acount
-    
     var loggedInAccount = localStorage.getItem("account")
     var provider = localStorage.getItem("provider")
-
-    
-    
+  
     async function connectOnLoad() {
 
         if ( localStorage.getItem("provider") == "fortmatic") provider = fortmatic
         if ( localStorage.getItem("provider") == "injected") provider = injected
-        if ( localStorage.getItem("provider") == "walletconnect") provider = walletconnect
+        if ( localStorage.getItem("provider") == "walletconnect") {
+
+            provider = walletconnect
+            return;  
+        }
+
         if ( localStorage.getItem("provider") == "portis") provider = portis
-        if ( localStorage.getItem("provider") == "torus") provider = torus
+        if ( localStorage.getItem("provider") == "torus") provider = torus 
 
         setOnPageLoading(true)
 
          try {
-
+           
             await activate(provider, undefined, true);
             await deactivate()
             await activate(provider, undefined, true);
+           
           
           } catch (err) {
 
             console.error(err)
             deactivate()
-            localStorage.removeItem("provider");
+            // localStorage.removeItem("provider");
 
             setOnPageLoading(false)
           }
@@ -85,7 +94,7 @@ export default function useAuth() {
     }, [])
 
 
-    async function connectOnClick() {
+    async function connectOn(provider1) {
         
        
         if(active) {
@@ -93,154 +102,42 @@ export default function useAuth() {
             alert("You must dissconnect first")
             return
         }
+
+        console.log(provider1)
+        if (provider1 === "fortmatic") provider = fortmatic
+        if (provider1 === "injected") provider = injected
+        if (provider1 === "walletconnect") {
+
+            provider = walletconnect
+            
+        }
+        if (provider1 === "portis") provider = portis
+        if (provider1 === "torus") provider = torus 
+
+       
         setLoading(true)
 
            
             try {
-                await activate(injected)
+                await activate(provider)
                 loggedInAccount = localStorage.setItem("account", account);
-                provider = localStorage.setItem("provider", "injected");
+                localStorage.setItem("provider", provider1);
+               
                 setTimeout(() => {
 
                     setLoading(false)
                 }, 800)
-
-            } catch (err) {
-
-                console.log(err)
-                deactivate()
-                localStorage.removeItem("provider");
-
-                setLoading(false)
-            }
-    }
-
-    async function connectOnClickFortmatic() {
-        
-        console.log(active)
-        if(active) {
-
-            alert("You must dissconnect first")
-            return
-        }
-
-        setLoading(true)
-
-           
-            try {
-                await activate(fortmatic)
-                loggedInAccount = localStorage.setItem("account", account);
-                provider = localStorage.setItem("provider", "fortmatic");
-                setLoading(false)
-               
                 
-        
             } catch (err) {
 
                 console.log(err)
                 deactivate()
-                localStorage.removeItem("provider");
-
-                setLoading(false)
-               
-            }
-            
-    }
-
-    async function connectOnClickTorus() {
-        
-        if(active) {
-
-            alert("You must dissconnect first")
-            return
-        }
-
-        setLoading(true)
-
-            
-            try {
-                await activate(torus)
-                loggedInAccount = localStorage.setItem("account", account);
-                provider = localStorage.setItem("provider", "torus");
-                setLoading(false)
-        
-            } catch (err) {
-
-                console.log(err)
-                deactivate()
-                localStorage.removeItem("provider");
+                // localStorage.removeItem("provider");
 
                 setLoading(false)
             }
-
     }
 
-    async function connectOnClickPortis() {
-        
-        if(active) {
-
-            alert("You must dissconnect first")
-            return
-        }
-
-        setLoading(true)
-
-           
-            try {
-                await activate(portis)
-                loggedInAccount = localStorage.setItem("account", account);
-                provider = localStorage.setItem("provider", "portis");
-                setLoading(false)
-        
-            } catch (err) {
-
-                console.log(err)
-                deactivate()
-                localStorage.removeItem("provider");
-
-                setLoading(false)
-            }
-
-            // console.log(localStorage.getItem("walletconnect"))
-
-            
-    }
-
-    async function connectOnClickWalletConnect() {
-        
-        if(active) {
-
-            alert("You must dissconnect first")
-            return
-        }
-
-        setLoading(true)
-
-           
-            try {
-                await activate(walletconnect, undefined, true)
-                
-                loggedInAccount = localStorage.setItem("account", account);
-                provider = localStorage.setItem("provider", "walletconnect");
-                setTimeout(() => {
-
-                    setLoading(false)
-                }, 800)
-               
-            } catch (err) {
-
-                console.log(err)
-                deactivate()
-                localStorage.removeItem("provider");
-
-                setLoading(false)
-            }
-
-            // const data = localStorage.getItem("walletconnect")
-            // local.setItem("walletconnect", data)
-
-
-    }
 
     async function disconnect() {
         try {
@@ -261,5 +158,5 @@ export default function useAuth() {
     }
 
 
-  return { connectOnLoad, connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect,  active, account, loading, web3, onPageLoading}
+  return { connectOnLoad, disconnect, connectOn, active, account, loading, library, onPageLoading}
 }

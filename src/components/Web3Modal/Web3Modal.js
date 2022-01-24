@@ -345,7 +345,7 @@ export const IconContents = styled.i`
 
 const Web3Modal = ({visible, close}) => {
     
-    const { connectOnClick, connectOnClickFortmatic, connectOnClickTorus, connectOnClickPortis, connectOnClickWalletConnect, disconnect, active, account, loading } = useAuth()
+    const { connectOn, disconnect, active, loading } = useAuth()
   
     const provider = localStorage.getItem("provider")
     return (
@@ -358,51 +358,51 @@ const Web3Modal = ({visible, close}) => {
                     </ModalTextWrapper>
                 </DisclaimerContainer>
                 <ButtonContainer>
-                    <ConnectButton active={active && provider==="injected"} onClick={connectOnClick}>
+                    <ConnectButton active={active && provider==="injected"} onClick={() => connectOn("injected")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={metamask} width={30} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="injected" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="injected" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 MetaMask
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="fortmatic"} onClick={connectOnClickFortmatic}>
+                    <ConnectButton active={active && provider==="fortmatic"} onClick={() => connectOn("fortmatic")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={fortmatic} width={27} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="fortmatic" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="fortmatic" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 Fortmatic
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="torus"} onClick={connectOnClickTorus}>
+                    <ConnectButton active={active && provider==="torus"} onClick={() => connectOn("torus")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={torus} width={27} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="torus" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="torus" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 Torus
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="portis"} onClick={connectOnClickPortis}>
+                    <ConnectButton active={active && provider==="portis"} onClick={() => connectOn("portis")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={portis} width={25} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="portis" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="portis" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 Portis
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="walletconnect"} onClick={connectOnClickWalletConnect}>
+                    <ConnectButton active={active && provider==="walletconnect"} onClick={() => connectOn("walletconnect")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={walletConnect} width={35} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="walletconnect" && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
+                                {active && provider ==="walletconnect" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 WalletConnect
                             </ModalTitle>
