@@ -90,11 +90,18 @@ const Login = ({ history }) => {
 		var signature;
 		try {
 
+            
             if (localStorage.getItem("provider") == "walletconnect") {
 
-                // provider1 = new WalletConnectProvider({
-                //             infuraId: "ba5ee6592e68419cab422190121eca4c",
-                //         });
+                provider1 = new WalletConnectProvider({
+                    infuraId: "ba5ee6592e68419cab422190121eca4c",
+                });
+        
+                await provider1.enable();
+                
+                setWeb3(new Web3(provider1))
+
+               
                 signature = await provider1.send(
                     'personal_sign',
                     [ ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`Alpha-Baetrum Onboarding unique one-time nonce: ${nonce} by signimg this you are verifying your ownership of this wallet`)), publicAddress ]
@@ -131,12 +138,7 @@ const Login = ({ history }) => {
        
         setText("Logging In. Please Wait!")
         
-        provider1 = new WalletConnectProvider({
-            infuraId: "ba5ee6592e68419cab422190121eca4c",
-        });
-        await provider1.enable();
         
-        setWeb3(new Web3(provider1))
               
         publicAddress = account.toLocaleLowerCase();
         console.log(publicAddress)

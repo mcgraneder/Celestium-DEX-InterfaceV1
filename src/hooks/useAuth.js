@@ -7,14 +7,13 @@ import { injected,
          walletconnect 
 } from "../connectors/providers";
 
-
-
 export default function useAuth() {
 
     const [loading, setLoading] = useState(false);
     const [onPageLoading, setOnPageLoading] = useState(false)
     const [acc, setAcc] = useState("")
     const web32 = useRef(null)
+    const [address, setAddress] = useState()
     let web3
 
     var { active, account, library, connector, activate, deactivate } = useWeb3React()
@@ -42,6 +41,15 @@ export default function useAuth() {
             await deactivate()
             await activate(provider, undefined, true);
            
+                // injected.isAuthorized().then((isAuthorized) => {
+                //   if (isAuthorized) {
+                //     activate(provider);
+                //     deactivate()
+                //     activate(provider)
+                //   }
+                // });
+           
+           
           
           } catch (err) {
 
@@ -57,7 +65,15 @@ export default function useAuth() {
 
     useEffect(() => {
  
-        if (loggedInAccount != null) {
+       setAddress(account);
+
+       localStorage.setItem("account", account)
+
+    }, [account])
+
+    useEffect(() => {
+ 
+        if (!active) {
 
              connectOnLoad()
         }
@@ -90,13 +106,13 @@ export default function useAuth() {
 
            
             try {
-                await activate(provider)
-                loggedInAccount = localStorage.setItem("account", account);
+                await activate(provider, undefined, true)
                 localStorage.setItem("provider", provider1);
                
                 setTimeout(() => {
 
                     setLoading(false)
+                    console.log(account)
                 }, 800)
                 
             } catch (err) {
@@ -129,5 +145,5 @@ export default function useAuth() {
     }
 
 
-  return { connectOnLoad, disconnect, connectOn, active, account, loading, library, onPageLoading}
+  return { connectOnLoad, disconnect, connectOn, address, setAddress, active, account, loading, library, onPageLoading}
 }

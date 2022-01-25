@@ -362,7 +362,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={metamask} width={30} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="injected" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
+                                {active && provider ==="injected" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 MetaMask
                             </ModalTitle>
@@ -372,7 +372,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={fortmatic} width={27} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="fortmatic" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
+                                {active && provider ==="fortmatic" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 Fortmatic
                             </ModalTitle>
@@ -382,7 +382,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={torus} width={27} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="torus" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
+                                {active && provider ==="torus" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 Torus
                             </ModalTitle>
@@ -392,7 +392,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={portis} width={25} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="portis" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
+                                {active && provider ==="portis" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 Portis
                             </ModalTitle>
@@ -402,7 +402,7 @@ const Web3Modal = ({visible, close}) => {
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={walletConnect} width={35} /></Logo>
                             <ModalTitle>
-                                {active && provider ==="walletconnect" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="10px" width="10px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
+                                {active && provider ==="walletconnect" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
                                 WalletConnect
                             </ModalTitle>
