@@ -51,8 +51,9 @@ const Login = ({ history }) => {
     const {active, account, library, onPageLoading,  connectOn} = useAuth()
     // const {library, provider} = useWeb3React()
    const provider = localStorage.getItem("provider")
-   
 
+   
+//    localStorage.setItem("authToken", 1234);
     var publicAddress
     var provider1;
 
