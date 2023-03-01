@@ -49,10 +49,7 @@ const Layout = memo(({history}) => {
             setShow(false)
          }
 
-        if (!localStorage.getItem("authToken")) {
-
-            history.push("/login")
-        }
+       
 
         const fetchPrivateData = async () => {
 
@@ -66,12 +63,12 @@ const Layout = memo(({history}) => {
 
             try {
 
-                const {data} = await axios.get("api/private", config);
+                const {data} = await axios.get("http://localhost:5000/api/private", config);
                 setPrivateData(data.data);
 
             } catch(error) {
 
-                localStorage.removeItem("authToken");
+                // localStorage.removeItem("authToken");
 
             }
         }
@@ -131,7 +128,7 @@ const Layout = memo(({history}) => {
        
         try {
 
-            const {data} = await axios.post("https://alpha-baetrum.herokuapp.com/api/users/useraddress", { publicAddress, email }, config)
+            const {data} = await axios.post("http://127.0.0.1:5000/api/users/useraddress", { publicAddress, email }, config)
             console.log(data)
 
             if(data.type == "currentUser") {
@@ -177,14 +174,13 @@ const Layout = memo(({history}) => {
             <NotCurrentUserModal visible={show} close={toggle}></NotCurrentUserModal>
             <Modal visible={show1} close={toggle1}></Modal>
             <Grid>
-                <GridSidebar>
-                    <Sidebar visible={show} close={toggle} logout={logoutHandler} />
-                </GridSidebar>
+               
+              
                 <GridHeader>
-                    <Navbar toggle={toggle}></Navbar>
+                    <Navbar toggle={toggle} ></Navbar>
                 </GridHeader>
                 <GridMain>
-                    main Content
+                    web3 auth login demo sandbox main page. App goes here
                 </GridMain>
             </Grid>
         </>

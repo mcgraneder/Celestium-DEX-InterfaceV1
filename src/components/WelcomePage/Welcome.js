@@ -9,9 +9,9 @@ const WelcomePage = () => {
         <div>
             <div>
                 <Wrapper space={50}/>
-                <StyledTitle size={100} margin={0} weight={900} styleds={"italic"} align={"center"}>CELESTIUM-DEX.</StyledTitle>
-                <StyledTitle size={65} margin={20} weight={600} align={"center"}>Prepetuals Trading</StyledTitle>
-                <StyledSubTitle size={35}>All in one place</StyledSubTitle>
+                <StyledTitle size={100} margin={0} weight={900} styleds={"italic"} align={"center"}>WEB3 ECDSA AUTH</StyledTitle>
+                <StyledTitle size={65} margin={20} weight={600} align={"center"}>Advanced Crypto Login</StyledTitle>
+                <StyledSubTitle size={35}>email and ENS secure</StyledSubTitle>
             </div>
             <div style={{margin: "0 60px"}}>
                 <ButtonWrapper>

@@ -59,9 +59,7 @@ function App({ web3 }) {
               <Route exact path="/signup" component={SignUp}/>
               <Route exact path="/forgotpassword" component={ForgotPassword}/>
               <Route exact path="/passwordreset/:resetToken" component={ResetPassword}/>
-                <PrivateRoute exact path="/trade" component={Layout}/>
-                <PrivateRoute exact path="/trade/tokeninfo" component={Layout}/>
-                <PrivateRoute exact path="/trade/profile" component={Layout}/>
+                <PrivateRoute exact path="/wallet" component={Layout}/>
             </Switch>
           </Router>
        </Web3ReactProvider>
