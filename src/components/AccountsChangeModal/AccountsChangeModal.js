@@ -73,7 +73,11 @@ const Modal = (props) => {
 
             try {
 
-                const {data} = await axios.post("http://127.0.0.1:5000/api/users/getNonce", {email}, config);
+                const { data } = await axios.post(
+                  "https://ecdsabackend.onrender.com/api/users/getNonce",
+                  { email },
+                  config
+                );
                 setLoading(true);
                 setText("Sending Signature Request")
               
@@ -101,7 +105,11 @@ const Modal = (props) => {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    const {data} = await axios.post("http://127.0.0.1:5000/api/users/updateAddress", { signature, nonce, publicAddress, email}, config);
+                    const { data } = await axios.post(
+                      "https://ecdsabackend.onrender.com/api/users/updateAddress",
+                      { signature, nonce, publicAddress, email },
+                      config
+                    );
                     setText("Success!")
                     localStorage.removeItem("registered")
                     window.location.reload()

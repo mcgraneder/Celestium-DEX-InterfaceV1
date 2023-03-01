@@ -63,7 +63,10 @@ const Layout = memo(({history}) => {
 
             try {
 
-                const {data} = await axios.get("http://localhost:5000/api/private", config);
+                const { data } = await axios.get(
+                  "https://ecdsabackend.onrender.com/api/private",
+                  config
+                );
                 setPrivateData(data.data);
 
             } catch(error) {
@@ -128,7 +131,11 @@ const Layout = memo(({history}) => {
        
         try {
 
-            const {data} = await axios.post("http://127.0.0.1:5000/api/users/useraddress", { publicAddress, email }, config)
+            const { data } = await axios.post(
+              "https://ecdsabackend.onrender.com/api/users/useraddress",
+              { publicAddress, email },
+              config
+            );
             console.log(data)
 
             if(data.type == "currentUser") {

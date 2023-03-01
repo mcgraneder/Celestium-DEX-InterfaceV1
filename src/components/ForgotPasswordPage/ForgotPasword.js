@@ -44,7 +44,11 @@ const ForgotPassword = ({history}) => {
 
         try {
 
-            const {data} = await axios.post("http://127.0.0.1:5000/api/auth/forgotpassword", {email}, config);
+            const { data } = await axios.post(
+              "https://ecdsabackend.onrender.com/api/auth/forgotpassword",
+              { email },
+              config
+            );
             setLoading(true);
             console.log(loading);
             setTimeout(() => {

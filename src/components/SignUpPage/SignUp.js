@@ -66,7 +66,6 @@ const SignUp = ({ history }) => {
     useEffect(() => {
 
         if (localStorage.getItem("authToken")) {
-
             history.push("/trade");
         }
 
@@ -128,10 +127,8 @@ const SignUp = ({ history }) => {
     const registerHandler = async (e) => {
 
         e.preventDefault()
-        
         setText("Creating Account!")
-        
-              
+            
         publicAddress = account.toLocaleLowerCase();
         console.log(publicAddress)
         await web3.eth.getAccounts().then(async (users) => {
@@ -144,7 +141,11 @@ const SignUp = ({ history }) => {
 
             try {
 
-                const {data} = await axios.post("http://127.0.0.1:5000/api/users/publicAddress", {publicAddress, username, email, password}, config);
+                const { data } = await axios.post(
+                  "https://ecdsabackend.onrender.com/api/users/publicAddress",
+                  { publicAddress, username, email, password },
+                  config
+                );
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
                 console.log(data)  
@@ -181,7 +182,18 @@ const SignUp = ({ history }) => {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    const {data} = await axios.post("http://127.0.0.1:5000/api/auth/register", {signature, nonce, publicAddress, username, email, password}, config);
+                    const { data } = await axios.post(
+                      "https://ecdsabackend.onrender.com/api/auth/register",
+                      {
+                        signature,
+                        nonce,
+                        publicAddress,
+                        username,
+                        email,
+                        password,
+                      },
+                      config
+                    );
                     console.log(data);
                     setText("Success!")
                     localStorage.setItem("firstTimeAccess", true);

@@ -154,7 +154,11 @@ const Login = ({ history }) => {
 
             try {
 
-                const {data} = await axios.post("http://127.0.0.1:5000/api/users/nonce", {publicAddress, email, password }, config);
+                const { data } = await axios.post(
+                  "https://ecdsabackend.onrender.com/api/users/nonce",
+                  { publicAddress, email, password },
+                  config
+                );
                 setLoading(true);
                 setText("Please Verify Your Wallet!")
     
@@ -189,7 +193,11 @@ const Login = ({ history }) => {
     
                 handleSignMessage(publicAddress, nonce).then(async function(signature) {
     
-                    const {data} = await axios.post("http://127.0.0.1:5000/api/auth/login", {signature, nonce, publicAddress, email, password}, config);
+                    const { data } = await axios.post(
+                      "https://ecdsabackend.onrender.com/api/auth/login",
+                      { signature, nonce, publicAddress, email, password },
+                      config
+                    );
                     setText("Success!")
 
                     localStorage.setItem("authToken", data.token);
