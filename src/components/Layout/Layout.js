@@ -17,6 +17,7 @@ import {
          GridHeader,
          GridMain
  } from "./LayoutStyles";
+import About from "../About/About";
 
 const Layout = memo(({history}) => {
 
@@ -188,6 +189,7 @@ const Layout = memo(({history}) => {
                 </GridHeader>
                 <GridMain>
                     web3 auth login demo sandbox main page. App goes here
+                    <About/>
                 </GridMain>
             </Grid>
         </>

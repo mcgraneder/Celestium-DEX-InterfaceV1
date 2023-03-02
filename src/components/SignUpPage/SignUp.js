@@ -66,7 +66,7 @@ const SignUp = ({ history }) => {
     useEffect(() => {
 
         if (localStorage.getItem("authToken")) {
-            history.push("/trade");
+            history.push("/wallet");
         }
 
         if (localStorage.getItem("provider") == null || localStorage.getItem("provider") == undefined) {
