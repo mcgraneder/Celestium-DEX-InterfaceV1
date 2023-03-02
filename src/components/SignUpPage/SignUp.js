@@ -203,7 +203,7 @@ const SignUp = ({ history }) => {
 
                     setTimeout(() => {
     
-                        history.push("/trade");
+                        history.push("/wallet");
     
                     }, 1000)
                 })
