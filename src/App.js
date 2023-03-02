@@ -52,6 +52,7 @@ function App({ web3 }) {
         {loading && <PageLoad></PageLoad>}
           <Web3ReactProvider getLibrary={getLibrary} 
       libraryName={'ethers.js'|'web3.js'|null}>
+      
           <Router>
             <Switch>
               <Route exact path="/" component={Home} />
