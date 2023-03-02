@@ -22,7 +22,7 @@ const Home = ({ history }) => {
 
         if (localStorage.getItem("authToken")) {
 
-            history.push("/trade");
+            history.push("/wallet");
         }
         
     }, [history])

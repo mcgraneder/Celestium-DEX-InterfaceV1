@@ -72,7 +72,7 @@ const Login = ({ history }) => {
 
         if (localStorage.getItem("authToken")) {
 
-            history.push("/trade");
+            history.push("/wallet");
         }
 
         if(localStorage.getItem("firstTimeAccess")) {
